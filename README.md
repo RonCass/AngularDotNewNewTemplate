@@ -18,6 +18,10 @@ this so that I have a better starting point in the future.
 * Item Moment 2.21.0 - Date processing
 * Item Toastr 2.1.4 - For popup toast notifications
 * Item Angular Proxy - Changed Startup to use Angular Proxy. So you need to do an "ng serve" in the clientApp folder to run Angular separate from the .Net code running.
-
+* Item SharedModule that can be imported in to other modules
+* Item CoreModule that has the data.service, auth-guard.service - Work In Progress  configuring the data service.
+* Item ToastrService - For creating toasts messages
+* Item CurrentUserService - Used with Authentication 
+* 
 ## Disclaimer
 I built this for my use. If you find it helpful, all the better. :)
