@@ -22,6 +22,10 @@ this so that I have a better starting point in the future.
 * Item CoreModule that has the data.service, auth-guard.service - Work In Progress  configuring the data service.
 * Item ToastrService - For creating toasts messages
 * Item CurrentUserService - Used with Authentication 
+* Item Serilog - Logging to MSSQLServer - Logs Table
+* Item Automapper - Example in startup.cs. Mapping User to UserOut DTO
+* Item Identity with JWT Token Auth
+* Item Database is created and seeded upon Debug
 * 
 ## Disclaimer
 I built this for my use. If you find it helpful, all the better. :)
