@@ -9,6 +9,9 @@ in all the additional stuff I think should be in there for when I need to start 
 All credit for the original template goes to Steve Sanderson and the asp.net team. I just created
 this so that I have a better starting point in the future.
 
+## Update
+I decided to also start saving code to this project. Just general stuff that I want to remember etc.
+
 ## Stuff I Added
 * Item Bootstrap 4.* - Upgraded template Bootstrap 4.* and changed the main top nav to use it.
 * Item JQuery 3.3.1 - For Bootstrap 4
