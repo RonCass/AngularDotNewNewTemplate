@@ -25,6 +25,7 @@ namespace AngularDotNetNewTemplate.Data
         ReferenceEntry<T, object> GetReference(T entity, Expression<Func<T, object>> property);
 
         T Get(Expression<Func<T, bool>> predicate);
+        T GetEager(Expression<Func<T, object>> property, Expression<Func<T, bool>> predicate);
 
         //void Add(T entity);
         T Add(T entity);
