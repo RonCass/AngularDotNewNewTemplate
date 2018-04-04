@@ -78,6 +78,12 @@ namespace AngularDotNetNewTemplate.Data
             return dbSet.FirstOrDefault(predicate);
         }
 
+        //Get with Where and an Include
+        public T GetEager(Expression<Func<T, object>> property, Expression<Func<T, bool>> predicate)
+        {
+            return dbSet.Include(property).FirstOrDefault(predicate);
+        }
+
         //public void Add(T entity)
         //{
         //    dbSet.Add(entity);           

@@ -33,6 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="ClientApp\src\app\admin\components\" />
     <Folder Include="ClientApp\src\app\core\services\" />
     <Folder Include="Data\" />
     <Folder Include="Models\DTOIn\" />
