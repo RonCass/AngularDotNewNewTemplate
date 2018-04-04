@@ -11,10 +11,13 @@ namespace AngularDotNetNewTemplate.Models
     // Add profile data for application users by adding properties to the ApplicationUser class
     public class ApplicationUser : IdentityUser<int>
     {
-        //public int Id { get; set; }
+       //Additional Fields that extend the Identity User
         public string CompanyName { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public bool IsActive { get; set; }
+        public DateTime DateCreated { get; set; }
+        public DateTime DateLastModified { get; set; }
 
 
         //3-27-2018 Ron C.: Adding in all the navigation properties that were removed from the default implementation with aspnetcore 2.0

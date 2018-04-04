@@ -1,4 +1,19 @@
 
+export interface Log {
+  id: number;
+  message: string;
+  level: string;
+  timeStamp: Date;
+  exception: string;
+  logEvent: string;
+  userId: string;
+  requestPath: string;
+  sourceContext: string;
+  actionId: string;
+  actionName: string;
+  requestId: string;
+}
+
 export interface WeatherForecast {
   dateFormatted: string;
   temperatureC: number;

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AngularDotNetNewTemplate.Controllers
 {
-    public class ApiCrudExampleController : Controller
+    public class ApiCrudExampleController : BaseApiController
     {
         public IActionResult Index()
         {

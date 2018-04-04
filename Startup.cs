@@ -1,6 +1,8 @@
 using AngularDotNetNewTemplate.Data;
 using AngularDotNetNewTemplate.Models;
+using AngularDotNetNewTemplate.Models.DTOIn;
 using AngularDotNetNewTemplate.Models.DTOOut;
+using AngularDotNetNewTemplate.Utils;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -10,14 +12,17 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;
-using Serilog.Models;
+
 using Serilog.Sinks.MSSqlServer;
 using System;
 using System.Collections.ObjectModel;
+using System.Data;
+using System.Diagnostics;
 using System.Text;
 
 namespace AngularDotNetNewTemplate
@@ -66,7 +71,7 @@ namespace AngularDotNetNewTemplate
                 .WriteTo.MSSqlServer(Configuration.GetConnectionString("DefaultConnection"), "Log", columnOptions: columnOptions)
                 .MinimumLevel.ControlledBy(loggingLevelSwitch)
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Error)
-                .MinimumLevel.Override("System", LogEventLevel.Error)
+                .MinimumLevel.Override("System", LogEventLevel.Error)                               
                 .CreateLogger();
             #endregion
         }
@@ -149,15 +154,16 @@ namespace AngularDotNetNewTemplate
             //Automapper Mappings
             Mapper.Initialize(config =>
             {
-
-                config.CreateMap<ApplicationUser, UserOut>();
-
-                //config.CreateMap<Customer, CustomerIn>().ReverseMap();
+                config.CreateMap<ApplicationUser, ApplicationUserIn>().ReverseMap();
+                config.CreateMap<ApplicationUser, ApplicationUserOut>();              
 
             });
 
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
+
+            //Serilog          
+            app.UseMiddleware<SerilogMiddleware>();
 
             app.UseMvc(routes =>
             {

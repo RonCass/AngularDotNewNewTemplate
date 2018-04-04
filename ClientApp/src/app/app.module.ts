@@ -12,13 +12,15 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { HomeModule } from './home/home.module';
 import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
+import { ViewLogsComponent } from './admin/view-logs/view-logs.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,   
     CounterComponent,
-    FetchDataComponent
+    FetchDataComponent,
+    ViewLogsComponent
     
     
   ],
@@ -33,6 +35,7 @@ import { CoreModule } from './core/core.module';
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
+      { path: 'viewLogs', component: ViewLogsComponent },
     ])
   ],
   providers: [],
