@@ -2,10 +2,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { HttpInterceptor } from '@angular/common/http/src/interceptor';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
-
+import { AuthGuard } from './core/services/auth-guard.service';
 
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
@@ -36,6 +37,7 @@ import { ViewLogsComponent } from './admin/view-logs/view-logs.component';
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'viewLogs', component: ViewLogsComponent },
+      { path: 'AuthExample', component: ViewLogsComponent, canLoad: [AuthGuard]},
     ])
   ],
   providers: [],

@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { catchError, retry } from 'rxjs/operators';
 
-import { WeatherForecast, Log } from './models';
+import { WeatherForecast, Log, Book } from './models';
 import { CurrentUserService } from './current-user.service';
 import { ToastrService } from './toastr.service';
 
@@ -61,6 +61,24 @@ export class DataService {
 
   }
 
+  //From PS Course
+  getAllBooks(): Observable<Book[]> {
+
+    return this.http.get<Book[]>('/api/books')
+      .pipe(
+      catchError(this.handleError)
+      );
+
+  }
+
+  getBookById(id: number): Observable<Book> {
+    return this.http.get<Book>('/api/books/${id}', this.httpOptions)
+      .pipe(
+      catchError(this.handleError)
+      );
+
+  }
+  
   GetSomething() {
 
     return this.http.get<WeatherForecast>(this.baseUrl + 'api/SampleData/WeatherForecasts', this.httpOptions)

@@ -1,4 +1,10 @@
 
+export interface Book {
+  id: number;
+  title: string
+}
+
+
 export interface Log {
   id: number;
   message: string;
