@@ -165,6 +165,9 @@ namespace AngularDotNetNewTemplate
             //Serilog          
             app.UseMiddleware<SerilogMiddleware>();
 
+            // 5-2-2018: Added this to use the new Authentication
+            app.UseAuthentication();
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
