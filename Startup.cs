@@ -14,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Serialization;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;
@@ -127,7 +128,12 @@ namespace AngularDotNetNewTemplate
 
             });
 
-            services.AddMvc();
+            services.AddMvc()
+               .AddJsonOptions(opt =>
+               {
+                   opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                   opt.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+               });
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
