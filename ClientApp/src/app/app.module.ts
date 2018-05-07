@@ -14,6 +14,7 @@ import { HomeModule } from './home/home.module';
 import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
 import { ViewLogsComponent } from './admin/view-logs/view-logs.component';
+import { ToastTestComponent } from './admin/toast-test/toast-test.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { ViewLogsComponent } from './admin/view-logs/view-logs.component';
     AppComponent,   
     CounterComponent,
     FetchDataComponent,
-    ViewLogsComponent
+    ViewLogsComponent,
+    ToastTestComponent
     
     
   ],
@@ -37,7 +39,8 @@ import { ViewLogsComponent } from './admin/view-logs/view-logs.component';
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'viewLogs', component: ViewLogsComponent },
-      { path: 'AuthExample', component: ViewLogsComponent, canLoad: [AuthGuard]},
+      { path: 'AuthExample', component: ViewLogsComponent, canLoad: [AuthGuard] },
+      { path: 'toastTest', component: ToastTestComponent },
     ])
   ],
   providers: [],
