@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpHandler, HttpSentEvent, HttpHeaderResponse, HttpProgressEvent, HttpResponse, HttpUserEvent, HttpRequest, HttpInterceptor } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class AddHeaderInteceptor implements HttpInterceptor {

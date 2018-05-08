@@ -4,12 +4,10 @@ import { Router } from '@angular/router';
 
 import { ApplicationUser } from './models';
 
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
-import 'rxjs/Rx';
+import { Observable ,  Subject } from 'rxjs';
+// import 'rxjs/Rx';
 
 import * as moment from 'moment';
-
 
 @Injectable()
 export class CurrentUserService {
@@ -30,14 +28,13 @@ export class CurrentUserService {
     this.initMethod();
   }
 
-  //private ronTestSubject: Subject<boolean> = new Subject<boolean>();
+  // private ronTestSubject: Subject<boolean> = new Subject<boolean>();
 
   initMethod() {
 
   }
 
-
-  //Create an observable that can be subscribed to in case it changes
+  // Create an observable that can be subscribed to in case it changes
   get isLoggedIn() {
     return this.loggedIn.asObservable();
   }
@@ -49,13 +46,13 @@ export class CurrentUserService {
   isUserAuthenticated(): boolean {
     if (localStorage.getItem('userToken') && localStorage.getItem('applicationUser')) {
 
-      var userToken = JSON.parse(localStorage.getItem('userToken'));
+      const userToken = JSON.parse(localStorage.getItem('userToken'));
 
-      //Check Expiration
-      var now = moment.utc();
-      var isAfter = moment(userToken.expiration).isAfter(now);
+      // Check Expiration
+      const now = moment.utc();
+      const isAfter = moment(userToken.expiration).isAfter(now);
 
-      //If token is expired, redirect to login
+      // If token is expired, redirect to login
       if (!isAfter) {
         localStorage.removeItem('userToken');
         localStorage.removeItem('applicationUser');
@@ -71,7 +68,7 @@ export class CurrentUserService {
     } else {
       this.loggedIn.next(false);
       return false;
-      //this.router.navigate(['/login']);
+      // this.router.navigate(['/login']);
     }
 
   }
@@ -79,19 +76,19 @@ export class CurrentUserService {
 
   // TOKEN Stuff
   public setUserToken(myUserName: string, myToken: string, myExpiration: Date) {
-    //Set the UserName and Token to the Local Storage
+    // Set the UserName and Token to the Local Storage
     localStorage.setItem('userToken', JSON.stringify({ username: myUserName, token: myToken, expiration: myExpiration }));
     this.userToken = myToken;
   }
 
 
 
-  //Called from the Data Service
+  // Called from the Data Service
   public getUserToken() {
-    //If local token is null, check local storage
+    // If local token is null, check local storage
     if (this.userToken === null) {
       if (localStorage.getItem('userToken')) {
-        var myToken = JSON.parse(localStorage.getItem('userToken'));
+        const myToken = JSON.parse(localStorage.getItem('userToken'));
         return myToken.token;
       } else {
         return this.userToken;
@@ -101,24 +98,22 @@ export class CurrentUserService {
     }
   }
 
-
-
   deleteUserToken() {
     localStorage.removeItem('userToken');
-    this.loggedIn.next(false); //Set the isLoggedInFlag
+    this.loggedIn.next(false); // Set the isLoggedInFlag
     this.userToken = null;
   }
 
 
 
-  //Application User Stuff
+  // Application User Stuff
   public setLoggedInUserInfo(appUser: ApplicationUser) {
-    //If there is a matchin item in Local Storage, delete it
+    // If there is a matchin item in Local Storage, delete it
     if (localStorage.getItem('applicationUser')) {
       this.deleteApplicationUser();
     }
 
-    //Create the item in local storage
+    // Create the item in local storage
     localStorage.setItem('applicationUser', JSON.stringify(appUser));
     this.applicationUser = appUser;
     this.appUserObservable.next(appUser);
@@ -129,7 +124,7 @@ export class CurrentUserService {
 
     if (this.applicationUser === null) {
       if (localStorage.getItem('applicationUser')) {
-        var applicationUser = JSON.parse(localStorage.getItem('applicationUser'));
+        const applicationUser = JSON.parse(localStorage.getItem('applicationUser'));
         this.setLoggedInUserInfo(applicationUser);
         return this.applicationUser;
 
@@ -144,17 +139,17 @@ export class CurrentUserService {
 
   deleteApplicationUser() {
     localStorage.removeItem('applicationUser');
-    //this.loggedIn.next(false); //Set the isLoggedInFlag
+    // this.loggedIn.next(false); //Set the isLoggedInFlag
     this.appUserObservable.next(null);
     this.applicationUser = null;
   }
 
 
-  //setUserTokenExpiration(myTokenExpiration: Date) {
+  // setUserTokenExpiration(myTokenExpiration: Date) {
   //    this.userTokenExpiration = myTokenExpiration;
-  //}
+  // }
 
-  //getUserTokenExpiration(): Date {
+  // getUserTokenExpiration(): Date {
   //    //If local token is null, check local storage
   //    if (this.userTokenExpiration === null) {
   //        if (localStorage.getItem('userToken')) {
@@ -169,9 +164,5 @@ export class CurrentUserService {
   //        return this.userTokenExpiration;
   //    }
 
-  //}
-
-
-
-
+  // }
 }
