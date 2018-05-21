@@ -3,7 +3,6 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Headers, Response, RequestOptions } from '@angular/http';
 
 import { Observable, throwError  } from 'rxjs';
-// import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { catchError, retry } from 'rxjs/operators';
 
 import { WeatherForecast, Log, Book } from './models';

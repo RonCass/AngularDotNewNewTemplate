@@ -19,13 +19,11 @@ import { ToastTestComponent } from './admin/toast-test/toast-test.component';
 
 @NgModule({
   declarations: [
-    AppComponent,   
+    AppComponent,
     CounterComponent,
     FetchDataComponent,
     ViewLogsComponent,
     ToastTestComponent
-    
-    
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
