@@ -13,6 +13,7 @@ this so that I have a better starting point in the future.
 I decided to also start saving code to this project. Just general stuff that I want to remember etc.
 
 ## Stuff I Added
+* Item Angular 6: 5/2018: Upgraded to Angular 6 with new CLI
 * Item Bootstrap 4.* - Upgraded template Bootstrap 4.* and changed the main top nav to use it.
 * Item JQuery 3.3.1 - For Bootstrap 4
 * Item Popper.js 1.14.1 - For Bootstrap 4
