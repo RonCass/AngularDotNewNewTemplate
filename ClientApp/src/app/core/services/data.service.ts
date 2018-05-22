@@ -1,37 +1,48 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Headers, Response, RequestOptions } from '@angular/http';
-
 import { Observable, throwError  } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 
 import { WeatherForecast, Log, Book } from './models';
 import { CurrentUserService } from './current-user.service';
 import { ToastrService } from './toastr.service';
+import { RequestOptions } from '@angular/http';
 
 
 @Injectable()
-export class DataService {
+export class DataService {  
 
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + this.getToken()
-    })
-  };
-
-   public baseUrl = 'http://localhost:49223/';
+  public baseUrl = 'http://localhost:56789/'; // 'http://localhost:49223/';
 
   constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string,
     private currentUserService: CurrentUserService, private toastrService: ToastrService) { }
 
   getToken() {
     const myToken = this.currentUserService.getUserToken();
-
     return myToken;
   }
 
+  getHttpOptions() {
+    return {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.getToken()
+      })
+    };
+  }
+
+   // Cant submit document saying its JSON data so have to remove that line from the headers
+  getHttpOptionsWithoutContentType() {
+    return {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',        
+        'Authorization': 'Bearer ' + this.getToken()
+      })
+    };
+
+  // 'Content-Type': 'multipart/form-data',
+  }
   // getHeaders() {
 
   //  let headers = new Headers();
@@ -56,44 +67,56 @@ export class DataService {
     const myJson = JSON.stringify({ 'username': username, 'password': password })
 
     return this.http.post(this.baseUrl + 'Auth/CreateToken',
-      myJson, this.httpOptions);
+      myJson, this.getHttpOptions());
   }
 
-  // From PS Course
-  getAllBooks() {
+  /////////////////////////////////////////////////////////
+  // START - File Upload
+  /////////////////////////////////////////////////////////
+ 
+  UploadFile(formData) {
 
-    return this.http.get<Book[]>('/api/books')
-      .pipe(
-        catchError(this.handleError)
-      );
-
-  }
-
-  getBookById(id: number) {
-    return this.http.get<Book>('/api/books/${id}', this.httpOptions)
-      .pipe(
-        catchError(this.handleError)
-      );
-
-  }
-
-  GetSomething() {
-
-    return this.http.get<WeatherForecast>(this.baseUrl + 'api/SampleData/WeatherForecasts', this.httpOptions)
-      .pipe(
-        catchError(this.handleError)
-      );
-  }
-
-  getLogs() {
-    return this.http.get<Log>(this.baseUrl + 'api/Logs/GetLogs', this.httpOptions)
+    return this.http.post(this.baseUrl + 'api/FileUpload/UploadFiles/', formData, this.getHttpOptionsWithoutContentType())
       .pipe(
         catchError(this.handleError)
       );
   }
 
   /////////////////////////////////////////////////////////
-  // ERROR HANDLING
+  // END - File Upload
+  /////////////////////////////////////////////////////////
+
+
+  // From PS Course
+  getAllBooks(): Observable<Book[]> {
+    return this.http.get<Book[]>('/api/books')
+      .pipe(
+        catchError(this.handleError)
+    );
+  }
+
+  getBookById(id: number): Observable<Book> {
+    return this.http.get<Book>('/api/books/${id}', this.getHttpOptions())
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  GetSomething(): Observable<WeatherForecast> {
+    return this.http.get<WeatherForecast>(this.baseUrl + 'api/SampleData/WeatherForecasts', this.getHttpOptions())
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  getLogs(): Observable<Log> {
+    return this.http.get<Log>(this.baseUrl + 'api/Logs/GetLogs', this.getHttpOptions())
+      .pipe(catchError(this.handleError)
+      );
+  }
+
+  /////////////////////////////////////////////////////////
+  // ERROR HANDLING - New httpClient
   /////////////////////////////////////////////////////////
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {

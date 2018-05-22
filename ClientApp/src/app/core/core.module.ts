@@ -4,7 +4,7 @@ import { CurrentUserService } from './services/current-user.service';
 import { DataService } from './services/data.service';
 import { ToastrService } from './services/toastr.service';
 import { AuthGuard } from './services/auth-guard.service';
-import { AddHeaderInteceptor } from './services/add-header.interceptor';
+// import { AddHeaderInteceptor } from './services/add-header.interceptor';
 // import { transition } from '@angular/core/src/animation/dsl';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LogResponseInterceptor } from './services/log-response.interceptor';
@@ -24,7 +24,7 @@ export class CoreModule {
         DataService,
         ToastrService,
         AuthGuard,
-        { provide: HTTP_INTERCEPTORS, useClass: AddHeaderInteceptor, multi: true },
+        // { provide: HTTP_INTERCEPTORS, useClass: AddHeaderInteceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: LogResponseInterceptor, multi: true }
       ]
     };

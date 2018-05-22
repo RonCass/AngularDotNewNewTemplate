@@ -22,15 +22,15 @@ export class FetchDataComponent implements OnInit {
 
   ngOnInit() {
 
-    let bookId = 1;
-    let selectedBook: Book;// = new Book();
+    const bookId = 1;
+    let selectedBook: Book; // = new Book();
 
-    //GetBookById from DataService
+    // GetBookById from DataService
     this.dataService.getBookById(bookId)
       .subscribe(
-      (data: Book) => selectedBook = data,
-      (err: any) => console.log(err),
-      () => console.log('Completion Handler')
+        (data: Book) => selectedBook = data,
+        (err: any) => console.log(err),
+        () => console.log('Completion Handler')
       );
   }
 
