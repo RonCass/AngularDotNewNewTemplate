@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,24 +14,36 @@ namespace AngularDotNetNewTemplate.Controllers
         public string MyField1 { get; set; }
         public string MyField2 { get; set; }
         public IFormFile File { get; set; }
-
     }
-
+  
     [Produces("application/json")]
     [Route("api/FileUpload")]
     public class FileUploadController : Controller
     {
-        
+        private IHostingEnvironment _hostingEnvironment;
+
+        public FileUploadController(IHostingEnvironment hostingEnvironment)
+        {
+            _hostingEnvironment = hostingEnvironment;
+        }
+
 
         [HttpPost("UploadOneFileOnly")]
         public async Task<IActionResult> UploadOneFileOnly(IFormFile file)
         {
-            var filePath = Path.GetTempFileName();
+            //Get Path to wwwroot folder of application
+            var webRootPath = _hostingEnvironment.WebRootPath;
+
+            //Combine wwwroot folder, new folder to hold the items (NEW FOLDER MUST BE CREATED ALREDY), and the files actual name
+            var filePath = Path.Combine(webRootPath, "UploadTesting", file.FileName);
+
+            //Using Temp File Name and Path
+            //var filePath = Path.GetTempFileName();
 
             if (file.Length > 0)
             {
                 using (var stream = new FileStream(filePath, FileMode.Create))
-                {
+                {                    
                     await file.CopyToAsync(stream);
                 }
             }
@@ -46,7 +59,14 @@ namespace AngularDotNetNewTemplate.Controllers
 
             if(modelWithFile.File != null)
             {
-                var filePath = Path.GetTempFileName();
+                //Get Path to wwwroot folder of application
+                var webRootPath = _hostingEnvironment.WebRootPath;
+
+                //Combine wwwroot folder, new folder to hold the items (NEW FOLDER MUST BE CREATED ALREDY), and the files actual name
+                var filePath = Path.Combine(webRootPath, "UploadTesting", modelWithFile.File.FileName);
+
+
+                //var filePath = Path.GetTempFileName();
 
                 if (modelWithFile.File.Length > 0)
                 {
@@ -70,10 +90,16 @@ namespace AngularDotNetNewTemplate.Controllers
             long size = files.Sum(f => f.Length);
 
             // full path to file in temp location
-            var filePath = Path.GetTempFileName();
+            //var filePath = Path.GetTempFileName();
 
             foreach (var formFile in files)
             {
+                //Get Path to wwwroot folder of application
+                var webRootPath = _hostingEnvironment.WebRootPath;
+
+                //Combine wwwroot folder, new folder to hold the items (NEW FOLDER MUST BE CREATED ALREDY), and the files actual name
+                var filePath = Path.Combine(webRootPath, "UploadTesting", formFile.FileName);
+
                 if (formFile.Length > 0)
                 {
                     using (var stream = new FileStream(filePath, FileMode.Create))
@@ -86,7 +112,7 @@ namespace AngularDotNetNewTemplate.Controllers
             // process uploaded files
             // Don't rely on or trust the FileName property without validation.
 
-            return Ok(new { count = files.Count, size, filePath });
+            return Ok();
         }
 
 

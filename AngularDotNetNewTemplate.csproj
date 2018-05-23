@@ -41,6 +41,7 @@
   <ItemGroup>
     <Folder Include="ClientApp\src\app\admin\components\" />
     <Folder Include="Data\" />
+    <Folder Include="wwwroot\UploadTesting\" />
   </ItemGroup>
 
   <ItemGroup>

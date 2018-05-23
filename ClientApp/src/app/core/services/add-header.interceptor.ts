@@ -1,3 +1,10 @@
+
+
+
+// 5-23-2018: Commented this out because I cant have the Content-Type as Application/Json when uploading files.
+
+
+
 //import { Injectable } from '@angular/core';
 //import { HttpHandler, HttpSentEvent, HttpHeaderResponse, HttpProgressEvent, HttpResponse, HttpUserEvent, HttpRequest, HttpInterceptor } from '@angular/common/http';
 //import { Observable } from 'rxjs';
