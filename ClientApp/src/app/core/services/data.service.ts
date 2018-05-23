@@ -74,9 +74,24 @@ export class DataService {
   // START - File Upload
   /////////////////////////////////////////////////////////
  
-  UploadFile(formData) {
+  UploadOneFileOnly(formData) {
 
-    return this.http.post(this.baseUrl + 'api/FileUpload/UploadFiles/', formData, this.getHttpOptionsWithoutContentType())
+    return this.http.post(this.baseUrl + 'api/FileUpload/UploadOneFileOnly/', formData, this.getHttpOptionsWithoutContentType())
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+  UploadOneFileAndOtherModelData(formData) {
+
+    return this.http.post(this.baseUrl + 'api/FileUpload/UploadOneFileAndOtherModelData/', formData, this.getHttpOptionsWithoutContentType())
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  UploadMultipleFiles(formData) {
+
+    return this.http.post(this.baseUrl + 'api/FileUpload/UploadMultipleFiles/', formData, this.getHttpOptionsWithoutContentType())
       .pipe(
         catchError(this.handleError)
       );
