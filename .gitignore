@@ -232,3 +232,4 @@ _Pvt_Extensions
 # FAKE - F# Make
 .fake/
 /wwwroot/UploadTesting/RonTest.txt
+appsettings.Development.json
