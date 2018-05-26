@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 
 import { DemosRoutingModule } from './demos-routing.module';
 import { FileUploadComponent } from './file-upload/file-upload.component';
+import { GridListAndPagingComponent } from './grid-list-and-paging/grid-list-and-paging.component';
 
 @NgModule({
   imports: [
@@ -12,7 +13,8 @@ import { FileUploadComponent } from './file-upload/file-upload.component';
     FormsModule
   ],
   declarations: [
-    FileUploadComponent
+    FileUploadComponent,
+    GridListAndPagingComponent
   ]
 })
 export class DemosModule { }

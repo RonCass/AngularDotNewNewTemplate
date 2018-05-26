@@ -21,7 +21,7 @@ namespace AngularDotNetNewTemplate.Data
             _roleManager = roleManager;
         }
 
-        public static async Task EnsureSeedDataAsync(ApplicationDbContext _context, ApplicationRoleManager _roleManager, UserManager<ApplicationUser> _userManager)       
+        public static async Task EnsureSeedDataAsync(ApplicationDbContext _context, ApplicationRoleManager _roleManager, UserManager<ApplicationUser> _userManager, IServiceProvider serviceProvider)       
         {
           
 
@@ -31,63 +31,102 @@ namespace AngularDotNetNewTemplate.Data
             EnsureRoleCreated("SuperAdmin", _context, _roleManager);
             EnsureRoleCreated("Admin", _context, _roleManager);           
             EnsureRoleCreated("User", _context, _roleManager);
-            
 
-            if (await _userManager.FindByEmailAsync("SuperAdmin@MyWebsite.com") == null)
+
+            try
             {
-                //Add New User
-                var newUser = new ApplicationUser()
+                if (await _userManager.FindByEmailAsync("SuperAdmin@MyWebsite.com") == null)
                 {
-                    UserName = "SuperAdmin@MyWebsite.com",
-                    Email = "SuperAdmin@MyWebsite.com",
-                    FirstName = "John",
-                    LastName = "Doe"
-                };
+                    //var adminID = await EnsureUser(serviceProvider, _userManager, "asdasd1!!", "admin@contoso.com");
 
-                await _userManager.CreateAsync(newUser, "SomePassword");
-                await _userManager.AddToRoleAsync(newUser, "SuperAdmin");
-                //await _userManager.AddClaimAsync(newUser, new System.Security.Claims.Claim("CanEdit", "true"));
+
+                    //Add New User
+                    var newUser = new ApplicationUser()
+                    {
+                        UserName = "SuperAdmin@MyWebsite.com",
+                        Email = "SuperAdmin@MyWebsite.com",
+                        FirstName = "John",
+                        LastName = "Doe",
+                        SecurityStamp = Guid.NewGuid().ToString("D")
+                    };
+
+
+                    await _userManager.CreateAsync(newUser, "SomePassword1!");
+                    await _userManager.AddToRoleAsync(newUser, "SuperAdmin");
+                    //await _userManager.AddClaimAsync(newUser, new System.Security.Claims.Claim("CanEdit", "true"));
+                }
+
+                if (await _userManager.FindByEmailAsync("Admin@MyWebsite.com") == null)
+                {
+                    //Add Admin New User
+                    var newUser2 = new ApplicationUser()
+                    {
+                        UserName = "Admin@MyWebsite.com",
+                        Email = "Admin@MyWebsite.com",
+                        FirstName = "Admin",
+                        LastName = "Doe",
+                        SecurityStamp = Guid.NewGuid().ToString("D")
+                    };
+
+                    await _userManager.CreateAsync(newUser2, "SomePassword1!");
+                    await _userManager.AddToRoleAsync(newUser2, "Admin");
+                    //await _userManager.AddClaimAsync(newUser, new System.Security.Claims.Claim("CanEdit", "true"));               
+                }
+
+                if (await _userManager.FindByEmailAsync("User@MyWebsite.com") == null)
+                {
+                    //Add New User
+                    var newUser3 = new ApplicationUser()
+                    {
+                        UserName = "User@MyWebsite.com",
+                        Email = "User@MyWebsite.com",
+                        FirstName = "User",
+                        LastName = "Doe",
+                        SecurityStamp = Guid.NewGuid().ToString("D")
+                    };
+
+                    await _userManager.CreateAsync(newUser3, "SomePassword1!");
+                    await _userManager.AddToRoleAsync(newUser3, "User");
+                    //await _userManager.AddClaimAsync(newUser, new System.Security.Claims.Claim("CanEdit", "true"));               
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
             }
 
-            if (await _userManager.FindByEmailAsync("Admin@MyWebsite.com") == null)
-            {
-                //Add Admin New User
-                var newUser = new ApplicationUser()
-                {
-                    UserName = "Admin@MyWebsite.com",
-                    Email = "Admin@MyWebsite.com",
-                    FirstName = "Admin",
-                    LastName = "Doe"
-                };
-
-                await _userManager.CreateAsync(newUser, "SomePassword");
-                await _userManager.AddToRoleAsync(newUser, "Admin");
-                //await _userManager.AddClaimAsync(newUser, new System.Security.Claims.Claim("CanEdit", "true"));               
-            }
-
-            if (await _userManager.FindByEmailAsync("User@MyWebsite.com") == null)
-            {
-                //Add New User
-                var newUser = new ApplicationUser()
-                {
-                    UserName = "User@MyWebsite.com",
-                    Email = "User@MyWebsite.com",
-                    FirstName = "User",
-                    LastName = "Doe"                    
-                };
-
-                await _userManager.CreateAsync(newUser, "SomePassword");
-                await _userManager.AddToRoleAsync(newUser, "User");
-                //await _userManager.AddClaimAsync(newUser, new System.Security.Claims.Claim("CanEdit", "true"));               
-            }
-
-            AddDefaultData();
+            AddDefaultData(_context);
         }
 
-        public static void AddDefaultData()
-        {           
+        public static void AddDefaultData(ApplicationDbContext _context)
+        {
 
+            if (!_context.DummyData.Any())
+            {
+                for (int i = 1; i < 51; i++)
+                {
+                    var myRow = new DummyData() { Col1 = "Col1 Row" + i, Col2 = "Col2Row" + i, Col3 = "Col3Row" + i };
+                    _context.DummyData.Add(myRow);
+                }
 
+                _context.SaveChanges();
+            }
+        }
+
+        private static async Task<int> EnsureUser(IServiceProvider serviceProvider, UserManager<ApplicationUser> userManager,
+                                              string testUserPw, string UserName)
+        {
+            //var userManager = serviceProvider.GetService<UserManager<ApplicationUser>>();
+
+            var user = await userManager.FindByNameAsync(UserName);
+            if (user == null)
+            {
+                user = new ApplicationUser { UserName = UserName };
+                await userManager.CreateAsync(user, testUserPw);
+            }
+
+            return user.Id;
         }
 
         private static void EnsureRoleCreated(string roleName, ApplicationDbContext _context, ApplicationRoleManager _roleManager)

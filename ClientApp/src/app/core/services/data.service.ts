@@ -10,9 +10,9 @@ import { RequestOptions } from '@angular/http';
 
 
 @Injectable()
-export class DataService {  
+export class DataService {
 
-  public baseUrl = 'http://localhost:56789/'; // 'http://localhost:49223/';
+  public baseUrl = 'http://localhost:49431/'; // 'http://localhost:49223/';
 
   constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string,
     private currentUserService: CurrentUserService, private toastrService: ToastrService) { }
@@ -27,7 +27,7 @@ export class DataService {
       headers: new HttpHeaders({
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + this.getToken()
+        // 'Authorization': 'Bearer ' + this.getToken()
       })
     };
   }
@@ -36,7 +36,7 @@ export class DataService {
   getHttpOptionsWithoutContentType() {
     return {
       headers: new HttpHeaders({
-        'Accept': 'application/json',        
+        'Accept': 'application/json',
         'Authorization': 'Bearer ' + this.getToken()
       })
     };
@@ -73,7 +73,7 @@ export class DataService {
   /////////////////////////////////////////////////////////
   // START - File Upload
   /////////////////////////////////////////////////////////
- 
+
   UploadOneFileOnly(formData) {
 
     return this.http.post(this.baseUrl + 'api/FileUpload/UploadOneFileOnly/', formData, this.getHttpOptionsWithoutContentType())
@@ -83,7 +83,8 @@ export class DataService {
   }
   UploadOneFileAndOtherModelData(formData) {
 
-    return this.http.post(this.baseUrl + 'api/FileUpload/UploadOneFileAndOtherModelData/', formData, this.getHttpOptionsWithoutContentType())
+    return this.http.post(this.baseUrl + 'api/FileUpload/UploadOneFileAndOtherModelData/',
+     formData, this.getHttpOptionsWithoutContentType())
       .pipe(
         catchError(this.handleError)
       );
@@ -99,6 +100,22 @@ export class DataService {
 
   /////////////////////////////////////////////////////////
   // END - File Upload
+  /////////////////////////////////////////////////////////
+
+  /////////////////////////////////////////////////////////
+  // START - Dummy Data
+  /////////////////////////////////////////////////////////
+  getDummyData(pageNumber: number, pageSize: number, sort: string): Observable<any> {
+
+    return this.http.get(this.baseUrl + 'api/DummyData/?pageNumber=' + pageNumber + '&pageSize=' + pageSize +
+     '&sort=' + sort, this.getHttpOptions())
+      .pipe(
+      catchError(this.handleError)
+      );
+  }
+
+  /////////////////////////////////////////////////////////
+  // END - Dummy Data
   /////////////////////////////////////////////////////////
 
 

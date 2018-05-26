@@ -45,7 +45,7 @@ namespace AngularDotNetNewTemplate.Data
                 .WithOne()
                 .HasForeignKey(e => e.UserId)
                 .IsRequired()
-                .OnDelete(DeleteBehavior.Cascade);          
+                .OnDelete(DeleteBehavior.Cascade);
 
         }
              
@@ -53,6 +53,8 @@ namespace AngularDotNetNewTemplate.Data
        //Extends the IdentityUser
         public DbSet<ApplicationUser> ApplicationUser { get; set; }
         public DbSet<ApplicationRole> ApplicationRole { get; set; }
+
+        public DbSet<DummyData> DummyData { get; set; }
         //Used for Serilog logging to the database
         public DbSet<Log> Log { get; set; }
 

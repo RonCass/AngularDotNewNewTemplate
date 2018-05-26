@@ -34,8 +34,9 @@ namespace AngularDotNetNewTemplate
                     var context = services.GetRequiredService<ApplicationDbContext>();
                     var roleManager = services.GetRequiredService<ApplicationRoleManager>();
                     var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+                    var serviceProvider = services.GetRequiredService<IServiceProvider>();
 
-                    ApplicationUserSeedData.EnsureSeedDataAsync(context, roleManager, userManager).Wait();
+                    ApplicationUserSeedData.EnsureSeedDataAsync(context, roleManager, userManager, serviceProvider).Wait();
                     
                 }
                 catch (Exception ex)
