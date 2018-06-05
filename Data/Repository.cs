@@ -49,6 +49,16 @@ namespace AngularDotNetNewTemplate.Data
         }
 
         //6-5-2018 Ron C.: Created this so I can add multiple includes
+        /*
+         * Example Usage In Method:
+         * Create a list of strings
+         *      List<string> myListOfIncludes = new List<string>();
+         *  Then include the other properties:
+         *      myListOfIncludes.Add("LineOfBusiness");
+         *      myListOfIncludes.Add("LineOfBusiness2");
+         *  Then call this method, passing in the list of items to include:
+         *      myEntities = _repo.GetAllWithIncludes(myListOfIncludes, null, pageNumber, pageSize, sort);         * 
+         */
         public PagedList<T> GetAllWithIncludes(List<string> properties,
            Expression<Func<T, bool>> predicate = null, int pageNumber = 1, int pageSize = 20,
             string sort = null)
