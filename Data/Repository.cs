@@ -48,6 +48,40 @@ namespace AngularDotNetNewTemplate.Data
             return PagedList<T>.Create(dbSet, pageNumber, pageSize, sort);
         }
 
+        //6-5-2018 Ron C.: Created this so I can add multiple includes
+        /*
+         * Example Usage In Method:
+         * Create a list of strings
+         *      List<string> myListOfIncludes = new List<string>();
+         *  Then include the other properties:
+         *      myListOfIncludes.Add("LineOfBusiness");
+         *      myListOfIncludes.Add("LineOfBusiness2");
+         *  Then call this method, passing in the list of items to include:
+         *      myEntities = _repo.GetAllWithIncludes(myListOfIncludes, null, pageNumber, pageSize, sort);         * 
+         */
+        public PagedList<T> GetAllWithIncludes(List<string> properties,
+           Expression<Func<T, bool>> predicate = null, int pageNumber = 1, int pageSize = 20,
+            string sort = null)
+        {
+            IQueryable<T> myQueryable;
+
+            if (predicate != null)
+            {
+                myQueryable = dbSet.AsQueryable().Where(predicate);
+            }
+            else
+            {
+                myQueryable = dbSet.AsQueryable();
+            }
+
+            foreach (var property in properties)
+            {
+                myQueryable = myQueryable.Include(property);
+            }
+
+            return PagedList<T>.Create(myQueryable, pageNumber, pageSize, sort);
+        }
+
         public PagedList<T> GetAllEager(Expression<Func<T, object>> property,
             Expression<Func<T, bool>> predicate = null, int pageNumber = 1, int pageSize = 20,
             string sort = null)
