@@ -21,6 +21,8 @@ namespace AngularDotNetNewTemplate.Data
         //IQueryable<T> GetAllEager(Expression<Func<T, object>> property, Expression<Func<T, bool>> predicate);
         PagedList<T> GetAllEager(Expression<Func<T, object>> property, Expression<Func<T, bool>> predicate, int pageNumber = 1, int pageSize = 20, string sort = null);
 
+        PagedList<T> GetAllWithIncludes(List<string> properties, Expression<Func<T, bool>> predicate, int pageNumber = 1, int pageSize = 20, string sort = null);
+
         // Explicit loading 
         ReferenceEntry<T, object> GetReference(T entity, Expression<Func<T, object>> property);
 

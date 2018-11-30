@@ -15,7 +15,8 @@ namespace AngularDotNetNewTemplate.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
-            Database.EnsureCreated();
+            // Uncomment this line if you want to recreate the database when debugging. 
+            // Database.EnsureCreated();
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
