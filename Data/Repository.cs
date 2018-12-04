@@ -102,28 +102,28 @@ namespace AngularDotNetNewTemplate.Data
         }
 
         //2-15-2018 Ron C.: Created this so I can add as the includes
-        public PagedList<T> GetAllWithIncludes(List<string> properties,
-           Expression<Func<T, bool>> predicate = null, int pageNumber = 1, int pageSize = 20,
-            string sort = null)
-        {
-            IQueryable<T> myQueryable;
+        //public PagedList<T> GetAllWithIncludes(List<string> properties,
+        //   Expression<Func<T, bool>> predicate = null, int pageNumber = 1, int pageSize = 20,
+        //    string sort = null)
+        //{
+        //    IQueryable<T> myQueryable;
 
-            if (predicate != null)
-            {
-                myQueryable = dbSet.AsQueryable().Where(predicate);
-            }
-            else
-            {
-                myQueryable = dbSet.AsQueryable();
-            }
+        //    if (predicate != null)
+        //    {
+        //        myQueryable = dbSet.AsQueryable().Where(predicate);
+        //    }
+        //    else
+        //    {
+        //        myQueryable = dbSet.AsQueryable();
+        //    }
 
-            foreach (var property in properties)
-            {
-                myQueryable = myQueryable.Include(property);
-            }
+        //    foreach (var property in properties)
+        //    {
+        //        myQueryable = myQueryable.Include(property);
+        //    }
 
-            return PagedList<T>.Create(myQueryable, pageNumber, pageSize, sort);
-        }
+        //    return PagedList<T>.Create(myQueryable, pageNumber, pageSize, sort);
+        //}
 
         public ReferenceEntry<T, object> GetReference(T entity, Expression<Func<T, object>> property)
         {
