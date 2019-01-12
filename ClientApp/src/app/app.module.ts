@@ -39,8 +39,7 @@ import { ToastTestComponent } from './admin/toast-test/toast-test.component';
       { path: 'viewLogs', component: ViewLogsComponent },
       { path: 'AuthExample', component: ViewLogsComponent, canLoad: [AuthGuard] },
       { path: 'toastTest', component: ToastTestComponent },
-      { path: 'demos', loadChildren: './demos/demos.module#DemosModule',
-        
+      { path: 'demos', loadChildren: './demos/demos.module#DemosModule'
       }
     ])
   ],
