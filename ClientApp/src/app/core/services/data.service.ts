@@ -6,7 +6,7 @@ import { catchError, retry } from 'rxjs/operators';
 import { WeatherForecast, Log, Book } from './models';
 import { CurrentUserService } from './current-user.service';
 import { ToastrService } from './toastr.service';
-import { RequestOptions } from '@angular/http';
+// import { RequestOptions } from '@angular/http';
 
 
 @Injectable()

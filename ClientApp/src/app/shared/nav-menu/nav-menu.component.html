@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">AngularDotNetNewTemplate</a>
+  <a class="navbar-brand" [routerLink]='["/"]' >AngularDotNetNewTemplate</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -8,17 +8,17 @@
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active" [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
         <a class="nav-link" [routerLink]='["/"]' (click)='collapse()'>
-          <span class='glyphicon glyphicon-home'></span> Home
+          <span class='fas fa-home'></span> Home
         </a>
       </li>
       <li class="nav-item" [routerLinkActive]='["link-active"]'>
         <a class="nav-link" [routerLink]='["/counter"]' (click)='collapse()'>
-          <span class='glyphicon glyphicon-education'></span> Counter
+          <span class='fas fas-globe'></span> Counter
         </a>
       </li>
       <li class="nav-item" [routerLinkActive]='["link-active"]'>
         <a class="nav-link" [routerLink]='["/fetch-data"]' (click)='collapse()'>
-          <span class='glyphicon glyphicon-th-list'></span> Fetch data
+          <span class='fas fas-globe'></span> Fetch data
         </a>
       </li>
 
