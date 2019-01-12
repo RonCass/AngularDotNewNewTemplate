@@ -2,10 +2,14 @@
 Dotnet New Angular Template with added foundational stuff
 
 ## Directions to run solution
-* 1st open a command window to the ClientApp folder or open a terminal window in VS Code to this location and type npm start. (This has to be done first or you will 
-get an error when debugging the main solution as it expects this site to be running already. You can change this in the startup.cs - near the bottom, look for
+* I run both VS Code and Visual Studio. I do all client app (frontend) work in VS Code and all C#/API stuff in Visual Studio.
+* To setup the database you will have to configure the DefaultConnection in the appsettings.Development.json file. Then uncomment the line in the 
+ApplicationDbContext.cs file, line 9. Then when you start debugging, it will automatically create the database and tables for you.
+* 1st Open a command window to the ClientApp folder or open a terminal window in VS Code and do an "npm install". Then type npm start to start the 
+client app on port 4200. (This has to be done first or you will get an error when debugging the main solution as it expects this site to be 
+running already. You can change this in the startup.cs - near the bottom, look for
 the comments.)
-* 2nd Start debugging or hit F5 to start the debugger.
+* 2nd In Visual Studio, Start debugging or hit F5 to start the debugger.
 With this setup, you can run the client app in VS Code with the "npm install" running it on port 4200 and also have the main solution running in debug mode within 
 Visual Studio. This allows you to make changes to the frontend which will then get rebuilt automatically and refresh in the browser. And you can also stop debugging
 in Visual Studio and make changes as needed without having to start and stop both at the same time. I find this easier but you can decide what you like better.
