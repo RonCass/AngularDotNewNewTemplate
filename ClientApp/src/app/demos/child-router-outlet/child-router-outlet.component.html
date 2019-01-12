@@ -1,0 +1,16 @@
+<p>
+  child-router-outlet works!
+</p>
+<div>
+  <a [routerLink]='["/demos/childRouterOutlet/"]'>Child Route</a><br>
+  <a [routerLink]='["/demos/childRouterOutlet/childRoute1"]'>Child Route1</a><br>
+  <a [routerLink]='["/demos/childRouterOutlet/childRoute2"]'>Child Route2</a><br>
+</div>
+<div>
+  <p>Relative Paths</p>
+  <a [routerLink]='["childRoute1"]'>Child Route1</a><br>
+  <a [routerLink]='["childRoute2"]'>Child Route2</a><br>
+</div>
+<div>The Child Router Outlet is below:><br>
+  <router-outlet></router-outlet>
+</div>

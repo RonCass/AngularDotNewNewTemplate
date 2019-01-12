@@ -1,8 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { DataService } from './../core/services/data.service';
-import { Book } from './../core/services/models';
+import { DataService } from './../../core/services/data.service';
+import { Book } from './../../core/services/models';
 
 @Component({
   selector: 'app-fetch-data',

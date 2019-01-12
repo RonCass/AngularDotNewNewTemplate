@@ -11,17 +11,6 @@
           <span class='fas fa-home'></span> Home
         </a>
       </li>
-      <li class="nav-item" [routerLinkActive]='["link-active"]'>
-        <a class="nav-link" [routerLink]='["/counter"]' (click)='collapse()'>
-          <span class='fas fas-globe'></span> Counter
-        </a>
-      </li>
-      <li class="nav-item" [routerLinkActive]='["link-active"]'>
-        <a class="nav-link" [routerLink]='["/fetch-data"]' (click)='collapse()'>
-          <span class='fas fas-globe'></span> Fetch data
-        </a>
-      </li>
-
 
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -32,6 +21,9 @@
           <a class="dropdown-item" [routerLink]='["/toastTest"]'>Toast Test</a>
           <a class="dropdown-item" [routerLink]='["/demos/fileUpload"]'>File Upload</a>
           <a class="dropdown-item" [routerLink]='["/demos/gridListAndPaging"]'>Grid List and Paging</a>
+          <a class="dropdown-item" [routerLink]='["/demos/counter"]'>Counter</a>
+          <a class="dropdown-item" [routerLink]='["/demos/fetch-data"]'>Fetch data</a>
+          <a class="dropdown-item" [routerLink]='["/demos/routingExamples"]'>Routing Examples</a>
 
         </div>
       </li>
