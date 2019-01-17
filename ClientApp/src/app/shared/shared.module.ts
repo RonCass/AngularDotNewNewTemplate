@@ -1,20 +1,27 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 import { SharedRoutingModule } from './shared-routing.module';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
+import { GridPagingComponent } from './grid-paging/grid-paging.component';
+import { GridColumnSortComponent } from './grid-column-sort/grid-column-sort.component';
 
 @NgModule({
   imports: [
     CommonModule,
-    SharedRoutingModule
-    
+    SharedRoutingModule,
+    FormsModule
   ],
   declarations: [
-    NavMenuComponent
+    NavMenuComponent,
+    GridPagingComponent,
+    GridColumnSortComponent
   ],
   exports: [
-    NavMenuComponent
+    NavMenuComponent,
+    GridPagingComponent,
+    GridColumnSortComponent
   ]
 })
 export class SharedModule { }

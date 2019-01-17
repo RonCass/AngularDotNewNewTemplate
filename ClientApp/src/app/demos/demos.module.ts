@@ -15,13 +15,16 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { ChildRouterOutletComponent } from './child-router-outlet/child-router-outlet.component';
 import { ChildRoute1Component } from './child-route1/child-route1.component';
 import { ChildRoute2Component } from './child-route2/child-route2.component';
+import { GridWithSortingAndPagingComponent } from './grid-with-sorting-and-paging/grid-with-sorting-and-paging.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     DemosRoutingModule,
     FormsModule,
-    CoreModule
+    CoreModule,
+    SharedModule
   ],
   declarations: [
     FileUploadComponent,
@@ -34,7 +37,8 @@ import { ChildRoute2Component } from './child-route2/child-route2.component';
     PageNotFoundComponent,
     ChildRouterOutletComponent,
     ChildRoute1Component,
-    ChildRoute2Component
+    ChildRoute2Component,
+    GridWithSortingAndPagingComponent
   ]
 })
 export class DemosModule { }

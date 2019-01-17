@@ -11,6 +11,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { ChildRouterOutletComponent } from './child-router-outlet/child-router-outlet.component';
 import { ChildRoute1Component } from './child-route1/child-route1.component';
 import { ChildRoute2Component } from './child-route2/child-route2.component';
+import { GridWithSortingAndPagingComponent } from './grid-with-sorting-and-paging/grid-with-sorting-and-paging.component';
 
 const routes: Routes = [
   { path: '', component: DefaultRoutePageComponent },
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: 'counter', component: CounterComponent },
   { path: 'fetch-data', component: FetchDataComponent },
   { path: 'routingExamples', component: RoutingExamplesComponent},
+  { path: 'gridWithSortingAndPaging', component: GridWithSortingAndPagingComponent},
   { path: 'routingWithToken/:token', component: RouteWithTokenComponent},
   { path: 'childRouterOutlet', component: ChildRouterOutletComponent,
       children: [

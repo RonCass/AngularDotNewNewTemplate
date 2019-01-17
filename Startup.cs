@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Cors.Internal;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -82,6 +84,11 @@ namespace AngularDotNetNewTemplate
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllOrigins",
+                      builder => builder.AllowAnyOrigin().AllowAnyMethod());
+            });
 
             services.AddDbContext<ApplicationDbContext>(options =>
                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
@@ -135,6 +142,13 @@ namespace AngularDotNetNewTemplate
                    opt.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                });
 
+
+            services.Configure<MvcOptions>(options =>
+            {
+                options.Filters.Add(new CorsAuthorizationFilterFactory("AllowAllOrigins"));
+
+            });
+
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -156,6 +170,14 @@ namespace AngularDotNetNewTemplate
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+
+            app.UseCors(config =>
+            {
+                config.AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowAnyOrigin()
+                .AllowCredentials();
+            });
 
             //Automapper Mappings
             Mapper.Initialize(config =>
