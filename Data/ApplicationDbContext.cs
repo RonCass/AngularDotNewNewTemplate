@@ -59,6 +59,9 @@ namespace AngularDotNetNewTemplate.Data
         //Used for Serilog logging to the database
         public DbSet<Log> Log { get; set; }
 
+        public DbSet<Address> Address { get; set; }
+        public DbSet<State> State { get; set; }
+        public DbSet<Country> Country { get; set; }
 
     }
 }

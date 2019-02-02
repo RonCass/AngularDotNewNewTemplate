@@ -233,5 +233,4 @@ _Pvt_Extensions
 .fake/
 /wwwroot/UploadTesting/RonTest.txt
 appsettings.Development.json
-appsettings.Development.json
-appsettings.Development.json
+
