@@ -66,7 +66,7 @@ export class DataService {
 
     const myJson = JSON.stringify({ 'username': username, 'password': password })
 
-    return this.http.post(this.baseUrl + 'Auth/CreateToken',
+    return this.http.post(this.baseUrl + 'api/Auth/CreateToken',
       myJson, this.getHttpOptions());
   }
 

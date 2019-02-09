@@ -6,7 +6,7 @@ import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home/home.component';
 import { SharedModule } from './../shared/shared.module';
 import { LoginComponent } from './login/login.component';
-
+import { FocusDirective } from './../core/directives/focus.directive';
 
 @NgModule({
   imports: [
@@ -17,7 +17,8 @@ import { LoginComponent } from './login/login.component';
   ],
   declarations: [
     HomeComponent,
-    LoginComponent
+    LoginComponent,
+    FocusDirective
   ]
 })
 export class HomeModule { }

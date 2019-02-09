@@ -19,6 +19,7 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" [routerLink]='["/viewLogs"]'>View Logs</a>
           <a class="dropdown-item" [routerLink]='["/toastTest"]'>Toast Test</a>
+          <a class="dropdown-item" [routerLink]='["/authExample"]'>Auth Example</a>
           <a class="dropdown-item" [routerLink]='["/demos/fileUpload"]'>File Upload</a>
           <a class="dropdown-item" [routerLink]='["/demos/gridListAndPaging"]'>Grid List and Paging</a>
           <a class="dropdown-item" [routerLink]='["/demos/counter"]'>Counter</a>
@@ -44,7 +45,24 @@
       <li class="nav-item">
         <a class="nav-link disabled" href="#">Disabled</a>
       </li>
+
     </ul>
+    <div>
+        <ul class="navbar-nav mr-auto" *ngIf="isUserAuthenticated">
+            <li class="nav-item" [routerLinkActive]='["link-active"]'>
+              <a class="nav-link" (click)="logOut()" style="cursor: pointer"><span class="fas fa-sign-out-alt" aria-hidden="true"></span> Log Off</a>
+            </li>
+          </ul>
+
+          <ul class="navbar-nav mr-auto" *ngIf="!isUserAuthenticated">
+            <li class="nav-item" [routerLinkActive]='["link-active"]'>
+              <a class="nav-link" [routerLink]="['/login']">Log In</a>
+            </li>
+          </ul>
+
+
+    </div>
+
     <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>

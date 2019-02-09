@@ -1,24 +1,30 @@
-﻿import { Component } from '@angular/core';
+﻿import { Component, OnInit, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from '../../core/services/toastr.service';
 import { DataService } from '../../core/services/data.service';
 import { CurrentUserService } from '../../core/services/current-user.service';
 import { ApplicationUser } from '../../core/services/models';
 
+
 @Component({
     selector: 'login',
     templateUrl: 'login.component.html'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
-    userName: string;
-    password: string;
+    userName: string = 'admin@mywebsite.com';
+    password: string = 'SomePassword1!';
     applicationUser: ApplicationUser = new ApplicationUser();
     isBusy = false;
+    public myFocusTriggeringEventEmitter = new EventEmitter<boolean>();
 
     constructor(private _dataService: DataService, private toastrService: ToastrService,
        private currentUserService: CurrentUserService, private router: Router) { }
 
+       ngOnInit() {
+
+          this.myFocusTriggeringEventEmitter.emit(true); // Set focus to Username Field
+      }
     login() {
 
         // Validate they entered a username

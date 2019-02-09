@@ -34,7 +34,7 @@ import { ToastTestComponent } from './admin/toast-test/toast-test.component';
     RouterModule.forRoot([
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: 'viewLogs', component: ViewLogsComponent },
-      { path: 'AuthExample', component: ViewLogsComponent, canLoad: [AuthGuard] },
+      { path: 'authExample', component: ViewLogsComponent, canActivate: [AuthGuard] },
       { path: 'toastTest', component: ToastTestComponent },
       { path: 'demos', loadChildren: './demos/demos.module#DemosModule'
       }
