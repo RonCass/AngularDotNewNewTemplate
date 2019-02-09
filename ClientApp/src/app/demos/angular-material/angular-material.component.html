@@ -1,0 +1,103 @@
+<p>
+  Angular Material Demos
+</p>
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <h1>Theme Demo</h1>
+    </mat-toolbar-row>
+  </mat-toolbar>
+<button mat-button [matMenuTriggerFor]="animals" color="primary" >Animal index</button>
+
+<mat-menu #animals="matMenu">
+  <button mat-menu-item [matMenuTriggerFor]="vertebrates">Vertebrates</button>
+  <button mat-menu-item [matMenuTriggerFor]="invertebrates">Invertebrates</button>
+</mat-menu>
+
+<mat-menu #vertebrates="matMenu">
+  <button mat-menu-item [matMenuTriggerFor]="fish">Fishes</button>
+  <button mat-menu-item [matMenuTriggerFor]="amphibians">Amphibians</button>
+  <button mat-menu-item [matMenuTriggerFor]="reptiles">Reptiles</button>
+  <button mat-menu-item>Birds</button>
+  <button mat-menu-item>Mammals</button>
+</mat-menu>
+
+<mat-menu #invertebrates="matMenu">
+  <button mat-menu-item>Insects</button>
+  <button mat-menu-item>Molluscs</button>
+  <button mat-menu-item>Crustaceans</button>
+  <button mat-menu-item>Corals</button>
+  <button mat-menu-item>Arachnids</button>
+  <button mat-menu-item>Velvet worms</button>
+  <button mat-menu-item>Horseshoe crabs</button>
+</mat-menu>
+
+<mat-menu #fish="matMenu">
+  <button mat-menu-item>Baikal oilfish</button>
+  <button mat-menu-item>Bala shark</button>
+  <button mat-menu-item>Ballan wrasse</button>
+  <button mat-menu-item>Bamboo shark</button>
+  <button mat-menu-item>Banded killifish</button>
+</mat-menu>
+
+<mat-menu #amphibians="matMenu">
+  <button mat-menu-item>Sonoran desert toad</button>
+  <button mat-menu-item>Western toad</button>
+  <button mat-menu-item>Arroyo toad</button>
+  <button mat-menu-item>Yosemite toad</button>
+</mat-menu>
+
+<mat-menu #reptiles="matMenu">
+  <button mat-menu-item>Banded Day Gecko</button>
+  <button mat-menu-item>Banded Gila Monster</button>
+  <button mat-menu-item>Black Tree Monitor</button>
+  <button mat-menu-item>Blue Spiny Lizard</button>
+  <button mat-menu-item disabled>Velociraptor</button>
+</mat-menu>
+
+<div class="card">
+  <div class="card-header">
+   Type Ahead
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">
+
+      <form class="example-form">
+        <mat-form-field class="example-full-width">
+          <input type="text" placeholder="Pick one" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+              {{option}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </form>
+
+    </li>
+    </ul>
+</div>
+
+<div class="card">
+    <div class="card-header">
+     Type Ahead - Dynamic Data Load after three key strokes
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">
+
+        <form class="example-form">
+          <mat-form-field class="example-full-width">
+            <input type="text" placeholder="Pick one" aria-label="Number" matInput [formControl]="myControl2" [matAutocomplete]="auto2"
+              [(ngModel)]="myModel" (input)="inputTextChanged($event)" >
+            <mat-autocomplete #auto2="matAutocomplete" [displayWith]="displayFn">
+              <mat-option *ngFor="let option of dynamicData" [value]="option">
+                {{option.col1}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </form>
+        <div>Selected Item = myModel = {{ myModel | json }}</div>
+      </li>
+      </ul>
+  </div>
+
+  <div>dynamicData = {{ dynamicData | json }}</div>
+

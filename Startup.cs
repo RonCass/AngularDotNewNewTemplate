@@ -183,7 +183,12 @@ namespace AngularDotNetNewTemplate
             Mapper.Initialize(config =>
             {
                 config.CreateMap<ApplicationUser, ApplicationUserIn>().ReverseMap();
-                config.CreateMap<ApplicationUser, ApplicationUserOut>();              
+                config.CreateMap<ApplicationUser, ApplicationUserOut>();
+
+                config.CreateMap<ApplicationUser, UserAndRoleOut>();
+
+                config.CreateMap<APICrudExample, APICrudExampleIn>().ReverseMap();
+                config.CreateMap<APICrudExample, APICrudExampleOut>();
 
             });
 

@@ -32,5 +32,15 @@ namespace AngularDotNetNewTemplate.Controllers
             return Ok(myEntities);
         }
 
+        [Route("GetByText")]
+        public IActionResult GetByText([FromQuery]int pageNumber = 1, [FromQuery]int pageSize = 1000, string sort = "Id", string searchText = "")
+        {
+            PagedList<DummyData> myEntities;
+
+            myEntities = _repo.GetAll(x => x.Col1.Contains(searchText), pageNumber, pageSize, sort);
+
+            return Ok(myEntities);
+        }
+
     }
 }

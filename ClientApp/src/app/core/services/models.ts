@@ -1,4 +1,10 @@
 
+export interface APICrudExample {
+  id: number;
+  field1: string;
+  field2: string;
+}
+
 export interface Book {
   id: number;
   title: string

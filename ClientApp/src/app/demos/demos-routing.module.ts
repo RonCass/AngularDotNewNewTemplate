@@ -12,6 +12,7 @@ import { ChildRouterOutletComponent } from './child-router-outlet/child-router-o
 import { ChildRoute1Component } from './child-route1/child-route1.component';
 import { ChildRoute2Component } from './child-route2/child-route2.component';
 import { GridWithSortingAndPagingComponent } from './grid-with-sorting-and-paging/grid-with-sorting-and-paging.component';
+import { AngularMaterialComponent } from './angular-material/angular-material.component';
 
 const routes: Routes = [
   { path: '', component: DefaultRoutePageComponent },
@@ -29,6 +30,7 @@ const routes: Routes = [
         { path: 'childRoute2', component: ChildRoute2Component}
       ]
   },
+  { path: 'angularMaterial', component: AngularMaterialComponent},
   { path: '**', component: PageNotFoundComponent },
 
 ];

@@ -5,9 +5,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpInterceptor } from '@angular/common/http/src/interceptor';
 import { RouterModule } from '@angular/router';
 
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+
 import { AppComponent } from './app.component';
 import { AuthGuard } from './core/services/auth-guard.service';
-
 
 import { HomeModule } from './home/home.module';
 import { SharedModule } from './shared/shared.module';
@@ -24,6 +25,7 @@ import { ToastTestComponent } from './admin/toast-test/toast-test.component';
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
+    BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
     HomeModule,
@@ -36,7 +38,11 @@ import { ToastTestComponent } from './admin/toast-test/toast-test.component';
       { path: 'toastTest', component: ToastTestComponent },
       { path: 'demos', loadChildren: './demos/demos.module#DemosModule'
       }
-    ])
+    ]),
+
+  ],
+  exports: [
+
   ],
   providers: [],
   bootstrap: [AppComponent]

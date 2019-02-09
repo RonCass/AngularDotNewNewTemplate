@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Observable, throwError  } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 
-import { WeatherForecast, Log, Book } from './models';
+import { WeatherForecast, Log, Book, APICrudExample } from './models';
 import { CurrentUserService } from './current-user.service';
 import { ToastrService } from './toastr.service';
 // import { RequestOptions } from '@angular/http';
@@ -70,6 +70,58 @@ export class DataService {
       myJson, this.getHttpOptions());
   }
 
+
+  /////////////////////////////////////////////////////////
+  // START - APICrudExample
+  /////////////////////////////////////////////////////////
+  getAPICrudExample(pageNumber: number, pageSize: number, sort: string): Observable<any> {
+
+    return this.http.get(this.baseUrl + 'api/APICrudExample/?pageNumber=' + pageNumber + '&pageSize=' + pageSize +
+      '&sort=' + sort, this.getHttpOptions())
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  getAPICrudExampleById(apiCrudExampleId: number): Observable<any> {
+
+    return this.http.get(this.baseUrl + 'api/APICrudExample/' + apiCrudExampleId, this.getHttpOptions())
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  createAPICrudExample(apiCrudExample: APICrudExample) {
+
+    const myJson = JSON.stringify(apiCrudExample);
+    return this.http.post(this.baseUrl + 'api/APICrudExample/', myJson, this.getHttpOptions())
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  updateAPICrudExample(apiCrudExample: APICrudExample) {
+
+    const myJson = JSON.stringify(apiCrudExample);
+    return this.http.put(this.baseUrl + 'api/APICrudExample/' + apiCrudExample.id, myJson, this.getHttpOptions())
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  deleteAPICrudExample(apiCrudExample: APICrudExample) {
+
+    return this.http.delete(this.baseUrl + 'api/APICrudExample/' + apiCrudExample.id, this.getHttpOptions())
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  /////////////////////////////////////////////////////////
+  // END - APICrudExample
+  /////////////////////////////////////////////////////////
+
+
   /////////////////////////////////////////////////////////
   // START - File Upload
   /////////////////////////////////////////////////////////
@@ -109,6 +161,15 @@ export class DataService {
 
     return this.http.get(this.baseUrl + 'api/DummyData/?pageNumber=' + pageNumber + '&pageSize=' + pageSize +
      '&sort=' + sort, this.getHttpOptions())
+      .pipe(
+      catchError(this.handleError)
+      );
+  }
+
+  getDummyDataBySearchText(pageNumber: number, pageSize: number, sort: string, searchText: string): Observable<any> {
+
+    return this.http.get(this.baseUrl + 'api/DummyData/GetByText/?pageNumber=' + pageNumber + '&pageSize=' + pageSize +
+     '&sort=' + sort + '&searchText=' + searchText, this.getHttpOptions())
       .pipe(
       catchError(this.handleError)
       );

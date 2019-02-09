@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { DemosRoutingModule } from './demos-routing.module';
 import { FileUploadComponent } from './file-upload/file-upload.component';
@@ -17,14 +17,16 @@ import { ChildRoute1Component } from './child-route1/child-route1.component';
 import { ChildRoute2Component } from './child-route2/child-route2.component';
 import { GridWithSortingAndPagingComponent } from './grid-with-sorting-and-paging/grid-with-sorting-and-paging.component';
 import { SharedModule } from '../shared/shared.module';
+import { AngularMaterialComponent } from './angular-material/angular-material.component';
 
 @NgModule({
   imports: [
     CommonModule,
     DemosRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     CoreModule,
-    SharedModule
+    SharedModule,
   ],
   declarations: [
     FileUploadComponent,
@@ -38,7 +40,9 @@ import { SharedModule } from '../shared/shared.module';
     ChildRouterOutletComponent,
     ChildRoute1Component,
     ChildRoute2Component,
-    GridWithSortingAndPagingComponent
+    GridWithSortingAndPagingComponent,
+    AngularMaterialComponent,
+
   ]
 })
 export class DemosModule { }
