@@ -121,6 +121,58 @@ export class DataService {
   // END - APICrudExample
   /////////////////////////////////////////////////////////
 
+  /////////////////////////////////////////////////////////
+  // START - Logging Demo
+  /////////////////////////////////////////////////////////
+
+  getLoggingLevel(): Observable<any> {
+    return this.http.get(this.baseUrl + 'api/Logs/GetLoggingLevel/', this.getHttpOptions())
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  changeLoggingLevel(logEventLevel): Observable<any> {
+    return this.http.get(this.baseUrl + 'api/Logs/ChangeLoggingLevel/?logEventLevel=' + logEventLevel, this.getHttpOptions())
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  getLogs(pageNumber = 1, pageSize = 20, sort = '', fields = '', userId = '', level = ''): Observable<any> {
+    return this.http.get(this.baseUrl + 'api/Logs/GetLogs/?pageNumber=' + pageNumber + '&pageSize=' + pageSize + '&sort=' + sort + '&fields=' + fields + '&userId=' + userId + '&level=' + level, this.getHttpOptions())
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  //getLogs(): Observable<Log> {
+  //  return this.http.get<Log>(this.baseUrl + 'api/Logs/GetLogs', this.getHttpOptions())
+  //    .pipe(catchError(this.handleError)
+  //    );
+  //}
+
+  getLogFileList(): Observable<any> {
+    return this.http.get(this.baseUrl + 'api/Logs/GetLogFileList', this.getHttpOptions())
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  getLogFile(myFile): Observable<any> {
+    return this.http.get(this.baseUrl + 'api/Logs/GetLogFile/?myFile=' + myFile, this.getHttpOptions())
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+ 
+
+  
+
+  /////////////////////////////////////////////////////////
+  // End - Logging Demo
+  /////////////////////////////////////////////////////////
 
   /////////////////////////////////////////////////////////
   // START - File Upload
@@ -202,11 +254,7 @@ export class DataService {
       );
   }
 
-  getLogs(): Observable<Log> {
-    return this.http.get<Log>(this.baseUrl + 'api/Logs/GetLogs', this.getHttpOptions())
-      .pipe(catchError(this.handleError)
-      );
-  }
+ 
 
   /////////////////////////////////////////////////////////
   // ERROR HANDLING - New httpClient

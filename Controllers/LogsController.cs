@@ -30,6 +30,41 @@ namespace AngularDotNetNewTemplate.Controllers
             _appContext = appContext;
         }
 
+        [Route("GetLoggingLevel")]
+        public IActionResult GetLoggingLevel()
+        {
+
+            var loggingService = new LoggingService()._loggingLevelSwitch;
+            string myStringRepresentation = loggingService.MinimumLevel.ToString();
+
+            return Json(new
+            {
+                minimumLoggingLevel = myStringRepresentation
+            });
+        }
+
+        [Route("ChangeLoggingLevel")]
+        public IActionResult ChangeLoggingLevel(string logEventLevel)
+        {
+            if (string.IsNullOrEmpty(logEventLevel))
+            {
+                return BadRequest();
+            }
+
+            var loggingService = new LoggingService();
+            bool isSuccess = loggingService.SetLoggingLevel(logEventLevel);
+
+            if (isSuccess)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+
         [Route("CreateTestLogEntries")]
         public IActionResult CreateTestLogEntries()
         {
@@ -39,6 +74,10 @@ namespace AngularDotNetNewTemplate.Controllers
             _logger.LogInformation("Logged INFORMATION");
             _logger.LogDebug("Logged DEBUG");
             _logger.LogError("Logged ERROR");
+            _logger.LogCritical("Critical Error");
+
+            //var UserEmail = HttpContext.User.Identity.Name;
+            _logger.LogInformation($"TESTUSER|LogsController|CreateTestLogEntries()|Started");
 
             return Ok("Entries have been created");
         }

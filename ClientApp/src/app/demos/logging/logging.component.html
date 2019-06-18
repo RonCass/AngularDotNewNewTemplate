@@ -1,0 +1,154 @@
+<p>
+  Logging Demo
+</p>
+<div>Get Logging Level and Change it</div>
+<div class="card border-primary mb-2">
+  <h4 class="card-header">
+    Logging
+  </h4>
+  <div class="card-body">
+    <div class="row" style="padding-bottom: 10px;">
+      <div class="col-md-3">
+        Current Logging Level = <strong>{{ currentLoggingLevel }}</strong>
+      </div>
+      <div class="col-md-2">
+        <button class="btn btn-primary btn-sm" (click)="getCurrentLoggingLevel()" [disabled]="isBusy">Get Current Logging Level <span *ngIf="isBusy"><i class="fa fa-spinner fa-spin fa-2x fa-fw"></i></span></button>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="uploadFilePath" class="col-md-3 col-form-label">
+        Set Minimum Logging Level
+      </label>
+      <div class="col-md-8">
+        <select class="form-control" name="user" id="user" [(ngModel)]="selectedLevel">
+          <option value="0" selected="selected">-- All Levels --</option>
+          <option value="Debug">Debug</option>
+          <option value="Error">Error</option>
+          <option value="Information">Information</option>
+          <option value="Warning">Warning</option>
+        </select>
+      </div>
+      <div>
+        <button class="btn btn-primary btn-sm" (click)="changeLoggingLevel()" [disabled]="isBusy">Save <span *ngIf="isBusy"><i class="fa fa-spinner fa-spin fa-2x fa-fw"></i></span></button>
+        <!--<input type="file" (change)="ronTestMethod(event);" webkitdirectory mozdirectory msdirectory odirectory directory multiple="multiple" />-->
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card border-primary mb-2">
+  <h4 class="card-header">
+    View Logs
+  </h4>
+  <div class="card-body">
+    <div>Total: {{ total }}</div>
+    <div class="form-group row">
+      <label for="DocumentTypeCodeId" class="col-form-label col-md-2 text-right">Filter By User</label>
+      <div class="col-md-3">
+        <select class="form-control" name="user" id="user" [(ngModel)]="selectedUser" (change)="userSelected($event.target.value)">
+          <option value="0" selected="selected">-- All Users --</option>
+          <option *ngFor="let user of dataUsers" value="{{user.id}}">{{user.id}} - {{user.employeeName}}</option>
+        </select>
+      </div>
+      <label for="DocumentTypeCodeId" class="col-form-label col-md-2 text-right">Filter By Level</label>
+      <div class="col-md-3">
+        <select class="form-control" name="user" id="user" [(ngModel)]="selectedLevel" (change)="levelSelected($event.target.value)">
+          <option value="0" selected="selected">-- All Levels --</option>
+          <option value="Debug">Debug</option>
+          <option value="Error">Error</option>
+          <option value="Information">Information</option>
+          <option value="Warning">Warning</option>
+
+        </select>
+      </div>
+    </div>
+    <div>
+      <table class="table table-striped " *ngIf="dataLogs">
+        <thead class="">
+          <tr class="card-header-rose">
+            <th>
+              <app-grid-column-sort [columnHeadingText]="'Id'" [columnDataElement]="'id'" [isActive]='isActive'
+                                    (sortColumnEvent)='sortColumnEvent($event)' [sortedColumnElement]="sortedColumnElement"></app-grid-column-sort>
+
+            </th>
+            <th>
+              <app-grid-column-sort [columnHeadingText]="'Message'" [columnDataElement]="'message'"
+                                    (sortColumnEvent)='sortColumnEvent($event)' [sortedColumnElement]="sortedColumnElement"></app-grid-column-sort>
+
+            </th>
+            <th>
+              <app-grid-column-sort [columnHeadingText]="'MessageTemplate'" [columnDataElement]="'messageTemplate'"
+                                    (sortColumnEvent)='sortColumnEvent($event)' [sortedColumnElement]="sortedColumnElement"></app-grid-column-sort>
+            </th>
+            <th>
+              <app-grid-column-sort [columnHeadingText]="'level'" [columnDataElement]="'level'"
+                                    (sortColumnEvent)='sortColumnEvent($event)' [sortedColumnElement]="sortedColumnElement"></app-grid-column-sort>
+            </th>
+            <th>
+              <app-grid-column-sort [columnHeadingText]="'timeStamp'" [columnDataElement]="'timeStamp'"
+                                    (sortColumnEvent)='sortColumnEvent($event)' [sortedColumnElement]="sortedColumnElement"></app-grid-column-sort>
+            </th>
+            <th>
+              <app-grid-column-sort [columnHeadingText]="'exception'" [columnDataElement]="'exception'"
+                                    (sortColumnEvent)='sortColumnEvent($event)' [sortedColumnElement]="sortedColumnElement"></app-grid-column-sort>
+            </th>
+            <th>
+              <app-grid-column-sort [columnHeadingText]="'logEvent'" [columnDataElement]="'logEvent'"
+                                    (sortColumnEvent)='sortColumnEvent($event)' [sortedColumnElement]="sortedColumnElement"></app-grid-column-sort>
+            </th>
+            <th>
+              <app-grid-column-sort [columnHeadingText]="'userId'" [columnDataElement]="'userId'"
+                                    (sortColumnEvent)='sortColumnEvent($event)' [sortedColumnElement]="sortedColumnElement"></app-grid-column-sort>
+            </th>
+            <th>
+              <app-grid-column-sort [columnHeadingText]="'requestPath'" [columnDataElement]="'requestPath'"
+                                    (sortColumnEvent)='sortColumnEvent($event)' [sortedColumnElement]="sortedColumnElement"></app-grid-column-sort>
+            </th>
+            <th>
+              <app-grid-column-sort [columnHeadingText]="'sourceContext'" [columnDataElement]="'sourceContext'"
+                                    (sortColumnEvent)='sortColumnEvent($event)' [sortedColumnElement]="sortedColumnElement"></app-grid-column-sort>
+            </th>
+            <th>
+              <app-grid-column-sort [columnHeadingText]="'actionId'" [columnDataElement]="'actionId'"
+                                    (sortColumnEvent)='sortColumnEvent($event)' [sortedColumnElement]="sortedColumnElement"></app-grid-column-sort>
+            </th>
+            <th>
+              <app-grid-column-sort [columnHeadingText]="'actionName'" [columnDataElement]="'actionName'"
+                                    (sortColumnEvent)='sortColumnEvent($event)' [sortedColumnElement]="sortedColumnElement"></app-grid-column-sort>
+            </th>
+            <th>
+              <app-grid-column-sort [columnHeadingText]="'requestId'" [columnDataElement]="'requestId'"
+                                    (sortColumnEvent)='sortColumnEvent($event)' [sortedColumnElement]="sortedColumnElement"></app-grid-column-sort>
+            </th>
+
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of dataLogs">
+            <td>{{ row.id }}</td>
+            <td>{{ row.message }}</td>
+            <td>{{ row.messageTemplate }}</td>
+            <td>{{ row.level }}</td>
+            <td>{{ row.timeStamp }}</td>
+            <td>{{ row.exception }}</td>
+            <td>{{ row.logEvent }}</td>
+            <td>{{ row.userId }}</td>
+            <td>{{ row.requestPath }}</td>
+            <td>{{ row.sourceContext }}</td>
+            <td>{{ row.actionId }}</td>
+            <td>{{ row.actionName }}</td>
+            <td>{{ row.requestId }}</td>
+          </tr>
+
+        </tbody>
+      </table>
+
+      <app-grid-paging [pageNumber]='pageNumber' [pageSize]='pageSize' [previousPageButton]='previousPageButton'
+                       [totalPages]='totalPages' [total]='total'
+                       (pageChangedEvent)='pageChangeEvent($event)' (pageSizeChangedEvent)='pageSizeChangedEvent($event)'></app-grid-paging>
+    </div>
+
+  </div>
+</div>
+<div>dataLogs = {{ dataLogs | json }}</div>

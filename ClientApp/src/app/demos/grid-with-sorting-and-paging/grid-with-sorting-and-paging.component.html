@@ -7,7 +7,7 @@
         <tr class="card-header-rose" >
           <th>
             <app-grid-column-sort [columnHeadingText]="'Col1'" [columnDataElement]="'col1'" [isActive]='isActive'
-            (sortColumnEvent)='sortColumnEvent($event)' [sortedColumnElement]="sortedColumnElement"></app-grid-column-sort>
+                                  (sortColumnEvent)='sortColumnEvent($event)' [sortedColumnElement]="sortedColumnElement"></app-grid-column-sort>
 
           </th>
           <th>
@@ -17,10 +17,7 @@
           </th>
           <th>
               <app-grid-column-sort [columnHeadingText]="'Col3'" [columnDataElement]="'col3'"
-              (sortColumnEvent)='sortColumnEvent($event)' [sortedColumnElement]="sortedColumnElement"></app-grid-column-sort>
-            <!-- <span class="span-sort-column" (click)="onSortOrderChange('col3')" [class.span-sort-column-active]="sortColumn=='col3'">Col3</span>
-            <span *ngIf="sortColumn=='col3' && sortDirection=='-'">&nbsp;<i class="fas fa-arrow-down span-sort-icon"></i></span>
-            <span *ngIf="sortColumn=='col3' && sortDirection==''">&nbsp;<i class="fas fa-arrow-up span-sort-icon"></i></span> -->
+              (sortColumnEvent)='sortColumnEvent($event)' [sortedColumnElement]="sortedColumnElement"></app-grid-column-sort>           
           </th>
 
         </tr>
@@ -35,8 +32,8 @@
     </tbody>
 </table>
 
-<app-grid-paging [pageNumber]='pageNumber' [pageSize]='pageSize' [previousPageButton]='previousPageButton'
-  [totalPages]='totalPages' [total]='total'
-  (pageChangedEvent)='pageChangeEvent($event)' (pageSizeChangedEvent)='pageSizeChangedEvent($event)'></app-grid-paging>
-
+  <app-grid-paging [pageNumber]='pageNumber' [pageSize]='pageSize' [previousPageButton]='previousPageButton'
+    [totalPages]='totalPages' [total]='total'
+    (pageChangedEvent)='pageChangeEvent($event)' (pageSizeChangedEvent)='pageSizeChangedEvent($event)'></app-grid-paging>
+</div>
 <div>gridData = {{ gridData | json }}</div>

@@ -18,6 +18,7 @@ import { ChildRoute2Component } from './child-route2/child-route2.component';
 import { GridWithSortingAndPagingComponent } from './grid-with-sorting-and-paging/grid-with-sorting-and-paging.component';
 import { SharedModule } from '../shared/shared.module';
 import { AngularMaterialComponent } from './angular-material/angular-material.component';
+import { LoggingComponent } from './logging/logging.component';
 
 @NgModule({
   imports: [
@@ -42,6 +43,7 @@ import { AngularMaterialComponent } from './angular-material/angular-material.co
     ChildRoute2Component,
     GridWithSortingAndPagingComponent,
     AngularMaterialComponent,
+    LoggingComponent,
 
   ]
 })
