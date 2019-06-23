@@ -26,7 +26,7 @@ this so that I have a better starting point in the future.
 I decided to start saving code to this project. Just general stuff that I want to remember etc.
 
 ## Stuff I Added
-* Angular 7.1.1 on 11/30/2018
+* Angular 8.0.2 on 6/23/2019
 * Bootstrap 4.* - Upgraded template Bootstrap 4.* and changed the main top nav to use it.
 * JQuery 3.3.1 - For Bootstrap 4
 * Popper.js 1.14.1 - For Bootstrap 4
