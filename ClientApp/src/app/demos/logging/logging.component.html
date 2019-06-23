@@ -144,7 +144,7 @@
         </tbody>
       </table>
 
-      <app-grid-paging [pageNumber]='pageNumber' [pageSize]='pageSize' [previousPageButton]='previousPageButton'
+      <app-grid-paging [pageNumber]='currentPage' [pageSize]='pageSize' [previousPageButton]='previousPageButton'
                        [totalPages]='totalPages' [total]='total'
                        (pageChangedEvent)='pageChangeEvent($event)' (pageSizeChangedEvent)='pageSizeChangedEvent($event)'></app-grid-paging>
     </div>

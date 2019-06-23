@@ -39,7 +39,7 @@
     <div class="col-4">
       <nav aria-label="Paging Navigation">
         <ul class="pagination">
-          <li class="page-item" [ngClass]="{'disabled': this.currentPage <= 1}">
+          <li class="page-item" [ngClass]="{'disabled': pageNumber <= 1}">
             <button class="btn btn-link" [disabled]="this.pageNumber <= 1" (click)="goToPreviousPage()">
               <i class="fa fa-chevron-left"></i> Previous</button>
           </li>

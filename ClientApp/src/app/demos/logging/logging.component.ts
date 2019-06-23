@@ -24,6 +24,9 @@ export class LoggingComponent implements OnInit {
   public sortDirection: string = '';
 
   public dataLogs;
+  public selectedUser = ''; //Dropdown list item selected
+  public dataUsers;
+ 
 
   constructor(private dataService: DataService, private toastrService: ToastrService) { }
 
@@ -120,6 +123,10 @@ export class LoggingComponent implements OnInit {
     this.currentPage = 1;
     this.sortedColumnElement = columnDataElementName; // Used to show or hide sort arrows
     this.getData();
+  }
+
+  userSelected(event) {
+
   }
 
 }

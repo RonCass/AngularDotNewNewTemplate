@@ -10,6 +10,8 @@ import { DataService } from '../../core/services/data.service';
 export class FileUploadComponent implements OnInit {
     
   theFileModel; // Ng Model is bound to this in the controle
+  theFileModel2;
+  theFileModel3;
   isBusy = false;;
   newDocument: DocumentsUploaded = new DocumentsUploaded();
 
