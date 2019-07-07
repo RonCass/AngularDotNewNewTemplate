@@ -14,6 +14,9 @@ import { ChildRoute2Component } from './child-route2/child-route2.component';
 import { GridWithSortingAndPagingComponent } from './grid-with-sorting-and-paging/grid-with-sorting-and-paging.component';
 import { AngularMaterialComponent } from './angular-material/angular-material.component';
 import { LoggingComponent } from './logging/logging.component';
+import { AuthExampleMainComponent } from './auth-example/auth-example-main.component';
+import { ProtectedRouteComponent } from './auth-example/protected-route.component';
+import { AuthGuard } from '../core/services/auth-guard.service';
 
 const routes: Routes = [
   { path: '', component: DefaultRoutePageComponent },
@@ -32,7 +35,9 @@ const routes: Routes = [
       ]
   },
   { path: 'angularMaterial', component: AngularMaterialComponent},
-  { path: 'logging', component: LoggingComponent},
+  { path: 'logging', component: LoggingComponent },
+  { path: 'authExample', component: AuthExampleMainComponent },
+  { path: 'protectedRoute', component: ProtectedRouteComponent, canActivate: [AuthGuard] },
   { path: '**', component: PageNotFoundComponent },
 
 ];

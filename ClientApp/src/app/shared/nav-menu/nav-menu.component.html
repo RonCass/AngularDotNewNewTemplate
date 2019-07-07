@@ -19,7 +19,7 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" [routerLink]='["/demos/logging"]'>Logging</a>
           <a class="dropdown-item" [routerLink]='["/toastTest"]'>Toast Test</a>
-          <a class="dropdown-item" [routerLink]='["/authExample"]'>Auth Example</a>
+          <a class="dropdown-item" [routerLink]='["/demos/authExample"]'>Auth Example</a>
           <a class="dropdown-item" [routerLink]='["/demos/fileUpload"]'>File Upload</a>
           <a class="dropdown-item" [routerLink]='["/demos/gridListAndPaging"]'>Grid List and Paging</a>
           <a class="dropdown-item" [routerLink]='["/demos/counter"]'>Counter</a>
@@ -47,20 +47,18 @@
       </li>
 
     </ul>
-    <div>
-        <ul class="navbar-nav mr-auto" *ngIf="isUserAuthenticated">
+    <div class="pr-3">
+        <ul class="navbar-nav mr-auto" *ngIf="myUser?.id">
             <li class="nav-item" [routerLinkActive]='["link-active"]'>
               <a class="nav-link" (click)="logOut()" style="cursor: pointer"><span class="fas fa-sign-out-alt" aria-hidden="true"></span> Log Off</a>
             </li>
           </ul>
 
-          <ul class="navbar-nav mr-auto" *ngIf="!isUserAuthenticated">
+          <ul class="navbar-nav mr-auto" *ngIf="!myUser?.id">
             <li class="nav-item" [routerLinkActive]='["link-active"]'>
               <a class="nav-link" [routerLink]="['/login']">Log In</a>
             </li>
           </ul>
-
-
     </div>
 
     <form class="form-inline my-2 my-lg-0">

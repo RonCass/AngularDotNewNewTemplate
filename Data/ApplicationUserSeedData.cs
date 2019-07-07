@@ -47,7 +47,8 @@ namespace AngularDotNetNewTemplate.Data
                         Email = "SuperAdmin@MyWebsite.com",
                         FirstName = "John",
                         LastName = "Doe",
-                        SecurityStamp = Guid.NewGuid().ToString("D")
+                        SecurityStamp = Guid.NewGuid().ToString("D"),
+                        IsActive = true
                     };
 
 
@@ -65,7 +66,8 @@ namespace AngularDotNetNewTemplate.Data
                         Email = "Admin@MyWebsite.com",
                         FirstName = "Admin",
                         LastName = "Doe",
-                        SecurityStamp = Guid.NewGuid().ToString("D")
+                        SecurityStamp = Guid.NewGuid().ToString("D"),
+                        IsActive = true
                     };
 
                     await _userManager.CreateAsync(newUser2, "SomePassword1!");
@@ -82,7 +84,8 @@ namespace AngularDotNetNewTemplate.Data
                         Email = "User@MyWebsite.com",
                         FirstName = "User",
                         LastName = "Doe",
-                        SecurityStamp = Guid.NewGuid().ToString("D")
+                        SecurityStamp = Guid.NewGuid().ToString("D"),
+                        IsActive = true
                     };
 
                     await _userManager.CreateAsync(newUser3, "SomePassword1!");

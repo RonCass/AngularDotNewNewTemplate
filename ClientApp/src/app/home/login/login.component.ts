@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Component, OnInit, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from '../../core/services/toastr.service';
 import { DataService } from '../../core/services/data.service';
@@ -45,12 +45,9 @@ export class LoginComponent implements OnInit {
         this._dataService.createToken(this.userName, this.password)
             .subscribe(
             response => {
-                // Set the UserName and Token to the Local Storage
-                localStorage.setItem('userToken', JSON.stringify({ username: this.userName, token: response.token,
-                   expiration: response.expiration }));
-
-                this.currentUserService.setUserToken(this.userName, response.token, response.expiration);
-                // this.currentUserService.setUserToken(response.token);
+                
+                //Set Token Information
+                this.currentUserService.setUserToken(response.token, response.expiration);               
 
                 // Set Application User Info
                 this.applicationUser.id = response.user.id;
@@ -60,7 +57,7 @@ export class LoginComponent implements OnInit {
                 this.applicationUser.email = response.user.email;
                 this.applicationUser.roleName = response.user.roleName;
                 // Set the info back to the service to be used throughout the site
-                this.currentUserService.setLoggedInUserInfo(this.applicationUser);
+                this.currentUserService.setCurrentUserInfo(this.applicationUser);
                 // Set the ApplicationUser to the Local Storage
                 // localStorage.setItem('applicationUser', JSON.stringify(this.applicationUser));
 

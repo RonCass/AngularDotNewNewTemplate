@@ -1,4 +1,9 @@
 
+export class TokenInfo {
+  expiration: string;
+  token: string;
+  // username: string;
+}
 export interface APICrudExample {
   id: number;
   field1: string;

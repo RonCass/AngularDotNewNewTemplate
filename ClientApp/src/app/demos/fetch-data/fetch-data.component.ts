@@ -26,12 +26,12 @@ export class FetchDataComponent implements OnInit {
     let selectedBook: Book; // = new Book();
 
     // GetBookById from DataService
-    this.dataService.getBookById(bookId)
-      .subscribe(
-        (data: Book) => selectedBook = data,
-        (err: any) => console.log(err),
-        () => console.log('Completion Handler')
-      );
+    //this.dataService.getBookById(bookId)
+    //  .subscribe(
+    //    (data: Book) => selectedBook = data,
+    //    (err: any) => console.log(err),
+    //    () => console.log('Completion Handler')
+    //  );
   }
 
 

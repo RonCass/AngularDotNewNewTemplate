@@ -1,0 +1,23 @@
+<h3 class="pt-3">
+ Auth Example
+</h3>
+<h5>This demo requires that you be running it locally with the database created that contains the users.</h5>
+
+<div>This demo uses:
+  <ul>
+    <li>home/login/login.component.ts: The LoginComponent will call back to the AuthController and get JWT auth token that will be used on future calls to the backend
+    API that should be hidden behind an [Authorize] decorator on the contollers.</li>
+    <li>
+      core/services/current-user.service.ts: The CurrentUserService will get and set the user and token information to LocalStorage in the browser. Both objects are
+      BehaviorSubjects (<a href="https://www.learnrxjs.io/subjects/" target="_blank">Subjects from RxJs</a>) ($tokenInfo and $currentUserInfo) that when changed will allow for other areas of the site that need this information to subscribe to it.
+    </li>
+    <li>core/services/auth-guard.service.ts: The AuthGuardService protects routes so that only Authorized Users can use routes. This service checks CurrentUserService to
+    see if the user is authenticated when they click a link for a route that is protected with the AuthGuardService by putting a &quot;canActivate: [AuthGuard]&quot; on the route itself.</li>
+  </ul>
+
+  <div>Link to Protect Route: Will only work after you have logged in. <a routerLink="/demos/protectedRoute">Protected Route</a></div>
+  </div>
+
+<!--<div>currentUserService.getLoggedInUserInfo = {{ currentUserService.getLoggedInUserInfo() | json }}</div>
+<div>currentUserService.getTokenInfo = {{ currentUserService.getTokenInfo() | json }}</div>
+<div>IsUserAuthenticated?: {{ currentUserService.isUserAuthenticated() }}</div>-->

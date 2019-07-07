@@ -83,6 +83,13 @@ namespace AngularDotNetNewTemplate.Controllers
 
                     if (_hasher.VerifyHashedPassword(user, user.PasswordHash, model.Password) == PasswordVerificationResult.Success)
                     {
+                        //Check IsActive Flag on user
+                        if (!user.IsActive)
+                        {
+                            _logger.LogWarning("User is InActive");
+                            return BadRequest("User has been deactivated. Please check with your adminstrator.");
+                        }
+
                         //This will get the claims from the Identity System - Unioned on the var claims below
                         var userClaims = await _userMgr.GetClaimsAsync(user);
 
@@ -102,9 +109,7 @@ namespace AngularDotNetNewTemplate.Controllers
                         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
                         //Cred are good, create token
-                        var token = new JwtSecurityToken(
-                             //issuer: "http://localhost:5001",
-                             //audience: "http://localhost:5001",
+                        var token = new JwtSecurityToken(                           
                              issuer: _config["Token:Issuer"],
                             audience: _config["Token:Audience"],
                             claims: claims,
@@ -128,7 +133,6 @@ namespace AngularDotNetNewTemplate.Controllers
                                 myUserAndRoleOut.RoleName = myRole.Name;                                
                             }
                         }
-
 
                         return Ok(new
                         {

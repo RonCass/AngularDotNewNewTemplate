@@ -19,6 +19,8 @@ import { GridWithSortingAndPagingComponent } from './grid-with-sorting-and-pagin
 import { SharedModule } from '../shared/shared.module';
 import { AngularMaterialComponent } from './angular-material/angular-material.component';
 import { LoggingComponent } from './logging/logging.component';
+import { AuthExampleMainComponent } from './auth-example/auth-example-main.component';
+import { ProtectedRouteComponent } from './auth-example/protected-route.component';
 
 @NgModule({
   imports: [
@@ -44,6 +46,8 @@ import { LoggingComponent } from './logging/logging.component';
     GridWithSortingAndPagingComponent,
     AngularMaterialComponent,
     LoggingComponent,
+    AuthExampleMainComponent,
+    ProtectedRouteComponent,
 
   ]
 })

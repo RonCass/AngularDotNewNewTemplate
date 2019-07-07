@@ -13,27 +13,18 @@ export class NavMenuComponent implements OnInit {
 
   isBusy = true;
   isExpanded = false;
-  myUser: ApplicationUser = new ApplicationUser();
+  public myUser: ApplicationUser = new ApplicationUser();
   public isUserAuthenticated = false;
 
   constructor(private currentUserService: CurrentUserService, private toastrService: ToastrService, private router: Router) {
 
-    // Hooked up this observable so the nav is responsive to login and out
-    currentUserService.isLoggedIn.subscribe({
-      next: (v) => {
-          this.isUserAuthenticated = v;
-      }
-    });
-
-    currentUserService.getAppUserObservable.subscribe({
-      next: (v2) => {
-          this.myUser = v2;
-      }
-    });
+    currentUserService.$currentUserInfo.subscribe(appUser => {
+      this.myUser = appUser;
+    });        
   }
 
   ngOnInit() {
-    this.myUser = this.currentUserService.getLoggedInUserInfo();
+   
   }
 
   collapse() {
@@ -45,8 +36,7 @@ export class NavMenuComponent implements OnInit {
   }
 
   logOut() {
-    this.currentUserService.deleteUserToken();
-    this.currentUserService.deleteApplicationUser();
+    this.currentUserService.ClearAll();    
     this.router.navigate(['/login']);
 
 
