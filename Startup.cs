@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Cors.Internal;
+using Microsoft.AspNetCore.Mvc.Cors;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -136,18 +136,19 @@ namespace AngularDotNetNewTemplate
             });
 
             services.AddMvc()
-               .AddJsonOptions(opt =>
-               {
-                   opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-                   opt.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-               });
+               //.AddJsonOptions(opt =>
+               //{
+               //    opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+               //    opt.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+               //})
+               ;
 
 
-            services.Configure<MvcOptions>(options =>
-            {
-                options.Filters.Add(new CorsAuthorizationFilterFactory("AllowAllOrigins"));
+            //services.Configure<MvcOptions>(options =>
+            //{
+            //    options.Filters.Add(new CorsAuthorizationFilterFactory("AllowAllOrigins"));
 
-            });
+            //});
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -171,13 +172,13 @@ namespace AngularDotNetNewTemplate
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseCors(config =>
-            {
-                config.AllowAnyHeader()
-                .AllowAnyMethod()
-                .AllowAnyOrigin()
-                .AllowCredentials();
-            });
+            //app.UseCors(config =>
+            //{
+            //    config.AllowAnyHeader()
+            //    .AllowAnyMethod()
+            //    .AllowAnyOrigin()
+            //    .AllowCredentials();
+            //});
 
             //Automapper Mappings
             Mapper.Initialize(config =>
@@ -201,11 +202,21 @@ namespace AngularDotNetNewTemplate
             // 5-2-2018: Added this to use the new Authentication
             app.UseAuthentication();
 
-            app.UseMvc(routes =>
+            //app.UseMvc(routes =>
+            //{
+            //    routes.MapRoute(
+            //        name: "default",
+            //        template: "{controller}/{action=Index}/{id?}");
+            //});
+
+            app.UseRouting();
+
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller}/{action=Index}/{id?}");
+                endpoints.MapControllers();
+                endpoints.MapRazorPages();
             });
 
             app.UseSpa(spa =>
@@ -219,12 +230,12 @@ namespace AngularDotNetNewTemplate
                 {
                     //3-23-2018 Ron C: 
                     //This will build the C# code and run the angular compiler
-                    //spa.UseAngularCliServer(npmScript: "start");
+                    spa.UseAngularCliServer(npmScript: "start");
 
                     // 3-23-2018 Ron C: 
                     //This will allow me to run the angular app in a different command window and still allow for a ctrl-f5 to build the C#. 
                     //The Angular will still get auto updated as well. You have to do an "ng serve" in the ClientApp folder.
-                    spa.UseProxyToSpaDevelopmentServer("http://localhost:5000");
+                    //spa.UseProxyToSpaDevelopmentServer("http://localhost:5000");
                 }
             });
         }
