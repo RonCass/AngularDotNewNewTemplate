@@ -14,6 +14,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 
 namespace AngularDotNetNewTemplate.Controllers
 {
@@ -25,9 +26,10 @@ namespace AngularDotNetNewTemplate.Controllers
         private UserManager<ApplicationUser> _userMgr;
         private IPasswordHasher<ApplicationUser> _hasher;
         private IConfiguration _config;
+        public IMapper _mapper { get; }
 
         public AuthController(ApplicationDbContext context, SignInManager<ApplicationUser> signInMgr, ILogger<AuthController> logger,
-            UserManager<ApplicationUser> userMgr, IPasswordHasher<ApplicationUser> hasher, IConfiguration config)
+            UserManager<ApplicationUser> userMgr, IPasswordHasher<ApplicationUser> hasher, IConfiguration config, IMapper mapper)
         {
             _context = context;
             _signInMgr = signInMgr;
@@ -35,6 +37,7 @@ namespace AngularDotNetNewTemplate.Controllers
             _userMgr = userMgr;
             _hasher = hasher;
             _config = config;
+            _mapper = mapper;
         }
 
         [HttpPost("api/auth/login")]
@@ -122,7 +125,7 @@ namespace AngularDotNetNewTemplate.Controllers
 
                         //Map User Info out
                         UserAndRoleOut myUserAndRoleOut = new UserAndRoleOut();
-                        myUserAndRoleOut = AutoMapper.Mapper.Map<UserAndRoleOut>(user);
+                        myUserAndRoleOut = _mapper.Map<UserAndRoleOut>(user);
                         //Get User Roles
                         var myUserRole = _context.UserRoles.Where(x => x.UserId == user.Id).FirstOrDefault();
                         if (myUserRole != null)
