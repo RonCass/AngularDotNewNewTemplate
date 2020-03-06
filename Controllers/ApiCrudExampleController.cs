@@ -7,6 +7,7 @@ using AngularDotNetNewTemplate.Models;
 using AngularDotNetNewTemplate.Models.DTOIn;
 using AngularDotNetNewTemplate.Models.DTOOut;
 using AngularDotNetNewTemplate.Utils;
+using AutoMapper;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -21,14 +22,17 @@ namespace AngularDotNetNewTemplate.Controllers
     {
         private IRepository<APICrudExample> _repo;
         private ILogger<ApiCrudExampleController> _logger;
+        private IMapper _mapper;
 
         public ApiCrudExampleController(
                 IRepository<APICrudExample> repo,
-                ILogger<ApiCrudExampleController> logger
+                ILogger<ApiCrudExampleController> logger,
+                IMapper mapper
             )
         {
             _repo = repo;
             _logger = logger;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -39,7 +43,7 @@ namespace AngularDotNetNewTemplate.Controllers
 
             myEntities = _repo.GetAll(null, pageNumber, pageSize, sort);
 
-            var myEntityOut = AutoMapper.Mapper.Map<IEnumerable<APICrudExampleOut>>(myEntities.Items);
+            var myEntityOut = _mapper.Map<IEnumerable<APICrudExampleOut>>(myEntities.Items);
 
             //Shape data being returned
             return Ok(myEntityOut.ShapeData(fields));
@@ -55,7 +59,7 @@ namespace AngularDotNetNewTemplate.Controllers
                 return NotFound();
             }
 
-            var myEntityOut = AutoMapper.Mapper.Map<APICrudExampleOut>(myEntity);
+            var myEntityOut = _mapper.Map<APICrudExampleOut>(myEntity);
 
             return Ok(myEntityOut.ShapeData(fields));
         }
@@ -74,10 +78,10 @@ namespace AngularDotNetNewTemplate.Controllers
                 return BadRequest(ModelState);
             }
 
-            var myEntity = AutoMapper.Mapper.Map<APICrudExample>(myEntityIn);
+            var myEntity = _mapper.Map<APICrudExample>(myEntityIn);
 
             //Map the full new entity back to the Out DTO for returning to the client
-            var myEntityOut = AutoMapper.Mapper.Map<APICrudExampleOut>(myEntity);
+            var myEntityOut = _mapper.Map<APICrudExampleOut>(myEntity);
 
             return CreatedAtRoute(
                 "Get",
@@ -110,7 +114,7 @@ namespace AngularDotNetNewTemplate.Controllers
                 return NotFound();
             }
 
-            AutoMapper.Mapper.Map(entityIn, myEntity);
+            _mapper.Map(entityIn, myEntity);
 
             _repo.Update(myEntity);
 
@@ -131,13 +135,13 @@ namespace AngularDotNetNewTemplate.Controllers
                 return NotFound();
             }
 
-            var myItemToPatch = AutoMapper.Mapper.Map<APICrudExampleIn>(myEntity);
+            var myItemToPatch = _mapper.Map<APICrudExampleIn>(myEntity);
 
             patchItem.ApplyTo(myItemToPatch);
 
             //Add Validation
 
-            AutoMapper.Mapper.Map(myItemToPatch, myEntity);
+            _mapper.Map(myItemToPatch, myEntity);
 
             _repo.Update(myEntity);
 

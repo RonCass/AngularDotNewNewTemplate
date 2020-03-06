@@ -7,6 +7,7 @@ using AngularDotNetNewTemplate.Models;
 using AngularDotNetNewTemplate.Models.DTOIn;
 using AngularDotNetNewTemplate.Models.DTOOut;
 using AngularDotNetNewTemplate.Utils;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -22,11 +23,13 @@ namespace AngularDotNetNewTemplate.Controllers
     {
         private ApplicationDbContext _context;
         private ILogger<ApplicationUsersController> _logger;
+        private IMapper _mapper;
 
-        public ApplicationUsersController(ApplicationDbContext context, ILogger<ApplicationUsersController> logger)
+        public ApplicationUsersController(ApplicationDbContext context, ILogger<ApplicationUsersController> logger, IMapper mapper)
         {
             _context = context;
             _logger = logger;
+            _mapper = mapper;
         }
 
         // GET: api/Users
@@ -54,7 +57,7 @@ namespace AngularDotNetNewTemplate.Controllers
                     .Select(x => ShapeReturnData.CreateDataShapedObject(x, fields));
                 
                 //Map data to Out DTO
-                var myEntitiesOut = AutoMapper.Mapper.Map<IEnumerable<ApplicationUserOut>>(results);
+                var myEntitiesOut = _mapper.Map<IEnumerable<ApplicationUserOut>>(results);
 
                 return Json(new
                 {
