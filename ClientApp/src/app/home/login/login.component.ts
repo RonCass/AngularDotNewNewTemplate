@@ -1,9 +1,9 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
-import { ToastrService } from '../../core/services/toastr.service';
-import { DataService } from '../../core/services/data.service';
-import { CurrentUserService } from '../../core/services/current-user.service';
-import { ApplicationUser } from '../../core/services/models';
+import { ToastrService } from '../../shared/services/toastr.service';
+import { DataService } from '../../shared/services/data.service';
+import { CurrentUserService } from '../../shared/services/current-user.service';
+import { ApplicationUser } from '../../shared/services/models';
 
 
 @Component({

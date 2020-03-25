@@ -7,7 +7,6 @@ import { FileUploadComponent } from './file-upload/file-upload.component';
 import { GridListAndPagingComponent } from './grid-list-and-paging/grid-list-and-paging.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
-import { CoreModule } from '../core/core.module';
 import { RoutingExamplesComponent } from './routing-examples/routing-examples.component';
 import { DefaultRoutePageComponent } from './default-route-page/default-route-page.component';
 import { RouteWithTokenComponent } from './route-with-token/route-with-token.component';
@@ -27,8 +26,7 @@ import { ProtectedRouteComponent } from './auth-example/protected-route.componen
     CommonModule,
     DemosRoutingModule,
     FormsModule,
-    ReactiveFormsModule,
-    CoreModule,
+    ReactiveFormsModule,    
     SharedModule,
   ],
   declarations: [

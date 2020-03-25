@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { CurrentUserService } from '../../core/services/current-user.service';
-import { ToastrService } from '../../core/services/toastr.service';
+import { CurrentUserService } from '../../shared/services/current-user.service';
+import { ToastrService } from '../../shared/services/toastr.service';
 import { Router } from '@angular/router';
-import { ApplicationUser } from '../../core/services/models';
+import { ApplicationUser } from '../../shared/services/models';
 
 @Component({
   selector: 'app-nav-menu',

@@ -16,7 +16,7 @@ import { AngularMaterialComponent } from './angular-material/angular-material.co
 import { LoggingComponent } from './logging/logging.component';
 import { AuthExampleMainComponent } from './auth-example/auth-example-main.component';
 import { ProtectedRouteComponent } from './auth-example/protected-route.component';
-import { AuthGuard } from '../core/services/auth-guard.service';
+import { AuthGuard } from '../shared/services/auth-guard.service';
 
 const routes: Routes = [
   { path: '', component: DefaultRoutePageComponent },

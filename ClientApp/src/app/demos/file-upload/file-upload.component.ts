@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ToastrService } from '../../core/services/toastr.service';
-import { DataService } from '../../core/services/data.service';
+import { ToastrService } from '../../shared/services/toastr.service';
+import { DataService } from '../../shared/services/data.service';
 
 @Component({
   selector: 'app-file-upload',

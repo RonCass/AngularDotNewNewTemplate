@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from '../../core/services/data.service';
-import { ToastrService } from '../../core/services/toastr.service';
+import { DataService } from '../../shared/services/data.service';
+import { ToastrService } from '../../shared/services/toastr.service';
 
 @Component({
   selector: 'app-logging',

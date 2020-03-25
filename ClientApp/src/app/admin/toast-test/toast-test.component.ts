@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ToastrService } from './../../core/services/toastr.service';
+import { ToastrService } from './../../shared/services/toastr.service';
 @Component({
   selector: 'app-toast-test',
   templateUrl: './toast-test.component.html',

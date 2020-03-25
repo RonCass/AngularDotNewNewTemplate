@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { CurrentUserService } from '../../core/services/current-user.service';
-import { ApplicationUser } from '../../core/services/models';
+import { CurrentUserService } from '../../shared/services/current-user.service';
+import { ApplicationUser } from '../../shared/services/models';
 
 @Component({
   selector: 'app-auth-example',

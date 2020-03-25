@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { DataService } from '../../core/services/data.service';
-import { Log } from '../../core/services/models';
+import { DataService } from '../../shared/services/data.service';
+import { Log } from '../../shared/services/models';
 
 
 @Component({

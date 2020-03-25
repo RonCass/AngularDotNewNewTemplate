@@ -8,13 +8,11 @@ import { RouterModule } from '@angular/router';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
-import { AuthGuard } from './core/services/auth-guard.service';
-
 import { HomeModule } from './home/home.module';
 import { SharedModule } from './shared/shared.module';
-import { CoreModule } from './core/core.module';
 import { ViewLogsComponent } from './admin/view-logs/view-logs.component';
 import { ToastTestComponent } from './admin/toast-test/toast-test.component';
+import { AuthGuard } from './shared/services/auth-guard.service';
 
 
 @NgModule({
@@ -29,8 +27,7 @@ import { ToastTestComponent } from './admin/toast-test/toast-test.component';
     HttpClientModule,
     FormsModule,
     HomeModule,
-    SharedModule,
-    CoreModule.forRoot(),
+    SharedModule,    
     RouterModule.forRoot([
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: 'viewLogs', component: ViewLogsComponent },
