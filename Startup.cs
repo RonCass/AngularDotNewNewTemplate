@@ -223,7 +223,7 @@ namespace AngularDotNetNewTemplate
                     // 3-23-2018 Ron C: 
                     //This will allow me to run the angular app in a different command window and still allow for a ctrl-f5 to build the C#. 
                     //The Angular will still get auto updated as well. You have to do an "ng serve" in the ClientApp folder.
-                    spa.UseProxyToSpaDevelopmentServer("http://localhost:5000");
+                    spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
                 }
             });
         }
