@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Headers, Http, Response, RequestOptions } from '@angular/http';
 import { Router } from '@angular/router';
 
 import { ApplicationUser, TokenInfo } from './models';
