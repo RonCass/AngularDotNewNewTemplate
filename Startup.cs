@@ -3,6 +3,7 @@ using AngularDotNetNewTemplate.Models;
 using AngularDotNetNewTemplate.Models.DTOIn;
 using AngularDotNetNewTemplate.Models.DTOOut;
 using AngularDotNetNewTemplate.Utils;
+using AngularDotNetNewTemplate.Utils.AutomapperMappings;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -158,6 +159,15 @@ namespace AngularDotNetNewTemplate
 
             //Used with Repository Pattern
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+
+
+            // Auto Mapper Configurations
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new AngularDotNetNewMappingsProfile());
+            });
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

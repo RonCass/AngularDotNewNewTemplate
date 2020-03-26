@@ -70,7 +70,7 @@ namespace AngularDotNetNewTemplate.Controllers
             return Ok();
         }
 
-        [HttpPost("Api/Auth/CreateToken")]
+        [HttpPost("api/Auth/CreateToken")]
         public async Task<IActionResult> CreateToken([FromBody] CredentialModel model)
         {
             try

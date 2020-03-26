@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError  } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 
 import { WeatherForecast, Log, Book, APICrudExample, TokenInfo } from './models';
@@ -12,7 +12,7 @@ import { ToastrService } from './toastr.service';
 @Injectable()
 export class DataService {
 
-  public baseUrl = 'http://localhost:49431/'; // 'http://localhost:49223/';
+  public baseUrl = 'https://localhost:44316/'; // 'http://localhost:49223/';
   public httpOptions;
   public httpOptionsWithoutContentType;
   public tokenInfo = new TokenInfo();
@@ -21,6 +21,11 @@ export class DataService {
     private currentUserService: CurrentUserService, private toastrService: ToastrService) {
 
     this.currentUserService.$tokenInfo.subscribe(tokenInfo => {
+
+      if (tokenInfo == null) {
+        tokenInfo = new TokenInfo();
+      }
+
       this.httpOptions = {
         headers: new HttpHeaders({
           'Accept': 'application/json',
@@ -31,12 +36,14 @@ export class DataService {
 
       this.httpOptionsWithoutContentType = {
         headers: new HttpHeaders({
-          'Accept': 'application/json',          
+          'Accept': 'application/json',
           'Authorization': 'Bearer ' + tokenInfo.token
         })
       };
 
       this.tokenInfo = tokenInfo;
+
+
     })
 
   }
@@ -56,7 +63,7 @@ export class DataService {
   //  };
   //}
 
-   // Cant submit document saying its JSON data so have to remove that line from the headers
+  // Cant submit document saying its JSON data so have to remove that line from the headers
   //getHttpOptionsWithoutContentType() {
   //  return {
   //    headers: new HttpHeaders({
@@ -190,9 +197,9 @@ export class DataService {
       );
   }
 
- 
 
-  
+
+
 
   /////////////////////////////////////////////////////////
   // End - Logging Demo
@@ -236,18 +243,18 @@ export class DataService {
   getDummyData(pageNumber: number, pageSize: number, sort: string): Observable<any> {
 
     return this.http.get(this.baseUrl + 'api/DummyData/?pageNumber=' + pageNumber + '&pageSize=' + pageSize +
-     '&sort=' + sort, this.httpOptions)
+      '&sort=' + sort, this.httpOptions)
       .pipe(
-      catchError(this.handleError)
+        catchError(this.handleError)
       );
   }
 
   getDummyDataBySearchText(pageNumber: number, pageSize: number, sort: string, searchText: string): Observable<any> {
 
     return this.http.get(this.baseUrl + 'api/DummyData/GetByText/?pageNumber=' + pageNumber + '&pageSize=' + pageSize +
-     '&sort=' + sort + '&searchText=' + searchText, this.httpOptions)
+      '&sort=' + sort + '&searchText=' + searchText, this.httpOptions)
       .pipe(
-      catchError(this.handleError)
+        catchError(this.handleError)
       );
   }
 
@@ -261,7 +268,7 @@ export class DataService {
     return this.http.get<Book[]>('/api/books')
       .pipe(
         catchError(this.handleError)
-    );
+      );
   }
 
   //getBookById(id: number): Observable<Book> {
@@ -278,7 +285,7 @@ export class DataService {
   //    );
   //}
 
- 
+
 
   /////////////////////////////////////////////////////////
   // ERROR HANDLING - New httpClient
@@ -295,8 +302,8 @@ export class DataService {
         `body was: ${error.error}`);
     }
     // return an observable with a user-facing error message
-  return throwError(
-    'Something bad happened; please try again later.');
+    return throwError(
+      'Something bad happened; please try again later.');
   }
 
 }
