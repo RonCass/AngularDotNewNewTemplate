@@ -1,5 +1,5 @@
 
-<span class="span-sort-column" (click)="onSortOrderChange(columnDataElement)"
+<span class="span-sort-column" (click)="onSortOrderChange(columnDataElement)"  style="cursor: pointer"
   [class.span-sort-column-active]="sortedColumnElement==columnDataElement">{{columnHeadingText}}</span>
 <span *ngIf="sortedColumnElement==columnDataElement && sortDirection=='-'">&nbsp;<i class="fas fa-arrow-down span-sort-icon"></i></span>
 <span *ngIf="sortedColumnElement==columnDataElement && sortDirection==''">&nbsp;<i class="fas fa-arrow-up span-sort-icon"></i></span>
