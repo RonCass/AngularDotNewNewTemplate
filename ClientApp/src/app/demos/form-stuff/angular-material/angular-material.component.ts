@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
-import { DataService } from '../../shared/services/data.service';
-import { ToastrService } from '../../shared/services/toastr.service';
+import { DataService } from '../../../shared/services/data.service';
+import { ToastrService } from '../../../shared/services/toastr.service';
 
 @Component({
   selector: 'app-angular-material',

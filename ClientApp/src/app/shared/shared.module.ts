@@ -13,24 +13,37 @@ import { ToastrService } from './services/toastr.service';
 import { AuthGuard } from './services/auth-guard.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LogResponseInterceptor } from './services/log-response.interceptor';
+import { RCTableComponent } from './rc-table/rc-table.component';
+import { RCGridColumnSortComponent } from './rc-table/components/rc-grid-column-sort/rc-grid-column-sort.component';
+import { RCGridPagingComponent } from './rc-table/components/rc-grid-paging/rc-grid-paging.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   imports: [
     CommonModule,
     SharedRoutingModule,
     FormsModule,
-   MaterialModule
+    MaterialModule,
+   FlexLayoutModule
   ],
   declarations: [
     NavMenuComponent,
     GridPagingComponent,
-    GridColumnSortComponent
+    GridColumnSortComponent,
+    RCTableComponent,
+    RCGridColumnSortComponent,
+    RCGridPagingComponent
+    
   ],
   exports: [
     NavMenuComponent,
     GridPagingComponent,
     GridColumnSortComponent,
-    MaterialModule
+    MaterialModule,
+    RCTableComponent,
+    RCGridColumnSortComponent,
+    RCGridPagingComponent,
+    FlexLayoutModule
   ],
   providers: [
     DataService,

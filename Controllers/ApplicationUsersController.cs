@@ -10,6 +10,7 @@ using AngularDotNetNewTemplate.Utils;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -24,12 +25,14 @@ namespace AngularDotNetNewTemplate.Controllers
         private ApplicationDbContext _context;
         private ILogger<ApplicationUsersController> _logger;
         private IMapper _mapper;
+        private UserManager<ApplicationUser> _userManager;
 
-        public ApplicationUsersController(ApplicationDbContext context, ILogger<ApplicationUsersController> logger, IMapper mapper)
+        public ApplicationUsersController(ApplicationDbContext context, ILogger<ApplicationUsersController> logger, IMapper mapper, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _logger = logger;
             _mapper = mapper;
+            _userManager = userManager;
         }
 
         // GET: api/Users
@@ -73,9 +76,9 @@ namespace AngularDotNetNewTemplate.Controllers
             }
         }
 
-        // GET: api/Users/5
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetById([FromRoute] int id)
+        // GET: api/Users/?id=5
+        [HttpGet("GetById")]
+        public async Task<IActionResult> GetById(int id)
         {
             try
             {
@@ -84,7 +87,10 @@ namespace AngularDotNetNewTemplate.Controllers
                     return BadRequest(ModelState);
                 }
 
-                ApplicationUser users = _context.ApplicationUser.FirstOrDefault(x => x.Id == id);
+                ApplicationUser users = _context.ApplicationUser
+                    .Include(x => x.ApplicationUserRoles)    
+                    .ThenInclude(x => x.ApplicationRole)
+                    .FirstOrDefault(x => x.Id == id);
 
                 if (users == null)
                 {                    
@@ -92,6 +98,22 @@ namespace AngularDotNetNewTemplate.Controllers
                 }
              
                 return Ok(users);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error: {ex}");
+                throw;
+            }
+        }
+
+        [HttpGet("GetRoles")]
+        public async Task<IActionResult> GetRoles()
+        {
+            try
+            {
+                var roles = _context.ApplicationRole.Where(x => x.Name != "SuperAdmin");
+
+                return Ok(roles);
             }
             catch (Exception ex)
             {
@@ -157,54 +179,70 @@ namespace AngularDotNetNewTemplate.Controllers
         //    }
         //}
 
-        // POST: api/Users
-        //[HttpPost]
-        //public async Task<IActionResult> PostUsers([FromBody] ApplicationUserIn users)
-        //{
-        //    string userID = "";
-        //    if (HttpContext.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier) != null)
-        //    {
-        //        userID = HttpContext.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value;
-        //    }
+        // POST: api/ApplicationUsers
+        [HttpPost]
+        public async Task<IActionResult> PostUsers([FromBody] ApplicationUserIn applicationUserIn)
+        {
+            string userID = "";
+            if (HttpContext.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier) != null)
+            {
+                userID = HttpContext.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value;
+            }
 
-        //    try
-        //    {
-        //        _logger.LogInformation($"{userID}|UsersController|PostUsers([FromBody] Users users)|Started");
-               
-        //        if (!ModelState.IsValid)
-        //        {
-        //            _logger.LogInformation($"{userID}|UsersController|PostUsers([FromBody] Users users)|return BadRequest(ModelState);");
-        //            return BadRequest(ModelState);
-        //        }
+            try
+            {
 
-        //        _context.ApplicationUser.Add(users);
-        //        try
-        //        {
-        //            await _context.SaveChangesAsync();
-        //        }
-        //        catch (DbUpdateException ex)
-        //        {
-        //            if (UsersExists(users.Id))
-        //            {
-        //                _logger.LogError($"{userID}|UsersController|PostUsers([FromBody] Users users)|Error: {ex}");
-        //                return new StatusCodeResult(StatusCodes.Status409Conflict);
-        //            }
-        //            else
-        //            {
-        //                _logger.LogError($"{userID}|UsersController|PostUsers([FromBody] Users users)|Error: {ex}");
-        //                throw;
-        //            }
-        //        }
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
 
-        //        _logger.LogInformation($"{userID}|UsersController|PostUsers([FromBody] Users users)|return CreatedAtAction(\"GetUsers\", new {{ id = users.UserId }}, users);");
-        //        return CreatedAtAction("GetUsers", new { id = users.UserId }, users);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError($"{userID}|UsersController|PostUsers([FromBody] Users users)|Error: {ex}");
-        //        throw;
-        //    }
-        //}
+                var newApplicationUser = new ApplicationUser();
+
+                //Map fields from DTO to actual ApplicationUser
+                _mapper.Map(applicationUserIn, newApplicationUser);
+
+                //Set Username same as email
+                newApplicationUser.UserName = newApplicationUser.Email;
+                //Set Date Created
+                newApplicationUser.DateCreated = DateTime.Now;
+                //Set Date Modified
+                newApplicationUser.DateLastModified = DateTime.Now;
+
+
+                var myResult = await _userManager.CreateAsync(newApplicationUser, applicationUserIn.Password);
+                if (!myResult.Succeeded)
+                {
+                    string myErrors = "";
+
+                    foreach (var error in myResult.Errors)
+                    {
+                        myErrors = myErrors + error.Description;
+                    }
+
+                    return BadRequest(myErrors);
+                }
+
+                var myResult2 = await _userManager.AddToRoleAsync(newApplicationUser, applicationUserIn.RoleName);
+                if (!myResult2.Succeeded)
+                {
+                    string myErrors = "";
+
+                    foreach (var error in myResult2.Errors)
+                    {
+                        myErrors = myErrors + error.Description;
+                    }
+
+                    return BadRequest(myErrors);
+                }
+
+                return Ok(newApplicationUser);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
         // DELETE: api/Users/5
         //[HttpDelete("{id}")]

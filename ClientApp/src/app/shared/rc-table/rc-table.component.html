@@ -1,0 +1,41 @@
+
+<p>
+  RC Table Component
+</p>
+<div>
+  <div *ngIf="!tableData">There is no data to display.</div>
+
+  <table class="table table-striped " *ngIf="tableData">
+    <thead class="">
+      <tr class="card-header-rose">
+        <th *ngFor="let row of displayedColumns">          
+          <app-rc-grid-column-sort [columnHeadingText]="row.title" [columnDataElement]="row.dataField" [isActive]='isActive'
+                                (sortColumnEvent)='sortColumnEvent($event)' [sortedColumnElement]="sortedColumnElement"></app-rc-grid-column-sort>
+        </th>
+        <!--<th>
+          <app-rc-grid-column-sort [columnHeadingText]="'Col2'" [columnDataElement]="'col2'"
+                                (sortColumnEvent)='sortColumnEvent($event)' [sortedColumnElement]="sortedColumnElement"></app-rc-grid-column-sort>
+
+        </th>
+        <th>
+          <app-rc-grid-column-sort [columnHeadingText]="'Col3'" [columnDataElement]="'col3'"
+                                (sortColumnEvent)='sortColumnEvent($event)' [sortedColumnElement]="sortedColumnElement"></app-rc-grid-column-sort>
+        </th>-->
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of tableData">
+        <td>{{ row.col1 }}</td>
+        <td>{{ row.col2 }}</td>
+        <td>{{ row.col3 }}</td>
+      </tr>
+
+    </tbody>
+  </table>
+
+  <!--<app-rc-grid-paging [pageNumber]='pageNumber' [pageSize]='pageSize' [previousPageButton]='previousPageButton'
+                   [totalPages]='totalPages' [total]='total'
+                   (pageChangedEvent)='pageChangeEvent($event)' (pageSizeChangedEvent)='pageSizeChangedEvent($event)'></app-rc-grid-paging>-->
+</div>
+<div>tableData = {{ tableData | json }}</div>

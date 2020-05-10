@@ -1,0 +1,117 @@
+<h2>Reactive Form Example</h2>
+<ul>
+  <li>Uses Fx Flex for Layout - <a href="https://github.com/angular/flex-layout" target="_blank">https://github.com/angular/flex-layout</a></li>
+  <li>Uses the ApplicationUser (AspNetUsers) Table</li>
+  <li>Uses Angular Material Form Fields</li>
+</ul>
+
+<p>Busy Spinner = <span *ngIf="isBusy"><i class="fas fa-spinner fa-spin"></i></span></p>
+<p>Material Progress Spinner  = <mat-progress-spinner style="display:inline-block" *ngIf="isBusy" diameter="30" color="primary" mode="indeterminate"></mat-progress-spinner></p>
+
+<form [formGroup]="appUserForm">
+  <div>
+    <div fxLayout="row" fxLayoutGap="10px">
+      <div fxFlex="50">
+        <mat-form-field appearance="standard">
+          <mat-label>Email</mat-label>
+          <input matInput placeholder="john@doe.com" formControlName="email" required (blur)="showHelpemail = !showHelpemail" (focus)="showHelpemail = !showHelpemail">
+          <mat-hint>Field Hint</mat-hint>
+          <mat-error *ngIf="email.invalid">
+            {{
+getEmailErrorMessage()
+            }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div fxFlex="50" *ngIf="showHelpemail" class="form-field-help-text">Enter your email address.</div>
+    </div>
+    <div fxLayout="row" fxLayoutGap="10px">
+      <div fxFlex="50">
+        <mat-form-field appearance="standard">
+          <mat-label>Password</mat-label>
+          <input matInput type="password" placeholder="" formControlName="password" required (blur)="showHelppassword = !showHelppassword" (focus)="showHelppassword = !showHelppassword">
+          <mat-hint>Requires one number and one character and must be at least eight characters long</mat-hint>
+          <mat-error *ngIf="password.hasError">Required Field</mat-error>
+        </mat-form-field>
+      </div>
+      <div fxFlex="50" *ngIf="showHelppassword" class="form-field-help-text">Requires one number and one character and must be at least eight characters long</div>
+    </div>
+    <div fxLayout="row" fxLayoutGap="10px">
+      <div fxFlex="50">
+        <mat-form-field appearance="standard">
+          <mat-label>First Name</mat-label>
+          <input matInput placeholder="" formControlName="firstName" required (blur)="showHelpfirstname = !showHelpfirstname" (focus)="showHelpfirstname = !showHelpfirstname">
+          <mat-hint>Field Hint</mat-hint>
+          <mat-error *ngIf="firstName.hasError">Required Field</mat-error>
+        </mat-form-field>
+      </div>
+      <div fxFlex="50" *ngIf="showHelpfirstname" class="form-field-help-text">Enter your first name.</div>
+    </div>
+    <div fxLayout="row" fxLayoutGap="10px">
+      <div fxFlex="50">
+        <mat-form-field appearance="standard">
+          <mat-label>Last Name</mat-label>
+          <input matInput placeholder="" formControlName="lastName" required (blur)="showHelplastName = !showHelplastName" (focus)="showHelplastName = !showHelplastName">
+          <mat-error *ngIf="lastName.hasError">Required Field</mat-error>
+        </mat-form-field>
+      </div>
+      <div fxFlex="50" *ngIf="showHelplastName" class="form-field-help-text">Enter your last name.</div>
+    </div>
+    <div fxLayout="row" fxLayoutGap="10px">
+      <div fxFlex="50">
+        <mat-form-field>
+          <mat-label>User Roles</mat-label>
+          <mat-select formControlName="userRole" required (selectionChange)="userRoleChanged($event)" [compareWith]="compareUserRole">
+            <mat-option *ngFor="let role of userRoles" [value]="role.name">{{ role.name }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="userRole.hasError">Required Field</mat-error>
+        </mat-form-field>
+      </div>
+      <div fxFlex="50" class="form-field-help-text">Select a user role</div>
+    </div>
+    <div fxLayout="row" fxLayoutGap="10px">
+      <div fxFlex="50">
+        <mat-form-field appearance="standard">
+          <mat-label>Company Name</mat-label>
+          <input matInput placeholder="" formControlName="companyName">
+        </mat-form-field>
+      </div>
+      <div fxFlex="50" class="form-field-help-text"></div>
+    </div>
+    <div fxLayout="row" fxLayoutGap="10px">
+      <div fxFlex="50">
+        <mat-form-field appearance="standard">
+          <mat-label>Phone Number</mat-label>
+          <input matInput placeholder="123-555-0000" formControlName="phoneNumber">
+        </mat-form-field>
+      </div>
+      <div fxFlex="50" class="form-field-help-text"></div>
+    </div>
+    <div fxLayout="row" fxLayoutGap="10px">
+      <div fxFlex="50">
+        <mat-slide-toggle formControlName="isActive">Is Active</mat-slide-toggle>
+      </div>
+      <div fxFlex="50" class="form-field-help-text">Using a slider</div>
+    </div>
+    <div fxLayout="row" fxLayoutGap="10px">
+      <div fxFlex="50">
+        <mat-label>Email Confirmed </mat-label>
+        <mat-radio-group aria-label="Select an option" formControlName="emailConfirmed">
+          <mat-radio-button value="1">True </mat-radio-button>
+          <mat-radio-button value="0">False</mat-radio-button>
+        </mat-radio-group>
+      </div>
+      <div fxFlex="50" class="form-field-help-text">Using Radio Buttons</div>
+    </div>
+
+
+    <button mat-raised-button color="primary" class="saveButtons" (click)="save()">
+      Save
+    </button>
+       
+  </div>
+
+  <mat-card>userRoles = {{ userRoles | json }}</mat-card>
+  <mat-card>applicationUserModel = {{ applicationUserModel | json }}</mat-card>
+
+</form>

@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace AngularDotNetNewTemplate.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityRole<int>, int>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, int>
     {
        
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
@@ -27,32 +27,33 @@ namespace AngularDotNetNewTemplate.Data
             // Add your customizations after calling base.OnModelCreating(builder);          
 
             //3-27-2018 Ron C.: Adding in all the navigation properties that were removed from the default implementation with aspnetcore 2.0
-            builder.Entity<ApplicationUser>()
-               .HasMany(e => e.Claims)
-               .WithOne()
-               .HasForeignKey(e => e.UserId)
-               .IsRequired()
-               .OnDelete(DeleteBehavior.Cascade);
+            //builder.Entity<ApplicationUser>()
+            //   .HasMany(e => e.Claims)
+            //   .WithOne()
+            //   .HasForeignKey(e => e.UserId)
+            //   .IsRequired()
+            //   .OnDelete(DeleteBehavior.Cascade);
 
-            builder.Entity<ApplicationUser>()
-                .HasMany(e => e.Logins)
-                .WithOne()
-                .HasForeignKey(e => e.UserId)
-                .IsRequired()
-                .OnDelete(DeleteBehavior.Cascade);
+            //builder.Entity<ApplicationUser>()
+            //    .HasMany(e => e.Logins)
+            //    .WithOne()
+            //    .HasForeignKey(e => e.UserId)
+            //    .IsRequired()
+            //    .OnDelete(DeleteBehavior.Cascade);
 
-            builder.Entity<ApplicationUser>()
-                .HasMany(e => e.UserRoles)
-                .WithOne()
-                .HasForeignKey(e => e.UserId)
-                .IsRequired()
-                .OnDelete(DeleteBehavior.Cascade);
+            //builder.Entity<ApplicationUser>()
+            //    .HasMany(e => e.UserRoles)
+            //    .WithOne()
+            //    .HasForeignKey(e => e.UserId)
+            //    .IsRequired()
+            //    .OnDelete(DeleteBehavior.Cascade);
 
         }
              
 
        //Extends the IdentityUser
         public DbSet<ApplicationUser> ApplicationUser { get; set; }
+        public DbSet<ApplicationUserRole> ApplicationUserRole { get; set; }
         public DbSet<ApplicationRole> ApplicationRole { get; set; }
 
         public DbSet<APICrudExample> APICrudExample { get; set; }

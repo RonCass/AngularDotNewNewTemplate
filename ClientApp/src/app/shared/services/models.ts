@@ -39,17 +39,21 @@ export interface WeatherForecast {
 }
 
 export class ApplicationUser {
-    id: number;
-    firstName: string;
-    lastName: string;
-    companyId: number;
-    company: string;
-    email: string;
-    roleId: number;
-    roleName: string;
-    userToken: string;
+  id: number;
+  firstName: string;
+  lastName: string;
+  companyId: number;
+  companyName: string;
+  email: string;
+  password: string;
+  phoneNumber: string;
+  emailConfirmed: boolean;
+  isActive: boolean;
+  roleId: number;
+  roleName: string;
+  userToken: string;
 }
 export class UserRole {
-    name: string;
+  name: string;
 }
 

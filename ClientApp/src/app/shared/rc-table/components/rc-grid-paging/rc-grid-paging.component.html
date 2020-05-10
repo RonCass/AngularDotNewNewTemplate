@@ -1,0 +1,34 @@
+<div class="row justify-content-end">
+  <div class="col-4">
+    <nav aria-label="Paging Navigation">
+      <ul class="pagination">
+        <li class="page-item" [ngClass]="{'disabled': this.pageNumber <= 1}">
+          <button class="btn btn-link" [disabled]="this.pageNumber <= 1" (click)="goToPreviousPage()">
+            <i class="fa fa-chevron-left"></i> Previous</button>
+        </li>
+        <li class="page-item">
+          <div style="padding-top:6px">Page: {{ pageNumber }} of {{totalPages}}</div>
+        </li>
+        <li class="page-item">
+          <button class="btn btn-link" [disabled]="this.pageNumber >= this.totalPages" (click)="goToNextPage()">Next
+            <i class="fa fa-chevron-right"></i>
+          </button>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  <div class="col-4">
+    <div class="form-group row">
+      <label for="pageSize" class="col-md-4 col-form-label">Page Size</label>
+      <div class="col-md-8">
+        <select class="form-control" [ngModel]="pageSize" (ngModelChange)="changePageSize($event)" name="pageSize">
+          <option value="10">10</option>
+          <option value="20">20</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+</div>

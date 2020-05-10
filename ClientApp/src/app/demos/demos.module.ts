@@ -16,10 +16,13 @@ import { ChildRoute1Component } from './child-route1/child-route1.component';
 import { ChildRoute2Component } from './child-route2/child-route2.component';
 import { GridWithSortingAndPagingComponent } from './grid-with-sorting-and-paging/grid-with-sorting-and-paging.component';
 import { SharedModule } from '../shared/shared.module';
-import { AngularMaterialComponent } from './angular-material/angular-material.component';
+import { AngularMaterialComponent } from './form-stuff/angular-material/angular-material.component';
 import { LoggingComponent } from './logging/logging.component';
 import { AuthExampleMainComponent } from './auth-example/auth-example-main.component';
 import { ProtectedRouteComponent } from './auth-example/protected-route.component';
+import { RcTableExampleComponent } from './rc-table-example/rc-table-example.component';
+import { ReactiveFormExampleComponent } from './form-stuff/reactive-form-example/reactive-form-example.component';
+import { TemplateFormExampleComponent } from './form-stuff/template-form-example/template-form-example.component';
 
 @NgModule({
   imports: [
@@ -46,6 +49,9 @@ import { ProtectedRouteComponent } from './auth-example/protected-route.componen
     LoggingComponent,
     AuthExampleMainComponent,
     ProtectedRouteComponent,
+    RcTableExampleComponent,
+    ReactiveFormExampleComponent,
+    TemplateFormExampleComponent,
 
   ]
 })

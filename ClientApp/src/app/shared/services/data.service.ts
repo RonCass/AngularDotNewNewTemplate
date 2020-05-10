@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 
-import { WeatherForecast, Log, Book, APICrudExample, TokenInfo } from './models';
+import { WeatherForecast, Log, Book, APICrudExample, TokenInfo, ApplicationUser } from './models';
 import { CurrentUserService } from './current-user.service';
 import { ToastrService } from './toastr.service';
 // import { RequestOptions } from '@angular/http';
@@ -12,7 +12,7 @@ import { ToastrService } from './toastr.service';
 @Injectable()
 export class DataService {
 
-  public baseUrl = 'https://localhost:44316/'; // 'http://localhost:49223/';
+  public baseUrl = 'http://localhost:51255/'; // 'http://localhost:49223/';
   public httpOptions;
   public httpOptionsWithoutContentType;
   public tokenInfo = new TokenInfo();
@@ -101,6 +101,56 @@ export class DataService {
       myJson, this.httpOptions);
   }
 
+  /////////////////////////////////////////////////////////
+  // START - Application User
+  /////////////////////////////////////////////////////////
+
+  getUsers(pageNumber: number, pageSize: number, sort: string): Observable<any> {
+
+    return this.http.get(this.baseUrl + 'api/ApplicationUsers/?pageNumber=' + pageNumber + '&pageSize=' + pageSize +
+      '&sort=' + sort, this.httpOptions)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  createUser(user: ApplicationUser) {
+
+    const myJson = JSON.stringify(user);
+    return this.http.post(this.baseUrl + 'api/ApplicationUsers/', myJson, this.httpOptions)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  getUserById(userId: number): Observable<any> {
+
+    return this.http.get(this.baseUrl + 'api/ApplicationUsers/' + userId, this.httpOptions)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  updateUser(user: ApplicationUser) {
+
+    const myJson = JSON.stringify(user);
+    return this.http.put(this.baseUrl + 'api/ApplicationUsers/' + user.id, myJson, this.httpOptions)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  getRoles(): Observable<any> {
+
+    return this.http.get(this.baseUrl + 'api/ApplicationUsers/GetRoles', this.httpOptions)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  /////////////////////////////////////////////////////////
+  // END - Application User
+  /////////////////////////////////////////////////////////
 
   /////////////////////////////////////////////////////////
   // START - APICrudExample
@@ -303,7 +353,7 @@ export class DataService {
     }
     // return an observable with a user-facing error message
     return throwError(
-      'Something bad happened; please try again later.');
+      `Something bad happened; ${error.error}.`);
   }
 
 }
