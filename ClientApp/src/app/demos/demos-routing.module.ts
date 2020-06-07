@@ -20,6 +20,7 @@ import { AuthGuard } from '../shared/services/auth-guard.service';
 import { RcTableExampleComponent } from './rc-table-example/rc-table-example.component';
 import { ReactiveFormExampleComponent } from './form-stuff/reactive-form-example/reactive-form-example.component';
 import { TemplateFormExampleComponent } from './form-stuff/template-form-example/template-form-example.component';
+import { StickyHeadersComponent } from './sticky-headers/sticky-headers.component';
 
 
 const routes: Routes = [
@@ -45,6 +46,7 @@ const routes: Routes = [
   { path: 'rcTable', component: RcTableExampleComponent },
   { path: 'reactiveFormExample/:applicationUserId', component: ReactiveFormExampleComponent },
   { path: 'templateFormExample', component: TemplateFormExampleComponent },
+  { path: 'stickyTableHeaders', component: StickyHeadersComponent },
   { path: '**', component: PageNotFoundComponent },
 
 ];

@@ -6,13 +6,14 @@ import { catchError, retry } from 'rxjs/operators';
 import { WeatherForecast, Log, Book, APICrudExample, TokenInfo, ApplicationUser } from './models';
 import { CurrentUserService } from './current-user.service';
 import { ToastrService } from './toastr.service';
+import { environment } from '../../../environments/environment';
 // import { RequestOptions } from '@angular/http';
 
 
 @Injectable()
 export class DataService {
 
-  public baseUrl = 'http://localhost:51255/'; // 'http://localhost:49223/';
+  public baseUrl = environment.apiUrl; 
   public httpOptions;
   public httpOptionsWithoutContentType;
   public tokenInfo = new TokenInfo();

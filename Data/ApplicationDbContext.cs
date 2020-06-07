@@ -11,7 +11,7 @@ namespace AngularDotNetNewTemplate.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, int>
     {
-       
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
@@ -49,9 +49,9 @@ namespace AngularDotNetNewTemplate.Data
             //    .OnDelete(DeleteBehavior.Cascade);
 
         }
-             
 
-       //Extends the IdentityUser
+
+        //Extends the IdentityUser
         public DbSet<ApplicationUser> ApplicationUser { get; set; }
         public DbSet<ApplicationUserRole> ApplicationUserRole { get; set; }
         public DbSet<ApplicationRole> ApplicationRole { get; set; }

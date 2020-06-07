@@ -91,6 +91,7 @@ namespace AngularDotNetNewTemplate.Controllers
                     .Include(x => x.ApplicationUserRoles)    
                     .ThenInclude(x => x.ApplicationRole)
                     .FirstOrDefault(x => x.Id == id);
+                                
 
                 if (users == null)
                 {                    

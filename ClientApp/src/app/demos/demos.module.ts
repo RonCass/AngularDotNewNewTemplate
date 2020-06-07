@@ -23,6 +23,7 @@ import { ProtectedRouteComponent } from './auth-example/protected-route.componen
 import { RcTableExampleComponent } from './rc-table-example/rc-table-example.component';
 import { ReactiveFormExampleComponent } from './form-stuff/reactive-form-example/reactive-form-example.component';
 import { TemplateFormExampleComponent } from './form-stuff/template-form-example/template-form-example.component';
+import { StickyHeadersComponent } from './sticky-headers/sticky-headers.component';
 
 @NgModule({
   imports: [
@@ -52,6 +53,7 @@ import { TemplateFormExampleComponent } from './form-stuff/template-form-example
     RcTableExampleComponent,
     ReactiveFormExampleComponent,
     TemplateFormExampleComponent,
+    StickyHeadersComponent,
 
   ]
 })

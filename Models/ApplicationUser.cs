@@ -19,7 +19,7 @@ namespace AngularDotNetNewTemplate.Models
         public DateTime DateCreated { get; set; }
         public DateTime DateLastModified { get; set; }
 
-        public List<ApplicationUserRole> ApplicationUserRoles { get; set; }
+        public IEnumerable<ApplicationUserRole> ApplicationUserRoles { get; set; }
 
         //3-27-2018 Ron C.: Adding in all the navigation properties that were removed from the default implementation with aspnetcore 2.0
         /// <summary>
