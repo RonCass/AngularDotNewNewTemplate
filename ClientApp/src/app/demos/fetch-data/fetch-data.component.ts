@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { DataService } from './../../shared/services/data.service';
-import { Book } from './../../shared/services/models';
+import { Book } from './../../shared/models/models';
 
 @Component({
   selector: 'app-fetch-data',

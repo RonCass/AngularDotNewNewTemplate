@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { DataService } from '../../../shared/services/data.service';
 import { ToastrService } from '../../../shared/services/toastr.service';
-import { ApplicationUser } from '../../../shared/services/models';
+import { ApplicationUser } from '../../../shared/models/models';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({

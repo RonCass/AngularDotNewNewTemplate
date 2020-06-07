@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 
-import { WeatherForecast, Log, Book, APICrudExample, TokenInfo, ApplicationUser } from './models';
+import { WeatherForecast, Log, Book, APICrudExample, TokenInfo, ApplicationUser } from '../models/models';
 import { CurrentUserService } from './current-user.service';
 import { ToastrService } from './toastr.service';
 import { environment } from '../../../environments/environment';
@@ -349,12 +349,12 @@ export class DataService {
       // The backend returned an unsuccessful response code.
       // The response body may contain clues as to what went wrong,
       console.error(
-        `Backend returned code ${error.status}, ` +
-        `body was: ${error.error}`);
+        `Backend returned code ${JSON.stringify(error.status)}, ` +
+        `body was: ${JSON.stringify(error.error)}`);
     }
     // return an observable with a user-facing error message
     return throwError(
-      `Something bad happened; ${error.error}.`);
+      `Something bad happened; ${JSON.stringify(error.error)}.`);
   }
 
 }

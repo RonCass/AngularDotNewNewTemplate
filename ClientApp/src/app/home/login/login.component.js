@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from '../../shared/services/toastr.service';
 import { DataService } from '../../shared/services/data.service';
 import { CurrentUserService } from '../../shared/services/current-user.service';
-import { ApplicationUser } from '../../shared/services/models';
+import { ApplicationUser } from '../../shared/models/models';
 var LoginComponent = (function () {
     function LoginComponent(_dataService, toastrService, currentUserService, router) {
         this._dataService = _dataService;

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { ApplicationUser, TokenInfo } from './models';
+import { ApplicationUser, TokenInfo } from '../models/models';
 
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
 // import 'rxjs/Rx';
