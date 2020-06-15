@@ -1,56 +1,68 @@
 <div>
- <h3>Routing Examples</h3>
- <p>These examples can be seen in both the app.module.ts for module, and demos.routing.module.ts for most of the other examples</p>
- <div class="card" style="">
-  <div class="card-header">
-   Module Routing
+  <h3>Routing Examples</h3>
+  <p>These examples can be seen in both the app.module.ts for module, and demos.routing.module.ts for most of the other examples</p>
+  <div class="card" style="">
+    <div class="card-header">
+      Module Routing
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">Look at how the Demo Module is used in the app.module routes</li>
+      <li class="list-group-item">Example: {{ '{' }} path: 'demos', loadChildren: './demos/demos.module#DemosModule', canLoad: [AuthGuard] {{ '}' }}</li>
+      <li class="list-group-item">"canLoad" calls the AuthGuard to authorize the user against this module. CanLoad will not even load the module if the AuthGuard returns false.</li>
+      <li class="list-group-item">"canActivate" calls the AuthGuard to authorize the user against this module. The module will still be loaded but the user will not activate if AuthGurard returns false.</li>
+    </ul>
   </div>
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item">Look at how the Demo Module is used in the app.module routes</li>
-    <li class="list-group-item">Example: {{ '{' }} path: 'demos', loadChildren: './demos/demos.module#DemosModule', canLoad: [AuthGuard] {{ '}' }}</li>
-    <li class="list-group-item">"canLoad" calls the AuthGuard to authorize the user against this module. CanLoad will not even load the module if the AuthGuard returns false.</li>
-    <li class="list-group-item">"canActivate" calls the AuthGuard to authorize the user against this module. The module will still be loaded but the user will not activate if AuthGurard returns false.</li>
-  </ul>
-</div>
 
-<div class="card" style="">
-  <div class="card-header">
-  Default Routing
+  <div class="card" style="">
+    <div class="card-header">
+      Default Routing
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">Example: {{ '{' }} path: '', component: DefaultRoutePageComponent, canActivate: [AuthGuard] {{ '}' }}</li>
+      <li class="list-group-item">Example Redired to another path: {{ '{' }} path: '', redirectTo: '/heroes', pathMatch: 'full' {{ '}' }}</li>
+      <li class="list-group-item">Links to pages in the demo module require a "demo/" before each link. But if a user just goes to http://localhost/demos/ they will get an empty page unless you point those to a page in the module. And it doesnt have to be its own page like I have it but any component in the module will do.</li>
+    </ul>
   </div>
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item">Example: {{ '{' }} path: '', component: DefaultRoutePageComponent, canActivate: [AuthGuard] {{ '}' }}</li>
-    <li class="list-group-item">Example Redired to another path: {{ '{' }} path: '', redirectTo: '/heroes', pathMatch: 'full' {{ '}' }}</li>
-    <li class="list-group-item">Links to pages in the demo module require a "demo/" before each link. But if a user just goes to http://localhost/demos/ they will get an empty page unless you point those to a page in the module. And it doesnt have to be its own page like I have it but any component in the module will do.</li>
-  </ul>
-</div>
 
-<div class="card" style="">
-  <div class="card-header">
-  Basic Component Routing
+  <div class="card" style="">
+    <div class="card-header">
+      Basic Component Routing
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">Example: {{ '{' }} path: 'routingExamples', component: RoutingExamplesComponent, canActivate: [AuthGuard] {{ '}' }}</li>
+      <li class="list-group-item">The "path" is what you will use in your links. So for this page, routingExamples, the link would be: &lt;a [routerLink]='["/demos/routingExamples"]'&gt;Routing Examples&lt;/a&gt;. You should also see this URL in the browser since you are on this page now.</li>
+      <li class="list-group-item">
+        Other Examples: <br>
+        &lt;a routerLink="/demos/routingExamples"&gt;Routing Examples&lt;/a&gt; - Square brackets aren't required for simple paths.<br>
+        Route With ID or Token - &lt;a [routerLink]='["/demos/routingWithToken:token"]'&gt;Route With Token&lt;/a&gt; - <a [routerLink]='["/demos/routingWithToken/123"]'>Route With Token Examples</a><br>
+        Or using route paramm array: &lt;a [routerLink]='["/demos/routingWithToken:token", routeToken]'&gt;Route With Token&lt;/a&gt; - <a [routerLink]='["/demos/routingWithToken/", routeToken]'>Route With Token Examples</a>
+      </li>
+      <li class="list-group-item">Page Not Found Route: {{ '{' }} path: '**', component: PageNotFoundComponent {{ '}' }}</li>
+    </ul>
   </div>
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item">Example: {{ '{' }} path: 'routingExamples', component: RoutingExamplesComponent, canActivate: [AuthGuard] {{ '}' }}</li>
-    <li class="list-group-item">The "path" is what you will use in your links. So for this page, routingExamples, the link would be: &lt;a [routerLink]='["/demos/routingExamples"]'&gt;Routing Examples&lt;/a&gt;. You should also see this URL in the browser since you are on this page now.</li>
-    <li class="list-group-item">Other Examples: <br>
-      &lt;a routerLink="/demos/routingExamples"&gt;Routing Examples&lt;/a&gt; - Square brackets aren't required for simple paths.<br>
-      Route With ID or Token - &lt;a [routerLink]='["/demos/routingWithToken:token"]'&gt;Route With Token&lt;/a&gt; - <a [routerLink]='["/demos/routingWithToken/123"]'>Route With Token Examples</a><br>
-      Or using route paramm array: &lt;a [routerLink]='["/demos/routingWithToken:token", routeToken]'&gt;Route With Token&lt;/a&gt; - <a [routerLink]='["/demos/routingWithToken/", routeToken]'>Route With Token Examples</a>
-    </li>
-    <li class="list-group-item">Page Not Found Route: {{ '{' }} path: '**', component: PageNotFoundComponent {{ '}' }}</li>
-  </ul>
-</div>
 
-<div class="card" style="">
-  <div class="card-header">
-  Child Routing Component - See the "Children" in demos.routing.module.ts
+  <div class="card" style="">
+    <div class="card-header">
+      Child Routing Component - See the "Children" in demos.routing.module.ts
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item"><a [routerLink]='["/demos/childRouterOutlet/"]'>Child Route</a></li>
+      <li class="list-group-item"><a [routerLink]='["/demos/childRouterOutlet/childRoute1"]'>Child Route1</a></li>
+      <li class="list-group-item"><a [routerLink]='["/demos/childRouterOutlet/childRoute2"]'>Child Route2</a></li>
+
+    </ul>
   </div>
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item"><a [routerLink]='["/demos/childRouterOutlet/"]'>Child Route</a></li>
-    <li class="list-group-item"><a [routerLink]='["/demos/childRouterOutlet/childRoute1"]'>Child Route1</a></li>
-    <li class="list-group-item"><a [routerLink]='["/demos/childRouterOutlet/childRoute2"]'>Child Route2</a></li>
 
-  </ul>
-</div>
+  <div class="card" style="">
+    <div class="card-header">
+      In Component Routing
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">Add To Constructor: private router: Router (Also inlude "import {{ '{' }} Router {{ '}' }} from '@angular/router';") </li>
+      <li class="list-group-item">In Code: this.router.navigate(['/myPath']);</li>
+      
+    </ul>
+  </div>
 
 </div>
 <br><br><br>
