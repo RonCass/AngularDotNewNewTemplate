@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using AngularDotNetNewTemplate.Models;
 using Microsoft.AspNetCore.Identity;
+using AngularDotNetNewTemplate.Models.EFTableTest;
 
 namespace AngularDotNetNewTemplate.Data
 {
@@ -22,6 +23,10 @@ namespace AngularDotNetNewTemplate.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            // 8-6-2020 - Global Filters - Using to now show deleted data. Data is still saved in the database but does not show on normal queries. 
+            builder.Entity<Address>().HasQueryFilter(x => !x.IsDeleted);
+
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);          
@@ -48,6 +53,10 @@ namespace AngularDotNetNewTemplate.Data
             //    .IsRequired()
             //    .OnDelete(DeleteBehavior.Cascade);
 
+            builder.Entity<PrimaryInfo>()
+                .HasIndex(x => x.ApplicationId)
+                .IsUnique(false);
+                
         }
 
 
@@ -64,6 +73,10 @@ namespace AngularDotNetNewTemplate.Data
         public DbSet<Address> Address { get; set; }
         public DbSet<State> State { get; set; }
         public DbSet<Country> Country { get; set; }
+
+        //EF Testing
+        public DbSet<Application> Applications{ get; set; }
+        public DbSet<PrimaryInfo> PrimaryInfos { get; set; }
 
     }
 }

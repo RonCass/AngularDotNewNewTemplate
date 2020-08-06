@@ -17,6 +17,7 @@ import { RCTableComponent } from './rc-table/rc-table.component';
 import { RCGridColumnSortComponent } from './rc-table/components/rc-grid-column-sort/rc-grid-column-sort.component';
 import { RCGridPagingComponent } from './rc-table/components/rc-grid-paging/rc-grid-paging.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MinusSignToParens } from './pipes/amount-to-parens.pipe';
 
 @NgModule({
   imports: [
@@ -32,7 +33,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     GridColumnSortComponent,
     RCTableComponent,
     RCGridColumnSortComponent,
-    RCGridPagingComponent
+    RCGridPagingComponent,
+    MinusSignToParens
     
   ],
   exports: [
@@ -43,7 +45,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     RCTableComponent,
     RCGridColumnSortComponent,
     RCGridPagingComponent,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MinusSignToParens
   ],
   providers: [
     DataService,
