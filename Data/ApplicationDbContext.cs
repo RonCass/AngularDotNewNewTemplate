@@ -25,6 +25,7 @@ namespace AngularDotNetNewTemplate.Data
             base.OnModelCreating(builder);
 
             // 8-6-2020 - Global Filters - Using to now show deleted data. Data is still saved in the database but does not show on normal queries. 
+            // To Query without using filter = myDbContext.Address.IgnoreQueryFilters()
             builder.Entity<Address>().HasQueryFilter(x => !x.IsDeleted);
 
             // Customize the ASP.NET Identity model and override the defaults if needed.

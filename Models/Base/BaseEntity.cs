@@ -18,7 +18,9 @@ namespace AngularDotNetNewTemplate.Models.Base
 
         //Used for global filter to not keep but not show data on normal queries
         public bool IsDeleted { get; set; }
+
         //Used for Concurrency Checking
+        //https://channel9.msdn.com/Shows/Visual-Studio-Toolbox/Entity-Framework-Core-In-Depth-Part-6
         [Timestamp]
         public byte[] TimeStamp { get; set; }
     }
