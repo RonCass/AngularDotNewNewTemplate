@@ -1,0 +1,40 @@
+<h1 mat-dialog-title>{{ pageTitle }} </h1>
+
+<div mat-dialog-content>
+
+  <form [formGroup]="userForm" *ngIf="showForm">
+
+    <div fxLayout="row" fxLayoutGap="10px">
+      <div fxFlex="50">
+        <mat-form-field appearance="standard">
+          <mat-label>First Name:</mat-label>
+          <input matInput placeholder="" formControlName="firstName" required (blur)="showHelpfirstName = !showHelpfirstName" (focus)="showHelpfirstName = !showHelpfirstName">
+          <mat-error *ngIf="firstName.hasError">Required Field</mat-error>
+        </mat-form-field>
+      </div>
+      <div fxFlex="50" *ngIf="showHelpfirstName" class="form-field-help-text">Enter contact's first name here. e.g "John"</div>
+    </div>
+    <div fxLayout="row" fxLayoutGap="10px">
+      <div fxFlex="50">
+        <mat-form-field appearance="standard">
+          <mat-label>Last Name:</mat-label>
+          <input matInput placeholder="" formControlName="lastName" required (blur)="showHelplastName = !showHelplastName" (focus)="showHelplastName = !showHelplastName">
+          <mat-error *ngIf="lastName.hasError">Required Field</mat-error>
+        </mat-form-field>
+      </div>
+      <div fxFlex="50" *ngIf="showHelplastName" class="form-field-help-text">Enter contact's last name here. e.g. "Smith"</div>
+    </div>
+
+  </form>
+
+</div>
+<div mat-dialog-actions>
+  <button mat-stroked-button color="primary" [disabled]="!userForm.valid" (click)="save()">
+    Save
+  </button>
+  <button mat-stroked-button color="warn" mat-dialog-close>
+    Cancel
+  </button>
+</div>
+
+<div>data = {{ data | json }}</div>

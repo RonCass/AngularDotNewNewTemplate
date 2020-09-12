@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { SharedRoutingModule } from './shared-routing.module';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
@@ -18,12 +18,14 @@ import { RCGridColumnSortComponent } from './rc-table/components/rc-grid-column-
 import { RCGridPagingComponent } from './rc-table/components/rc-grid-paging/rc-grid-paging.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MinusSignToParens } from './pipes/amount-to-parens.pipe';
+import { TableFilterComponent } from './table-filter/table-filter.component';
 
 @NgModule({
   imports: [
     CommonModule,
     SharedRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     MaterialModule,
    FlexLayoutModule
   ],
@@ -34,7 +36,8 @@ import { MinusSignToParens } from './pipes/amount-to-parens.pipe';
     RCTableComponent,
     RCGridColumnSortComponent,
     RCGridPagingComponent,
-    MinusSignToParens
+    MinusSignToParens,
+    TableFilterComponent
     
   ],
   exports: [
@@ -46,7 +49,9 @@ import { MinusSignToParens } from './pipes/amount-to-parens.pipe';
     RCGridColumnSortComponent,
     RCGridPagingComponent,
     FlexLayoutModule,
-    MinusSignToParens
+    MinusSignToParens,
+    TableFilterComponent,
+    ReactiveFormsModule
   ],
   providers: [
     DataService,

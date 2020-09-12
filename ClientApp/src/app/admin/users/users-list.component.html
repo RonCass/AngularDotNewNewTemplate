@@ -1,0 +1,49 @@
+<h3>Users List</h3>
+
+<app-table-filter [filterByList]="filterByList" [mainData]="dataUsers" (filterBy)="onFilter($event)" (filterReset)="onFilterReset()"></app-table-filter>
+
+<mat-table [dataSource]="dataUsers" class="mat-elevation-z8" matSort (matSortChange)="sortData($event)">
+ 
+  
+  <ng-container matColumnDef="companyName">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Company Name </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element?.companyName}} </mat-cell>
+  </ng-container>
+
+ 
+  <ng-container matColumnDef="firstName">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>First Name</mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element?.firstName}} </mat-cell>
+  </ng-container>
+
+  
+  <ng-container matColumnDef="lastName">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Last Name</mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element?.lastName}} </mat-cell>
+  </ng-container>
+
+  
+  <ng-container matColumnDef="userName">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>User Name</mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element?.userName}} </mat-cell>
+  </ng-container>
+
+  <!-- Avail Actions Column -->
+  <ng-container matColumnDef="actions">
+    <mat-header-cell *matHeaderCellDef> Available Actions </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <button mat-icon-button><mat-icon matTooltip='Edit' (click)="edit(element)">edit</mat-icon></button>
+      <button mat-icon-button><mat-icon matTooltip='Delete' (click)="delete(element.lineId)">delete</mat-icon></button>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
+<br />
+<br />
+<mat-toolbar *ngIf="!isBusy && dataUsers.length === 0">
+  <h2 class="nothing-found">You currently have no Users saved</h2>
+</mat-toolbar>
+
+<div>dataUsers = {{ dataUsers | json }}</div>

@@ -33,8 +33,8 @@ import { AuthGuard } from './shared/services/auth-guard.service';
       { path: 'viewLogs', component: ViewLogsComponent },
       { path: 'authExample', component: ViewLogsComponent, canActivate: [AuthGuard] },
       { path: 'toastTest', component: ToastTestComponent },
-      { path: 'demos', loadChildren: () => import('./demos/demos.module').then(m => m.DemosModule)
-      }
+      { path: 'demos', loadChildren: () => import('./demos/demos.module').then(m => m.DemosModule) },
+      { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) }
     ]),
 
   ],

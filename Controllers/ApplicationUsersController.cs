@@ -26,13 +26,61 @@ namespace AngularDotNetNewTemplate.Controllers
         private ILogger<ApplicationUsersController> _logger;
         private IMapper _mapper;
         private UserManager<ApplicationUser> _userManager;
+        private IRepository<ApplicationUser> _repository;
 
-        public ApplicationUsersController(ApplicationDbContext context, ILogger<ApplicationUsersController> logger, IMapper mapper, UserManager<ApplicationUser> userManager)
+        public ApplicationUsersController(ApplicationDbContext context, ILogger<ApplicationUsersController> logger, IMapper mapper, UserManager<ApplicationUser> userManager, IRepository<ApplicationUser> repository)
         {
             _context = context;
             _logger = logger;
             _mapper = mapper;
             _userManager = userManager;
+            _repository = repository;
+        }
+
+        [HttpGet]
+        [Route("GetPagedList")]
+        public IActionResult GetPagedList(int pageNumber = 1, int pageSize = 20, string sort = "userName", string filterColumnName = "", string filterValue = "")
+        {
+            try
+            {
+                var test = _context.ApplicationUser
+                    .Include(x => x.ApplicationUserRoles)
+                    .ThenInclude(x => x.ApplicationRole);
+
+                //Filter Fields for My Lines = Line Name, Line Type and Line Location (Related Entity)
+
+                PagedList<ApplicationUser> myEntities;
+
+                //if (filterColumnName?.ToLower() == "selectall")
+                //{
+                //    myEntities = _repository.GetAllWithIncludes(new List<string>() { "LineLocation" }, x =>
+                //       x.Remain == Remain && x.IsSavedLine == IsSavedLine && (x.LineName.Contains(filterValue) || x.LineTypeName.Contains(filterValue) || x.LineLocation.LineLocationName.Contains(filterValue)),
+                //       pageNumber, pageSize, sort, "", "");
+                //}
+                //else if (filterColumnName == "lineLocation.lineLocationName")
+                //{
+                //    myEntities = _repository.GetAllWithIncludes(new List<string>() { "LineLocation" }, x =>
+                //       x.Remain == Remain && x.IsSavedLine == IsSavedLine && x.LineLocation.LineLocationName.Contains(filterValue),
+                //       pageNumber, pageSize, sort, "", "");
+                //}
+                //else if (applicationUserId == null)
+                //{
+                //    myEntities = _repository.GetAllWithIncludes(new List<string>() { "LineLocation" }, x =>
+                //        x.Remain == Remain && x.IsSavedLine == IsSavedLine, pageNumber, pageSize, sort, filterColumnName, filterValue);
+                //}
+                //else
+                //{
+                    myEntities = _repository.GetAllWithIncludes(new List<string>() { "ApplicationUserRoles" }, x => x == x, pageNumber, pageSize, sort, filterColumnName, filterValue);
+                //}
+
+                return Ok(myEntities);
+
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException != null) return BadRequest(ex.InnerException.Message);
+                return BadRequest(ex.Message);
+            }
         }
 
         // GET: api/Users

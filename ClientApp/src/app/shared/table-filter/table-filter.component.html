@@ -1,0 +1,28 @@
+<div class="containerOutline">
+  <form [formGroup]="filterForm">
+    <mat-form-field class="leftFilter">
+      <mat-label>Choose Column</mat-label>
+      <mat-select formControlName="filterColumn" required (selectionChange)="onFilterColumnChanged($event)" [compareWith]="compareFilterColumn">
+        <!--<mat-option value="SelectAll">SELECT ALL</mat-option>-->
+        <mat-option *ngFor="let fb of mainFilterByList" [value]="fb">
+          {{fb.filterColumnName}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="leftFilter">
+      <input formControlName="filterText" matInput placeholder="Type here" [matAutocomplete]="auto" (input)="searchTextChanged($event)">
+    </mat-form-field>
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+      <mat-option *ngFor="let item of predictiveSearchData" [value]="item">
+        {{item}}
+      </mat-option>
+    </mat-autocomplete>
+
+    <button mat-raised-button color="primary" (click)="filterTable()" [disabled]="!filterForm.valid" class="leftFilter">Filter</button>
+    <button mat-raised-button color="warn" (click)="resetFilter()" class="leftFilter">Reset</button>    
+  </form>
+</div>
+<!--<div>  mainFilterByList = {{ mainFilterByList | json }}</div>-->
+<!--<div>  predictiveSearchData = {{ predictiveSearchData | json  }}</div>-->
+<!--<div>mainData = {{ mainData | json  }}</div>
+<div>mainDataLargestSet = {{ mainDataLargestSet | json  }}</div>-->

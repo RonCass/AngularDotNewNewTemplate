@@ -35,17 +35,17 @@ namespace AngularDotNetNewTemplate.Data
         //}
 
         public PagedList<T> GetAll(Expression<Func<T, bool>> predicate = null, int pageNumber = 1, int pageSize = 20, 
-            string sort = null)
+            string sort = null, string filterColumnName = "", string filterValue = "")
         {
             //Default Page Size checking
             pageSize = (pageSize > maxPageSize) ? maxPageSize : pageSize;
 
             if (predicate != null)
             {
-                return PagedList<T>.Create(dbSet.Where(predicate), pageNumber, pageSize, sort);  
+                return PagedList<T>.Create(dbSet.Where(predicate), pageNumber, pageSize, sort, filterColumnName, filterValue);  
             }      
 
-            return PagedList<T>.Create(dbSet, pageNumber, pageSize, sort);
+            return PagedList<T>.Create(dbSet, pageNumber, pageSize, sort, filterColumnName, filterValue);
         }
 
         //6-5-2018 Ron C.: Created this so I can add multiple includes
@@ -61,7 +61,7 @@ namespace AngularDotNetNewTemplate.Data
          */
         public PagedList<T> GetAllWithIncludes(List<string> properties,
            Expression<Func<T, bool>> predicate = null, int pageNumber = 1, int pageSize = 20,
-            string sort = null)
+            string sort = null, string filterColumnName = "", string filterValue = "")
         {
             IQueryable<T> myQueryable;
 
@@ -79,12 +79,12 @@ namespace AngularDotNetNewTemplate.Data
                 myQueryable = myQueryable.Include(property);
             }
 
-            return PagedList<T>.Create(myQueryable, pageNumber, pageSize, sort);
+            return PagedList<T>.Create(myQueryable, pageNumber, pageSize, sort, filterColumnName, filterValue);
         }
 
         public PagedList<T> GetAllEager(Expression<Func<T, object>> property,
             Expression<Func<T, bool>> predicate = null, int pageNumber = 1, int pageSize = 20,
-            string sort = null)
+            string sort = null, string filterColumnName = "", string filterValue = "")
 
         {
             //Default Page Size checking
@@ -93,11 +93,11 @@ namespace AngularDotNetNewTemplate.Data
             if (predicate != null)
             {
                 //return dbSet.Include(property).Where(predicate);
-                return PagedList<T>.Create(dbSet.Include(property).Where(predicate), pageNumber, pageSize, sort);
+                return PagedList<T>.Create(dbSet.Include(property).Where(predicate), pageNumber, pageSize, sort, filterColumnName, filterValue);
             }
 
             //return dbSet.Include(property);
-            return PagedList<T>.Create(dbSet.Include(property), pageNumber, pageSize, sort);
+            return PagedList<T>.Create(dbSet.Include(property), pageNumber, pageSize, sort, filterColumnName, filterValue);
             
         }
 

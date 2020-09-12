@@ -12,7 +12,7 @@ namespace AngularDotNetNewTemplate.Utils
         public int TotalPages { get; set; }
         public int PageSize { get; set; }
         public int TotalCount { get; set; }
-        public List<T> Items { get; set; }
+        public List<T> ListItems { get; set; }
 
         public bool HasPrevious
         {
@@ -36,16 +36,22 @@ namespace AngularDotNetNewTemplate.Utils
             PageSize = pageSize;
             CurrentPage = pageNumber;
             TotalPages = (int)Math.Ceiling(count / (double)pageSize);
-            Items = items;
+            ListItems = items;
         }
 
         //Static Method that will call the contstructor above
-        public static PagedList<T> Create(IQueryable<T> source, int pageNumber, int pageSize, string sort)
+        public static PagedList<T> Create(IQueryable<T> source, int pageNumber, int pageSize, string sort, string filterColumnName, string filterValue)
         {
+            //Filter before sorting and getting the total count
+            if (!string.IsNullOrEmpty(filterColumnName) && !string.IsNullOrEmpty(filterValue))
+            {
+                source = FilterDataUtil.FilterData(source, filterColumnName, filterValue);
+            }
+
             var count = source.Count();
             var items = source
                 .ApplySort(sort)
-                .Skip((pageNumber - 1) * pageSize)
+                .Skip((pageNumber) * pageSize)
                 .Take(pageSize)
                 .ToList();
 

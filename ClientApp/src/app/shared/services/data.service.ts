@@ -1,9 +1,9 @@
 import { Injectable, Inject } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 
-import { WeatherForecast, Log, Book, APICrudExample, TokenInfo, ApplicationUser } from '../models/models';
+import { WeatherForecast, Log, Book, APICrudExample, TokenInfo, ApplicationUser, PagedListModel } from '../models/models';
 import { CurrentUserService } from './current-user.service';
 import { ToastrService } from './toastr.service';
 import { environment } from '../../../environments/environment';
@@ -47,6 +47,16 @@ export class DataService {
 
     })
 
+  }
+
+  getNoAuthHttpOptions() {
+    return {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        // 'Authorization': 'Bearer ' + this.getToken()
+      })
+    };
   }
 
   //getToken() {
@@ -115,6 +125,40 @@ export class DataService {
       );
   }
 
+  getUsersPagedList(pageIndex: number, pageSize: number, sort: string, filterColumn: string, filterText: string): Observable<PagedListModel> {
+
+    const httpOptionsViews = {
+      headers: new HttpHeaders({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }),
+      params: new HttpParams().set('pageNumber', '0').set('pageSize', '10').set('sort', '').set('filterColumnName', '').set('filterValue', '').set('IsSavedLine', '').set('remain', '')
+    };
+    httpOptionsViews.params = httpOptionsViews.params.set('pageNumber', pageIndex.toString());
+    httpOptionsViews.params = httpOptionsViews.params.set('pageSize', pageSize.toString());
+    httpOptionsViews.params = httpOptionsViews.params.set('sort', sort.toString());
+    httpOptionsViews.params = httpOptionsViews.params.set('filterColumnName', filterColumn);
+    httpOptionsViews.params = httpOptionsViews.params.set('filterValue', filterText);
+
+    //if (applicationUserId) {
+    //  httpOptionsViews.params = httpOptionsViews.params.set('applicationUserId', applicationUserId.toString());
+    //}
+
+    //if (IsSavedLine) {
+    //  httpOptionsViews.params = httpOptionsViews.params.set('IsSavedLine', IsSavedLine.toString());
+    //}
+
+    //if (remain) {
+    //  httpOptionsViews.params = httpOptionsViews.params.set('remain', remain.toString());
+    //}
+
+    return this.http.get<PagedListModel>(`${this.baseUrl}/ApplicationUsers/GetPagedList/`, httpOptionsViews)
+      .pipe(
+        catchError(this.handleError)
+      );
+
+  }
+
   createUser(user: ApplicationUser) {
 
     const myJson = JSON.stringify(user);
@@ -143,7 +187,7 @@ export class DataService {
 
   getRoles(): Observable<any> {
 
-    return this.http.get(this.baseUrl + 'api/ApplicationUsers/GetRoles', this.httpOptions)
+    return this.http.get(this.baseUrl + 'api/ApplicationUsers/GetRoles', this.getNoAuthHttpOptions())
       .pipe(
         catchError(this.handleError)
       );

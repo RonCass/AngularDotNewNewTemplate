@@ -1,0 +1,10 @@
+.containerOutline {
+  border-style: solid;
+  border-width: thin;
+  padding: 10px 0 10px 5px;
+  width: 55%;
+}
+
+.leftFilter {
+  margin-left: 10px;
+}

@@ -15,14 +15,14 @@ namespace AngularDotNetNewTemplate.Data
     public interface IRepository<T> where T : class
     {
         //IQueryable<T> GetAll(Expression<Func<T, bool>> predicate = null);
-        PagedList<T> GetAll(Expression<Func<T, bool>> predicate = null, int pageNumber = 1, int pageSize = 20, string sort = null);
+        PagedList<T> GetAll(Expression<Func<T, bool>> predicate = null, int pageNumber = 1, int pageSize = 20, string sort = null, string filterColumnName = "", string filterValue = "");
 
         // Eager loading: for one-to-one and one-to-many 
         //IQueryable<T> GetAllEager(Expression<Func<T, object>> property, Expression<Func<T, bool>> predicate);
-        PagedList<T> GetAllEager(Expression<Func<T, object>> property, Expression<Func<T, bool>> predicate, int pageNumber = 1, int pageSize = 20, string sort = null);
+        PagedList<T> GetAllEager(Expression<Func<T, object>> property, Expression<Func<T, bool>> predicate, int pageNumber = 1, int pageSize = 20, string sort = null, string filterColumnName = "", string filterValue = "");
 
         //Rons Version that has Includes for related data and returns a paged list
-        PagedList<T> GetAllWithIncludes(List<string> properties, Expression<Func<T, bool>> predicate, int pageNumber = 1, int pageSize = 20, string sort = null);
+        PagedList<T> GetAllWithIncludes(List<string> properties, Expression<Func<T, bool>> predicate, int pageNumber = 1, int pageSize = 20, string sort = null, string filterColumnName = "", string filterValue = "");
 
         // Explicit loading 
         ReferenceEntry<T, object> GetReference(T entity, Expression<Func<T, object>> property);

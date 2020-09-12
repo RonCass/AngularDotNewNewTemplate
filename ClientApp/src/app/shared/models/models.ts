@@ -15,6 +15,14 @@ export interface Book {
   title: string
 }
 
+export class PagedListModel {
+  pageNumber: number;
+  pageSize: number;
+  totalPages: number;
+  totalCount: number;
+  listItems: any[];
+
+}
 
 export interface Log {
   id: number;

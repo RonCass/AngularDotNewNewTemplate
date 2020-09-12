@@ -43,7 +43,7 @@ namespace AngularDotNetNewTemplate.Controllers
 
             myEntities = _repo.GetAll(null, pageNumber, pageSize, sort);
 
-            var myEntityOut = _mapper.Map<IEnumerable<APICrudExampleOut>>(myEntities.Items);
+            var myEntityOut = _mapper.Map<IEnumerable<APICrudExampleOut>>(myEntities.ListItems);
 
             //Shape data being returned
             return Ok(myEntityOut.ShapeData(fields));
