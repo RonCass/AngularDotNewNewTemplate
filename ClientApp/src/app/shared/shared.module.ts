@@ -19,6 +19,7 @@ import { RCGridPagingComponent } from './rc-table/components/rc-grid-paging/rc-g
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MinusSignToParens } from './pipes/amount-to-parens.pipe';
 import { TableFilterComponent } from './table-filter/table-filter.component';
+import { DataServiceGenerated } from './services/data.service.generated';
 
 @NgModule({
   imports: [
@@ -55,6 +56,7 @@ import { TableFilterComponent } from './table-filter/table-filter.component';
   ],
   providers: [
     DataService,
+    DataServiceGenerated,
     CurrentUserService,
     ToastrService,
     AuthGuard,

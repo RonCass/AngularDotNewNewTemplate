@@ -13,16 +13,20 @@ namespace AngularDotNetNewTemplate.Utils.AutomapperMappings
     {
         public AngularDotNetNewMappingsProfile()
         {
-            
-                CreateMap<ApplicationUser, ApplicationUserIn>().ReverseMap();
-                CreateMap<ApplicationUser, ApplicationUserOut>();
 
-                CreateMap<ApplicationUser, UserAndRoleOut>();
+            CreateMap<ApplicationUser, ApplicationUserIn>().ReverseMap();
+            CreateMap<ApplicationUser, ApplicationUserOut>();
+            CreateMap<ApplicationUserIn, ApplicationUser>();
 
-                CreateMap<APICrudExample, APICrudExampleIn>().ReverseMap();
-                CreateMap<APICrudExample, APICrudExampleOut>();         
+            CreateMap<ApplicationRole, ApplicationRoleOut>().ReverseMap();
+            CreateMap<ApplicationUserRole, ApplicationUserRoleOut>().ReverseMap();
 
-            
+            CreateMap<ApplicationUser, UserAndRoleOut>();
+
+            CreateMap<APICrudExample, APICrudExampleIn>().ReverseMap();
+            CreateMap<APICrudExample, APICrudExampleOut>();
+
+
 
 
         }

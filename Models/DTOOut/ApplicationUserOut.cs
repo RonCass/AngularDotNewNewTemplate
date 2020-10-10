@@ -7,6 +7,11 @@ namespace AngularDotNetNewTemplate.Models.DTOOut
 {
     public class ApplicationUserOut
     {
+        public ApplicationUserOut()
+        {
+            //this.ApplicationRoles = new List<ApplicationRoleOut>();
+        }
+
         //Fields From IdentityUser itself
         public int Id { get; set; }
         public int AccessFailCount { get; set; }
@@ -25,6 +30,8 @@ namespace AngularDotNetNewTemplate.Models.DTOOut
         public DateTime DateCreated { get; set; }
         public DateTime DateLastModified { get; set; }
 
+        //public List<ApplicationRoleOut> ApplicationRoles { get; set; }
+        public virtual ICollection<ApplicationUserRoleOut> ApplicationUserRoles { get; set; }
 
     }
 }

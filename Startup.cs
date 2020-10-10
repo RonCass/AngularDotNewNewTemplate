@@ -1,4 +1,5 @@
 using AngularDotNetNewTemplate.Data;
+using AngularDotNetNewTemplate.Extensions;
 using AngularDotNetNewTemplate.Models;
 using AngularDotNetNewTemplate.Models.DTOIn;
 using AngularDotNetNewTemplate.Models.DTOOut;
@@ -136,14 +137,8 @@ namespace AngularDotNetNewTemplate
 
             });
 
-            services.AddMvc()
-               //.AddJsonOptions(opt =>
-               //{
-               //    opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-               //    opt.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-               //})
-               ;
-
+            services.AddMvc() 
+                .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             //services.Configure<MvcOptions>(options =>
             //{
@@ -196,6 +191,9 @@ namespace AngularDotNetNewTemplate
 
             //Serilog          
             app.UseMiddleware<SerilogMiddleware>();
+
+            // Custom Global Error Handling - LogGlobals Table
+            app.ConfigureCustomExceptionMiddleware();
 
             // 5-2-2018: Added this to use the new Authentication
             app.UseAuthentication();

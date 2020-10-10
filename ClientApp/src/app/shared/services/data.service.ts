@@ -18,7 +18,7 @@ export class DataService {
   public httpOptionsWithoutContentType;
   public tokenInfo = new TokenInfo();
 
-  constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string,
+  constructor(private http: HttpClient, 
     private currentUserService: CurrentUserService, private toastrService: ToastrService) {
 
     this.currentUserService.$tokenInfo.subscribe(tokenInfo => {
@@ -108,7 +108,7 @@ export class DataService {
 
     const myJson = JSON.stringify({ 'username': username, 'password': password })
 
-    return this.http.post(this.baseUrl + 'api/Auth/CreateToken',
+    return this.http.post(this.baseUrl + '/Auth/CreateToken',
       myJson, this.httpOptions);
   }
 
@@ -118,7 +118,7 @@ export class DataService {
 
   getUsers(pageNumber: number, pageSize: number, sort: string): Observable<any> {
 
-    return this.http.get(this.baseUrl + 'api/ApplicationUsers/?pageNumber=' + pageNumber + '&pageSize=' + pageSize +
+    return this.http.get(this.baseUrl + '/ApplicationUsers/?pageNumber=' + pageNumber + '&pageSize=' + pageSize +
       '&sort=' + sort, this.httpOptions)
       .pipe(
         catchError(this.handleError)
@@ -162,7 +162,7 @@ export class DataService {
   createUser(user: ApplicationUser) {
 
     const myJson = JSON.stringify(user);
-    return this.http.post(this.baseUrl + 'api/ApplicationUsers/', myJson, this.httpOptions)
+    return this.http.post(this.baseUrl + '/ApplicationUsers/', myJson, this.httpOptions)
       .pipe(
         catchError(this.handleError)
       );
@@ -170,7 +170,7 @@ export class DataService {
 
   getUserById(userId: number): Observable<any> {
 
-    return this.http.get(this.baseUrl + 'api/ApplicationUsers/' + userId, this.httpOptions)
+    return this.http.get(this.baseUrl + '/ApplicationUsers/' + userId, this.httpOptions)
       .pipe(
         catchError(this.handleError)
       );
@@ -179,19 +179,21 @@ export class DataService {
   updateUser(user: ApplicationUser) {
 
     const myJson = JSON.stringify(user);
-    return this.http.put(this.baseUrl + 'api/ApplicationUsers/' + user.id, myJson, this.httpOptions)
+    return this.http.put(this.baseUrl + '/ApplicationUsers/', myJson, this.httpOptions)
       .pipe(
         catchError(this.handleError)
       );
   }
+
 
   getRoles(): Observable<any> {
 
-    return this.http.get(this.baseUrl + 'api/ApplicationUsers/GetRoles', this.getNoAuthHttpOptions())
+    return this.http.get(this.baseUrl + '/ApplicationUsers/GetRoles', this.getNoAuthHttpOptions())
       .pipe(
         catchError(this.handleError)
       );
   }
+
 
   /////////////////////////////////////////////////////////
   // END - Application User
@@ -202,7 +204,7 @@ export class DataService {
   /////////////////////////////////////////////////////////
   getAPICrudExample(pageNumber: number, pageSize: number, sort: string): Observable<any> {
 
-    return this.http.get(this.baseUrl + 'api/APICrudExample/?pageNumber=' + pageNumber + '&pageSize=' + pageSize +
+    return this.http.get(this.baseUrl + '/APICrudExample/?pageNumber=' + pageNumber + '&pageSize=' + pageSize +
       '&sort=' + sort, this.httpOptions)
       .pipe(
         catchError(this.handleError)
@@ -211,7 +213,7 @@ export class DataService {
 
   getAPICrudExampleById(apiCrudExampleId: number): Observable<any> {
 
-    return this.http.get(this.baseUrl + 'api/APICrudExample/' + apiCrudExampleId, this.httpOptions)
+    return this.http.get(this.baseUrl + '/APICrudExample/' + apiCrudExampleId, this.httpOptions)
       .pipe(
         catchError(this.handleError)
       );
@@ -220,7 +222,7 @@ export class DataService {
   createAPICrudExample(apiCrudExample: APICrudExample) {
 
     const myJson = JSON.stringify(apiCrudExample);
-    return this.http.post(this.baseUrl + 'api/APICrudExample/', myJson, this.httpOptions)
+    return this.http.post(this.baseUrl + '/APICrudExample/', myJson, this.httpOptions)
       .pipe(
         catchError(this.handleError)
       );
@@ -229,7 +231,7 @@ export class DataService {
   updateAPICrudExample(apiCrudExample: APICrudExample) {
 
     const myJson = JSON.stringify(apiCrudExample);
-    return this.http.put(this.baseUrl + 'api/APICrudExample/' + apiCrudExample.id, myJson, this.httpOptions)
+    return this.http.put(this.baseUrl + '/APICrudExample/' + apiCrudExample.id, myJson, this.httpOptions)
       .pipe(
         catchError(this.handleError)
       );
@@ -237,7 +239,7 @@ export class DataService {
 
   deleteAPICrudExample(apiCrudExample: APICrudExample) {
 
-    return this.http.delete(this.baseUrl + 'api/APICrudExample/' + apiCrudExample.id, this.httpOptions)
+    return this.http.delete(this.baseUrl + '/APICrudExample/' + apiCrudExample.id, this.httpOptions)
       .pipe(
         catchError(this.handleError)
       );
@@ -252,41 +254,41 @@ export class DataService {
   /////////////////////////////////////////////////////////
 
   getLoggingLevel(): Observable<any> {
-    return this.http.get(this.baseUrl + 'api/Logs/GetLoggingLevel/', this.httpOptions)
+    return this.http.get(this.baseUrl + '/Logs/GetLoggingLevel/', this.httpOptions)
       .pipe(
         catchError(this.handleError)
       );
   }
 
   changeLoggingLevel(logEventLevel): Observable<any> {
-    return this.http.get(this.baseUrl + 'api/Logs/ChangeLoggingLevel/?logEventLevel=' + logEventLevel, this.httpOptions)
+    return this.http.get(this.baseUrl + '/Logs/ChangeLoggingLevel/?logEventLevel=' + logEventLevel, this.httpOptions)
       .pipe(
         catchError(this.handleError)
       );
   }
 
   getLogs(pageNumber = 1, pageSize = 20, sort = '', fields = '', userId = '', level = ''): Observable<any> {
-    return this.http.get(this.baseUrl + 'api/Logs/GetLogs/?pageNumber=' + pageNumber + '&pageSize=' + pageSize + '&sort=' + sort + '&fields=' + fields + '&userId=' + userId + '&level=' + level, this.httpOptions)
+    return this.http.get(this.baseUrl + '/Logs/GetLogs/?pageNumber=' + pageNumber + '&pageSize=' + pageSize + '&sort=' + sort + '&fields=' + fields + '&userId=' + userId + '&level=' + level, this.httpOptions)
       .pipe(
         catchError(this.handleError)
       );
   }
 
   //getLogs(): Observable<Log> {
-  //  return this.http.get<Log>(this.baseUrl + 'api/Logs/GetLogs', this.httpOptions)
+  //  return this.http.get<Log>(this.baseUrl + '/Logs/GetLogs', this.httpOptions)
   //    .pipe(catchError(this.handleError)
   //    );
   //}
 
   getLogFileList(): Observable<any> {
-    return this.http.get(this.baseUrl + 'api/Logs/GetLogFileList', this.httpOptions)
+    return this.http.get(this.baseUrl + '/Logs/GetLogFileList', this.httpOptions)
       .pipe(
         catchError(this.handleError)
       );
   }
 
   getLogFile(myFile): Observable<any> {
-    return this.http.get(this.baseUrl + 'api/Logs/GetLogFile/?myFile=' + myFile, this.httpOptions)
+    return this.http.get(this.baseUrl + '/Logs/GetLogFile/?myFile=' + myFile, this.httpOptions)
       .pipe(
         catchError(this.handleError)
       );
@@ -306,14 +308,14 @@ export class DataService {
 
   UploadOneFileOnly(formData) {
 
-    return this.http.post(this.baseUrl + 'api/FileUpload/UploadOneFileOnly/', formData, this.httpOptionsWithoutContentType)
+    return this.http.post(this.baseUrl + '/FileUpload/UploadOneFileOnly/', formData, this.httpOptionsWithoutContentType)
       .pipe(
         catchError(this.handleError)
       );
   }
   UploadOneFileAndOtherModelData(formData) {
 
-    return this.http.post(this.baseUrl + 'api/FileUpload/UploadOneFileAndOtherModelData/',
+    return this.http.post(this.baseUrl + '/FileUpload/UploadOneFileAndOtherModelData/',
       formData, this.httpOptionsWithoutContentType)
       .pipe(
         catchError(this.handleError)
@@ -322,7 +324,7 @@ export class DataService {
 
   UploadMultipleFiles(formData) {
 
-    return this.http.post(this.baseUrl + 'api/FileUpload/UploadMultipleFiles/', formData, this.httpOptionsWithoutContentType)
+    return this.http.post(this.baseUrl + '/FileUpload/UploadMultipleFiles/', formData, this.httpOptionsWithoutContentType)
       .pipe(
         catchError(this.handleError)
       );
@@ -337,7 +339,7 @@ export class DataService {
   /////////////////////////////////////////////////////////
   getDummyData(pageNumber: number, pageSize: number, sort: string): Observable<any> {
 
-    return this.http.get(this.baseUrl + 'api/DummyData/?pageNumber=' + pageNumber + '&pageSize=' + pageSize +
+    return this.http.get(this.baseUrl + '/DummyData/?pageNumber=' + pageNumber + '&pageSize=' + pageSize +
       '&sort=' + sort, this.httpOptions)
       .pipe(
         catchError(this.handleError)
@@ -346,7 +348,7 @@ export class DataService {
 
   getDummyDataBySearchText(pageNumber: number, pageSize: number, sort: string, searchText: string): Observable<any> {
 
-    return this.http.get(this.baseUrl + 'api/DummyData/GetByText/?pageNumber=' + pageNumber + '&pageSize=' + pageSize +
+    return this.http.get(this.baseUrl + '/DummyData/GetByText/?pageNumber=' + pageNumber + '&pageSize=' + pageSize +
       '&sort=' + sort + '&searchText=' + searchText, this.httpOptions)
       .pipe(
         catchError(this.handleError)
@@ -360,21 +362,21 @@ export class DataService {
 
   // From PS Course
   getAllBooks(): Observable<Book[]> {
-    return this.http.get<Book[]>('/api/books')
+    return this.http.get<Book[]>('/books')
       .pipe(
         catchError(this.handleError)
       );
   }
 
   //getBookById(id: number): Observable<Book> {
-  //  return this.http.get<Book>('/api/books/${id}', this.httpOptions)
+  //  return this.http.get<Book>('/books/${id}', this.httpOptions)
   //    .pipe(
   //      catchError(this.handleError)
   //    );
   //}
 
   //GetSomething(): Observable<WeatherForecast> {
-  //  return this.http.get<WeatherForecast>(this.baseUrl + 'api/SampleData/WeatherForecasts', this.httpOptions)
+  //  return this.http.get<WeatherForecast>(this.baseUrl + '/SampleData/WeatherForecasts', this.httpOptions)
   //    .pipe(
   //      catchError(this.handleError)
   //    );

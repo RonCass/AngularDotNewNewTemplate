@@ -5,24 +5,56 @@
   <form [formGroup]="userForm" *ngIf="showForm">
 
     <div fxLayout="row" fxLayoutGap="10px">
-      <div fxFlex="50">
+      <div fxFlex="">
+        <mat-form-field appearance="standard">
+          <mat-label>Email Address:</mat-label>
+          <input matInput placeholder="" formControlName="userName" required>
+          <mat-error *ngIf="userName.hasError">Required Field</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div fxLayout="row" fxLayoutGap="10px">
+      <div fxFlex="">
         <mat-form-field appearance="standard">
           <mat-label>First Name:</mat-label>
-          <input matInput placeholder="" formControlName="firstName" required (blur)="showHelpfirstName = !showHelpfirstName" (focus)="showHelpfirstName = !showHelpfirstName">
+          <input matInput placeholder="" formControlName="firstName" required>
           <mat-error *ngIf="firstName.hasError">Required Field</mat-error>
         </mat-form-field>
       </div>
-      <div fxFlex="50" *ngIf="showHelpfirstName" class="form-field-help-text">Enter contact's first name here. e.g "John"</div>
     </div>
     <div fxLayout="row" fxLayoutGap="10px">
-      <div fxFlex="50">
+      <div fxFlex="">
         <mat-form-field appearance="standard">
           <mat-label>Last Name:</mat-label>
-          <input matInput placeholder="" formControlName="lastName" required (blur)="showHelplastName = !showHelplastName" (focus)="showHelplastName = !showHelplastName">
+          <input matInput placeholder="" formControlName="lastName" required>
           <mat-error *ngIf="lastName.hasError">Required Field</mat-error>
         </mat-form-field>
       </div>
-      <div fxFlex="50" *ngIf="showHelplastName" class="form-field-help-text">Enter contact's last name here. e.g. "Smith"</div>
+    </div>
+    <div fxLayout="row" fxLayoutGap="10px">
+      <div fxFlex="">
+        <mat-checkbox class="example-margin" formControlName="isActive">Is Active</mat-checkbox>
+      </div>
+    </div>
+    <div fxLayout="row" fxLayoutGap="10px">
+      <div fxFlex="">
+        <mat-checkbox class="example-margin" formControlName="emailConfirmed">Email Confirmed</mat-checkbox>
+      </div>
+    </div>
+
+    <div fxLayout="row">
+      <div fxFlex="">
+        <mat-form-field>
+          <mat-label>User Roles</mat-label>
+          <mat-select formControlName="userRole" required [compareWith]="compare" multiple>
+            <mat-option *ngFor="let role of userRoles" [value]="role">
+              {{  role.name }}
+            </mat-option>
+          </mat-select>
+          <!--<mat-error *ngIf="userRole.hasError">Required Field</mat-error>-->
+        </mat-form-field>
+      </div>
     </div>
 
   </form>
@@ -36,5 +68,5 @@
     Cancel
   </button>
 </div>
-
-<div>data = {{ data | json }}</div>
+<!--<div>userRoles = {{ userRoles | json }}</div>
+<div>data = {{ data | json  }}</div>-->

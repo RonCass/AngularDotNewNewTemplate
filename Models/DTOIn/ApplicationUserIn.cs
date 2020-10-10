@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AngularDotNetNewTemplate.Models.DTOOut;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,7 +9,7 @@ namespace AngularDotNetNewTemplate.Models.DTOIn
     public class ApplicationUserIn
     {
         //Fields From IdentityUser itself
-        //public int Id { get; set; } //ID should be send to the Update Method outside of this model
+        public int Id { get; set; } 
         public int AccessFailCount { get; set; }
         public string Email { get; set; }
         public bool? EmailConfirmed { get; set; }
@@ -25,7 +26,8 @@ namespace AngularDotNetNewTemplate.Models.DTOIn
         public DateTime? DateCreated { get; set; }
         public DateTime? DateLastModified { get; set; }
 
-        public string Password { get; set; }
-        public string RoleName { get; set; }
+        //public string Password { get; set; }
+        //public string RoleName { get; set; }
+        public virtual ICollection<ApplicationUserRoleOut> ApplicationUserRoles { get; set; }
     }
 }

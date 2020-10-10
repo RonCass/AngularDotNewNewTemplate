@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using AngularDotNetNewTemplate.Data;
 using AngularDotNetNewTemplate.Models;
@@ -38,14 +39,50 @@ namespace AngularDotNetNewTemplate.Controllers
         }
 
         [HttpGet]
+        [Route("SetApplicationUserIsActive")]
+        public IActionResult SetApplicationUserIsActive(int ApplicationUserid, bool IsActive)
+        {
+            var myApplicationUser = _context.ApplicationUser.FirstOrDefault(x => x.Id == ApplicationUserid);
+
+            if (myApplicationUser != null)
+            {
+                myApplicationUser.IsActive = IsActive;
+                _context.ApplicationUser.Update(myApplicationUser);
+                _context.SaveChanges();
+                return Ok();
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpGet]
+        [Route("SetApplicationUserEmailConfirmed")]
+        public IActionResult SetApplicationUserEmailConfirmed(int ApplicationUserid, bool EmailConfirmed)
+        {
+            var myApplicationUser = _context.ApplicationUser.FirstOrDefault(x => x.Id == ApplicationUserid);
+
+            if (myApplicationUser != null)
+            {
+                myApplicationUser.EmailConfirmed = EmailConfirmed;
+                _context.ApplicationUser.Update(myApplicationUser);
+                _context.SaveChanges();
+                return Ok();
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpGet]
         [Route("GetPagedList")]
         public IActionResult GetPagedList(int pageNumber = 1, int pageSize = 20, string sort = "userName", string filterColumnName = "", string filterValue = "")
         {
             try
             {
-                var test = _context.ApplicationUser
-                    .Include(x => x.ApplicationUserRoles)
-                    .ThenInclude(x => x.ApplicationRole);
+
 
                 //Filter Fields for My Lines = Line Name, Line Type and Line Location (Related Entity)
 
@@ -70,10 +107,33 @@ namespace AngularDotNetNewTemplate.Controllers
                 //}
                 //else
                 //{
-                    myEntities = _repository.GetAllWithIncludes(new List<string>() { "ApplicationUserRoles" }, x => x == x, pageNumber, pageSize, sort, filterColumnName, filterValue);
+                myEntities = _repository.GetAllWithIncludes(new List<string>() { "ApplicationUserRoles.ApplicationRole" }, x => x == x, pageNumber, pageSize, sort, filterColumnName, filterValue);
                 //}
 
-                return Ok(myEntities);
+                //Map ApplicationUser info to out DTO
+                var myApplicationUsersOutList = new List<ApplicationUserOut>();
+
+                foreach (var ApplicationUser in myEntities.ListItems)
+                {
+                    var myApplicationUserOut = new ApplicationUserOut();
+                    myApplicationUserOut = _mapper.Map<ApplicationUserOut>(ApplicationUser);
+
+                    //Roles
+                    //foreach (var role in ApplicationUser.ApplicationUserRoles)
+                    //{
+                    //    myApplicationUserOut.ApplicationRoles.Add(new ApplicationRoleOut() { RoleId = role.RoleId, RoleName = role.ApplicationRole.Name });
+                    //}
+
+                    myApplicationUsersOutList.Add(myApplicationUserOut);
+                }
+
+                ////var myEntitiesOut = _mapper.Map<IEnumerable<ApplicationUserOut>>(myEntities.ListItems);
+
+                var myPagedListOut = new PagedList<ApplicationUserOut>(myApplicationUsersOutList, myEntities.TotalCount, myEntities.CurrentPage, myEntities.PageSize);
+                //var myPagedListOut = new PagedList<ApplicationUser>(myEntities.ListItems, myEntities.TotalCount, myEntities.CurrentPage, myEntities.PageSize);
+
+
+                return Ok(myPagedListOut);
 
             }
             catch (Exception ex)
@@ -86,9 +146,9 @@ namespace AngularDotNetNewTemplate.Controllers
         // GET: api/Users
         [HttpGet]
         public IActionResult Get(int page = 1, int pageSize = 20, string sort = "Id", bool isActive = true, string userName = null, string fields = null)
-        {            
+        {
             try
-            {                
+            {
                 //Default Page Size checking -BaseApiController
                 pageSize = pageSize > MaxPageSize ? MaxPageSize : pageSize;
 
@@ -106,7 +166,7 @@ namespace AngularDotNetNewTemplate.Controllers
                     .Skip(pageSize * (page - 1))
                     .Take(pageSize)
                     .Select(x => ShapeReturnData.CreateDataShapedObject(x, fields));
-                
+
                 //Map data to Out DTO
                 var myEntitiesOut = _mapper.Map<IEnumerable<ApplicationUserOut>>(results);
 
@@ -120,7 +180,7 @@ namespace AngularDotNetNewTemplate.Controllers
             catch (Exception ex)
             {
                 _logger.LogError($"Error: {ex}");
-                return StatusCode(500);                
+                return StatusCode(500);
             }
         }
 
@@ -131,21 +191,21 @@ namespace AngularDotNetNewTemplate.Controllers
             try
             {
                 if (!ModelState.IsValid)
-                {                   
+                {
                     return BadRequest(ModelState);
                 }
 
                 ApplicationUser users = _context.ApplicationUser
-                    .Include(x => x.ApplicationUserRoles)    
+                    .Include(x => x.ApplicationUserRoles)
                     .ThenInclude(x => x.ApplicationRole)
                     .FirstOrDefault(x => x.Id == id);
-                                
+
 
                 if (users == null)
-                {                    
+                {
                     return NotFound();
                 }
-             
+
                 return Ok(users);
             }
             catch (Exception ex)
@@ -171,8 +231,120 @@ namespace AngularDotNetNewTemplate.Controllers
             }
         }
 
+        [HttpPut]
+        public async Task<IActionResult> UpdateUser([FromBody] ApplicationUserIn EntityIn)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var MyEntity = _context.ApplicationUser
+                .Include(x => x.ApplicationUserRoles)
+                .ThenInclude(x => x.ApplicationRole)
+                .FirstOrDefault(x => x.Id == EntityIn.Id)
+                ;
+
+            if (MyEntity == null)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                //Process Roles - Delete all current roles and only add the ones they selected
+                if(EntityIn.ApplicationUserRoles != null && EntityIn.ApplicationUserRoles.Count() > 0)
+                {
+                    _context.ApplicationUserRole.RemoveRange(MyEntity.ApplicationUserRoles);
+                    //_context.SaveChanges();
+                }
+
+                _mapper.Map(EntityIn, MyEntity);
+
+                //Null Roles so only the ApplicationUser is updated below
+                MyEntity.ApplicationUserRoles = new List<ApplicationUserRole>();
+
+                //Add in Roles chosen in the UI
+                foreach (var role in EntityIn.ApplicationUserRoles)
+                {
+                    MyEntity.ApplicationUserRoles.Add(new ApplicationUserRole() { UserId = EntityIn.Id, RoleId = role.ApplicationRole.Id });
+                }
+
+                _context.Update(MyEntity);
+               await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return Ok();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] ApplicationUserIn EntityIn)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }           
+
+            try
+            {
+                var MyNewEntity = new ApplicationUser();
+                _mapper.Map(EntityIn, MyNewEntity);
+                MyNewEntity.ApplicationUserRoles = null;
+
+                //Set email the same as username
+                MyNewEntity.Email = MyNewEntity.UserName;
+                MyNewEntity.DateCreated = DateTime.Now;
+                MyNewEntity.DateLastModified = DateTime.Now;
+
+                var myResult = await _userManager.CreateAsync(MyNewEntity);
+                if (!myResult.Succeeded)
+                {
+                    string myErrors = "";
+
+                    foreach (var error in myResult.Errors)
+                    {
+                        myErrors = myErrors + error.Description;
+                    }
+
+                    return BadRequest(myErrors);
+                }  
+                
+                //_context.ApplicationUser.Add(MyNewEntity);
+                //await _context.SaveChangesAsync();
+
+                //Add in Roles chosen in the UI
+                foreach (var role in EntityIn.ApplicationUserRoles)
+                {
+                    _context.ApplicationUserRole.Add(new ApplicationUserRole() { UserId = MyNewEntity.Id, RoleId = role.ApplicationRole.Id });
+                }
+               
+                await _context.SaveChangesAsync();
+
+                //Get User and Roles to send back for the list
+                var myNewUser = _context.ApplicationUser
+                    .Include(x => x.ApplicationUserRoles)
+                    .ThenInclude(x => x.ApplicationRole)
+                    .FirstOrDefault(x => x.Id == MyNewEntity.Id);
+
+                var myApplicationUserOut = new ApplicationUserOut();
+                myApplicationUserOut = _mapper.Map<ApplicationUserOut>(myNewUser);
+
+                return Ok(myApplicationUserOut);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            
+        }
+
         // PUT: api/Users/5
-        //[HttpPut("{id}")]
+        // [HttpPut("{id}")]
         //public async Task<IActionResult> PutUsers([FromRoute] int id, [FromBody] ApplicationUserIn users)
         //{
         //    string userID = "";
@@ -229,69 +401,69 @@ namespace AngularDotNetNewTemplate.Controllers
         //}
 
         // POST: api/ApplicationUsers
-        [HttpPost]
-        public async Task<IActionResult> PostUsers([FromBody] ApplicationUserIn applicationUserIn)
-        {
-            string userID = "";
-            if (HttpContext.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier) != null)
-            {
-                userID = HttpContext.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value;
-            }
+        //[HttpPost]
+        //public async Task<IActionResult> PostUsers([FromBody] ApplicationUserIn applicationUserIn)
+        //{
+        //    string userID = "";
+        //    if (HttpContext.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier) != null)
+        //    {
+        //        userID = HttpContext.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value;
+        //    }
 
-            try
-            {
+        //    try
+        //    {
 
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-                }
+        //        if (!ModelState.IsValid)
+        //        {
+        //            return BadRequest(ModelState);
+        //        }
 
-                var newApplicationUser = new ApplicationUser();
+        //        var newApplicationUser = new ApplicationUser();
 
-                //Map fields from DTO to actual ApplicationUser
-                _mapper.Map(applicationUserIn, newApplicationUser);
+        //        //Map fields from DTO to actual ApplicationUser
+        //        _mapper.Map(applicationUserIn, newApplicationUser);
 
-                //Set Username same as email
-                newApplicationUser.UserName = newApplicationUser.Email;
-                //Set Date Created
-                newApplicationUser.DateCreated = DateTime.Now;
-                //Set Date Modified
-                newApplicationUser.DateLastModified = DateTime.Now;
+        //        //Set Username same as email
+        //        newApplicationUser.UserName = newApplicationUser.Email;
+        //        //Set Date Created
+        //        newApplicationUser.DateCreated = DateTime.Now;
+        //        //Set Date Modified
+        //        newApplicationUser.DateLastModified = DateTime.Now;
 
 
-                var myResult = await _userManager.CreateAsync(newApplicationUser, applicationUserIn.Password);
-                if (!myResult.Succeeded)
-                {
-                    string myErrors = "";
+        //        var myResult = await _userManager.CreateAsync(newApplicationUser, applicationUserIn.Password);
+        //        if (!myResult.Succeeded)
+        //        {
+        //            string myErrors = "";
 
-                    foreach (var error in myResult.Errors)
-                    {
-                        myErrors = myErrors + error.Description;
-                    }
+        //            foreach (var error in myResult.Errors)
+        //            {
+        //                myErrors = myErrors + error.Description;
+        //            }
 
-                    return BadRequest(myErrors);
-                }
+        //            return BadRequest(myErrors);
+        //        }
 
-                var myResult2 = await _userManager.AddToRoleAsync(newApplicationUser, applicationUserIn.RoleName);
-                if (!myResult2.Succeeded)
-                {
-                    string myErrors = "";
+        //        var myResult2 = await _userManager.AddToRoleAsync(newApplicationUser, applicationUserIn.RoleName);
+        //        if (!myResult2.Succeeded)
+        //        {
+        //            string myErrors = "";
 
-                    foreach (var error in myResult2.Errors)
-                    {
-                        myErrors = myErrors + error.Description;
-                    }
+        //            foreach (var error in myResult2.Errors)
+        //            {
+        //                myErrors = myErrors + error.Description;
+        //            }
 
-                    return BadRequest(myErrors);
-                }
+        //            return BadRequest(myErrors);
+        //        }
 
-                return Ok(newApplicationUser);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
+        //        return Ok(newApplicationUser);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest(ex.Message);
+        //    }
+        //}
 
         // DELETE: api/Users/5
         //[HttpDelete("{id}")]

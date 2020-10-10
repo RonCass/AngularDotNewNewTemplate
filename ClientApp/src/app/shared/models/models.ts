@@ -60,8 +60,15 @@ export class ApplicationUser {
   roleId: number;
   roleName: string;
   userToken: string;
+  applicationRoles: ApplicationRole[];
 }
-export class UserRole {
-  name: string;
+
+export class ApplicationRole {
+  roleId: string;
+  roleName: string;
 }
+
+//export class UserRole {
+//  name: string;
+//}
 

@@ -19,7 +19,17 @@ namespace AngularDotNetNewTemplate.Models
         public DateTime DateCreated { get; set; }
         public DateTime DateLastModified { get; set; }
 
-        public IEnumerable<ApplicationUserRole> ApplicationUserRoles { get; set; }
+        //9-12-2020 Ron C.: Adding in navigation properties - https://docs.microsoft.com/en-us/aspnet/core/security/authentication/customize-identity-model?view=aspnetcore-3.1
+        //public virtual ICollection<ApplicationUserClaim> Claims { get; set; }
+        //public virtual ICollection<ApplicationUserLogin> Logins { get; set; }
+        //public virtual ICollection<ApplicationUserToken> Tokens { get; set; }
+        public virtual ICollection<ApplicationUserRole> ApplicationUserRoles { get; set; }
+
+
+
+
+
+        //public IEnumerable<ApplicationUserRole> ApplicationUserRoles { get; set; }
 
         //3-27-2018 Ron C.: Adding in all the navigation properties that were removed from the default implementation with aspnetcore 2.0
         /// <summary>

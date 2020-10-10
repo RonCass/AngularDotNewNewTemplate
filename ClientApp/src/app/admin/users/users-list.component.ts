@@ -5,6 +5,8 @@ import { ApplicationUser } from '../../shared/models/models';
 import { Sort } from '@angular/material/sort';
 import { UserModalComponent } from '../user-modal/user-modal.component';
 import { MatDialog } from '@angular/material/dialog';
+import { DataServiceGenerated } from '../../shared/services/data.service.generated';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-users-list',
@@ -19,23 +21,56 @@ export class UsersListComponent implements OnInit {
   public pageSize = 20;
   public dataUsers: ApplicationUser[] = [];
   public displayedColumns =
-    ['companyName', 'firstName', 'lastName', 'userName', 'actions'];
+    ['id', 'companyName', 'firstName', 'lastName', 'userName', 'roles', 'isActive', 'emailConfirmed', 'actions'];
 
   //Sorting And Filtering
   public sort = "-userName";
   public filterColumnName = "";
   public filterValue = ""
   public filterByList = [
-    { filterColumnName: 'companyName', filterColumnValue: 'companyName' },
-    { filterColumnName: 'firstName', filterColumnValue: 'firstName' },
-    { filterColumnName: 'lastName', filterColumnValue: 'lastName' },
-    { filterColumnName: 'userName', filterColumnValue: 'userName' }    
+    { filterColumnName: 'Company Name', filterColumnValue: 'companyName' },
+    { filterColumnName: 'First Name', filterColumnValue: 'firstName' },
+    { filterColumnName: 'Last Name', filterColumnValue: 'lastName' },
+    { filterColumnName: 'User Name', filterColumnValue: 'userName' }    
   ];
 
-  constructor(private dataService: DataService, private toastrService: ToastrService, private modaldialog: MatDialog) { }
+  constructor(private dataService: DataService, private dataServiceGenerated: DataServiceGenerated, private toastrService: ToastrService, private modaldialog: MatDialog) { }
 
   ngOnInit(): void {
     this.getUsers();
+  }
+  
+
+  setIsActive(applicationUserId, isActive) {
+    this.dataServiceGenerated.ApplicationUsersSetApplicationUserIsActive(applicationUserId, isActive)
+      .subscribe(
+        response => {
+          //Set the value to the item in the users data so the checkbox changes in the UI
+          _.find(this.dataUsers, function (o) { return o.id == applicationUserId }).isActive = isActive;
+         this.toastrService.success("User was updated.")
+        },
+        error => {
+          //this.spinnerService.hide();
+          //this.isBusy = false;
+          this.toastrService.error("Error=" + error);
+        }
+      );
+  }
+
+  setEmailConfirmed(applicationUserId, emailConfirmed) {
+    this.dataServiceGenerated.ApplicationUsersSetApplicationUserEmailConfirmed(applicationUserId, emailConfirmed)
+      .subscribe(
+        response => {
+          //Set the value to the item in the users data so the checkbox changes in the UI
+          _.find(this.dataUsers, function (o) { return o.id == applicationUserId }).emailConfirmed = emailConfirmed;
+          this.toastrService.success("User was updated.")
+        },
+        error => {
+          //this.spinnerService.hide();
+          //this.isBusy = false;
+          this.toastrService.error("Error=" + error);
+        }
+      );
   }
 
   getUsers() {
@@ -56,22 +91,52 @@ export class UsersListComponent implements OnInit {
     );
   }
 
-  edit(element: any) {
+  //getUserRolesForTableColumnDisplay(element) {
+
+  //  const myRoleArray = [];
+  //  for (let myApplicationRole of element.applicationRoles) {
+  //    myRoleArray.push(myApplicationRole.roleName);
+  //  }
+  //  return myRoleArray.sort().join();
+  //}
+
+  create() {
     const dialogRef = this.modaldialog.open(UserModalComponent, {
       width: '1000px',
-      data: { showTopBlueBox: false, updateRecord: element, applicationUserId: "" }
+      data: null
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      //this.spinnerService.show();
-      //this.isBusy = true;
-      //this.getMyLines();
-    },
-      error => {
-        //this.spinnerService.hide();
-        //this.isBusy = false;
-        //this.notificationService.notifyError("Error=" + error);
-      });
+      if (result !== "" && result !== undefined) {
+        //Add the edited user to the list
+        //Table was not updating so I had to make a copy etc.
+        const dataUsersCopy = this.dataUsers.slice();
+        dataUsersCopy.push(result);
+        this.dataUsers = dataUsersCopy.slice();
+      }
+
+    });
+  }
+
+  edit(element: any) {
+    const dialogRef = this.modaldialog.open(UserModalComponent, {
+      width: '1000px',
+      data: { updateRecord: element}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== "" && result !== undefined) {
+
+        //Remove the current version of the user from the list
+        _.remove(this.dataUsers, function (o) { return o.id == result.id });
+
+        //Add the edited user to the list
+        this.dataUsers.push(result);
+
+
+      }
+      
+    });
   }
   
   //Filter and Sorting
@@ -103,7 +168,12 @@ export class UsersListComponent implements OnInit {
     this.sort = `${sortDirection}${sort.active}`;
 
     this.getUsers();
+  }
 
+  //Paging
+  loadPage(event) {
+    this.pageIndex = event.pageIndex;
+    this.getUsers();
   }
 
 }
