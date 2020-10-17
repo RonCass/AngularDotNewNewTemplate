@@ -343,6 +343,33 @@ namespace AngularDotNetNewTemplate.Controllers
             
         }
 
+        [HttpGet("ForgotPassword")]
+        public IActionResult ForgotPassword(string Email)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(Email)) {
+                    return BadRequest();
+                }
+
+                var myUser = _context.ApplicationUser.FirstOrDefault(x => x.Email == Email);
+                if(myUser == null)
+                {
+                    return Ok(); //Don't want to tell the user the email was not found
+                }
+
+               //Send Email
+
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error: {ex}");
+                throw;
+            }
+        }
+
         // PUT: api/Users/5
         // [HttpPut("{id}")]
         //public async Task<IActionResult> PutUsers([FromRoute] int id, [FromBody] ApplicationUserIn users)

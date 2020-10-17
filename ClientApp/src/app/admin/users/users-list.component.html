@@ -1,84 +1,103 @@
-<h3>Users List</h3>
+<div class="pageTitle">Users List</div>
 
-<app-table-filter [filterByList]="filterByList" [mainData]="dataUsers" (filterBy)="onFilter($event)" (filterReset)="onFilterReset()"></app-table-filter>
-
-<button mat-stroked-button color="primary" (click)="create()">Add New</button>
-
-<mat-table [dataSource]="dataUsers" class="mat-elevation-z8" matSort (matSortChange)="sortData($event)">
-
-  <ng-container matColumnDef="id">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>ID </mat-header-cell>
-    <mat-cell *matCellDef="let element"> {{element?.id}} </mat-cell>
-  </ng-container>
-
-  <ng-container matColumnDef="companyName">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>Company Name </mat-header-cell>
-    <mat-cell *matCellDef="let element"> {{element?.companyName}} </mat-cell>
-  </ng-container>
-
-  <ng-container matColumnDef="firstName">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>First Name</mat-header-cell>
-    <mat-cell *matCellDef="let element"> {{element?.firstName}} </mat-cell>
-  </ng-container>
-
-  <ng-container matColumnDef="lastName">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>Last Name</mat-header-cell>
-    <mat-cell *matCellDef="let element"> {{element?.lastName}} </mat-cell>
-  </ng-container>
-
-  <ng-container matColumnDef="userName">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>User Name</mat-header-cell>
-    <mat-cell *matCellDef="let element"> {{element?.userName}} </mat-cell>
-  </ng-container>
-
-  <ng-container matColumnDef="roles">
-    <mat-header-cell *matHeaderCellDef>Role(s)</mat-header-cell>
-    <!--<mat-cell *matCellDef="let element">{{ getUserRolesForTableColumnDisplay(element) }}</mat-cell>-->
-  <mat-cell *matCellDef="let element">
-    <div *ngFor="let role of element?.applicationUserRoles">
-      {{ role?.applicationRole?.name}},&nbsp;
-    </div>
-    <!--{{ element?.applicationUserRoles | json }}-->
-  </mat-cell>
-  </ng-container>
-
-  <ng-container matColumnDef="isActive">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>Active</mat-header-cell>
-    <mat-cell *matCellDef="let element">
-      <button mat-icon-button *ngIf="element.isActive==true" (click)="setIsActive(element.id, false)"><mat-icon>check_box</mat-icon></button>
-      <button mat-icon-button *ngIf="element.isActive!=true" (click)="setIsActive(element.id, true)"><mat-icon>check_box_outline_blank</mat-icon></button>      
-    </mat-cell>
-  </ng-container>
-
-  <ng-container matColumnDef="emailConfirmed">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>Email Confirmed</mat-header-cell>
-    <mat-cell *matCellDef="let element">
-      <button mat-icon-button *ngIf="element.emailConfirmed==true" (click)="setEmailConfirmed(element.id, false)"><mat-icon>check_box</mat-icon></button>
-      <button mat-icon-button *ngIf="element.emailConfirmed!=true" (click)="setEmailConfirmed(element.id, true)"><mat-icon>check_box_outline_blank</mat-icon></button>    
-    </mat-cell>
-  </ng-container>
-
-  <!-- Avail Actions Column -->
-  <ng-container matColumnDef="actions">
-    <mat-header-cell *matHeaderCellDef> Available Actions </mat-header-cell>
-    <mat-cell *matCellDef="let element">
-      <button mat-icon-button><mat-icon matTooltip='Edit' (click)="edit(element)">edit</mat-icon></button>
-      <!--<button mat-icon-button><mat-icon matTooltip='Delete' (click)="delete(element.lineId)">delete</mat-icon></button>-->
-    </mat-cell>
-  </ng-container>
-
-  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-</mat-table>
-
-<mat-toolbar *ngIf="!isBusy && dataUsers.length === 0">
-  <h2 class="nothing-found">There are no items to display</h2>
-</mat-toolbar>
-<div>
-  <mat-paginator hidePageSize="true" [length]="pageLength"
-                 [pageSize]="pageSize" [pageIndex]="pageIndex" (page)="loadPage($event)">
-  </mat-paginator>
+<div fxLayout="row" fxLayoutAlign="space-between center">
+  <div fxFlex="60">
+    <app-table-filter [filterByList]="filterByList" [mainData]="dataUsers" (filterBy)="onFilter($event)" (filterReset)="onFilterReset()"></app-table-filter>
+  </div>
+  <div fxFlex fxLayoutAlign="end center">
+    <button mat-stroked-button color="primary" (click)="create()">Add New</button>
+  </div>
 </div>
+<div fxLayout="row">
+  <div fxFlex fxLayoutAlign="end center">
+    <mat-paginator hidePageSize="true" [length]="pageLength"
+                   [pageSize]="pageSize" [pageIndex]="pageIndex" (page)="loadPage($event)">
+    </mat-paginator>
+  </div>
+</div>
+
+<div fxLayout="row">
+  <div fxFlex>
+    <mat-table [dataSource]="dataUsers" class="mat-elevation-z8" matSort (matSortChange)="sortData($event)">
+
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>ID </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element?.id}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="companyName">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Company Name </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element?.companyName}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="firstName">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>First Name</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element?.firstName}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="lastName">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Last Name</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element?.lastName}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="userName">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>User Name</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element?.userName}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="isActive">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Active</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <button mat-icon-button *ngIf="element.isActive==true" (click)="setIsActive(element.id, false)"><mat-icon>check_box</mat-icon></button>
+          <button mat-icon-button *ngIf="element.isActive!=true" (click)="setIsActive(element.id, true)"><mat-icon>check_box_outline_blank</mat-icon></button>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="emailConfirmed">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Email Confirmed</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <button mat-icon-button *ngIf="element.emailConfirmed==true" (click)="setEmailConfirmed(element.id, false)"><mat-icon>check_box</mat-icon></button>
+          <button mat-icon-button *ngIf="element.emailConfirmed!=true" (click)="setEmailConfirmed(element.id, true)"><mat-icon>check_box_outline_blank</mat-icon></button>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="roles">
+        <mat-header-cell *matHeaderCellDef>Role(s)</mat-header-cell>
+        <!--<mat-cell *matCellDef="let element">{{ getUserRolesForTableColumnDisplay(element) }}</mat-cell>-->
+        <mat-cell *matCellDef="let element">
+          <div *ngFor="let role of element?.applicationUserRoles">
+            {{ role?.applicationRole?.name}},&nbsp;
+          </div>
+          <!--{{ element?.applicationUserRoles | json }}-->
+        </mat-cell>
+      </ng-container>
+
+      <!-- Avail Actions Column -->
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef> Available Actions </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <button mat-icon-button><mat-icon matTooltip='Edit' (click)="edit(element)">edit</mat-icon></button>
+          <!--<button mat-icon-button><mat-icon matTooltip='Delete' (click)="delete(element.lineId)">delete</mat-icon></button>-->
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+
+    <mat-toolbar *ngIf="!isBusy && dataUsers.length === 0">
+      <h2 class="nothing-found">There are no items to display</h2>
+    </mat-toolbar>
+  </div>
+</div>
+<div fxLayout="row" style="padding-top: 15px">
+  <div fxFlex fxLayoutAlign="end center">
+    <mat-paginator hidePageSize="true" [length]="pageLength"
+                   [pageSize]="pageSize" [pageIndex]="pageIndex" (page)="loadPage($event)">
+    </mat-paginator>
+  </div>
+</div>
+
 <br />
 <br />
 <!--<div>dataUsers = {{ dataUsers | json }}</div>-->

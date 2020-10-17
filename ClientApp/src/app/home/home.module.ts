@@ -7,6 +7,8 @@ import { HomeComponent } from './home/home.component';
 import { SharedModule } from './../shared/shared.module';
 import { LoginComponent } from './login/login.component';
 import { FocusDirective } from './../shared/directives/focus.directive';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 @NgModule({
   imports: [
@@ -18,7 +20,9 @@ import { FocusDirective } from './../shared/directives/focus.directive';
   declarations: [
     HomeComponent,
     LoginComponent,
-    FocusDirective
+    FocusDirective,
+    ResetPasswordComponent,
+    ForgotPasswordComponent
   ]
 })
 export class HomeModule { }

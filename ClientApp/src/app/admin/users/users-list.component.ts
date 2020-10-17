@@ -21,7 +21,7 @@ export class UsersListComponent implements OnInit {
   public pageSize = 20;
   public dataUsers: ApplicationUser[] = [];
   public displayedColumns =
-    ['id', 'companyName', 'firstName', 'lastName', 'userName', 'roles', 'isActive', 'emailConfirmed', 'actions'];
+    ['id', 'companyName', 'firstName', 'lastName', 'userName', 'isActive', 'emailConfirmed', 'roles', 'actions'];
 
   //Sorting And Filtering
   public sort = "-userName";

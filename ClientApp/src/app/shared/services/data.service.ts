@@ -194,6 +194,14 @@ export class DataService {
       );
   }
 
+  forgotPassword(email: string): Observable<any> {
+
+    return this.http.get(this.baseUrl + '/ApplicationUsers/ForgotPassword/?email=' + email, this.getNoAuthHttpOptions())
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
 
   /////////////////////////////////////////////////////////
   // END - Application User
