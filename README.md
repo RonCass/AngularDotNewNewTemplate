@@ -5,7 +5,8 @@ Dotnet New Angular Template with added foundational stuff
 I decided to start saving code to this project. Just general stuff that I want to remember etc.
 
 ## Stuff I Added
-* Angular 9.0.5 on 3/6/2020
+* Angular 11.0.2 on 11/22/2020
+* .Net 5.0 on 11/22/2020
 * Bootstrap 4.* - Upgraded template Bootstrap 4.* and changed the main top nav to use it.
 * JQuery 3.3.1 - For Bootstrap 4
 * Popper.js 1.14.1 - For Bootstrap 4
