@@ -88,12 +88,12 @@ namespace AngularDotNetNewTemplate.Controllers
 
                 PagedList<ApplicationUser> myEntities;
 
-                //if (filterColumnName?.ToLower() == "selectall")
-                //{
-                //    myEntities = _repository.GetAllWithIncludes(new List<string>() { "LineLocation" }, x =>
-                //       x.Remain == Remain && x.IsSavedLine == IsSavedLine && (x.LineName.Contains(filterValue) || x.LineTypeName.Contains(filterValue) || x.LineLocation.LineLocationName.Contains(filterValue)),
-                //       pageNumber, pageSize, sort, "", "");
-                //}
+                if (filterColumnName?.ToLower() == "selectall")
+                {
+                    myEntities = _repository.GetAllWithIncludes(new List<string>() { "ApplicationUserRoles.ApplicationRole" }, x =>
+                       (x.FirstName.Contains(filterValue) || x.LastName.Contains(filterValue) || x.CompanyName.Contains(filterValue)),
+                       pageNumber, pageSize, sort, "", "");
+                }
                 //else if (filterColumnName == "lineLocation.lineLocationName")
                 //{
                 //    myEntities = _repository.GetAllWithIncludes(new List<string>() { "LineLocation" }, x =>
@@ -105,10 +105,10 @@ namespace AngularDotNetNewTemplate.Controllers
                 //    myEntities = _repository.GetAllWithIncludes(new List<string>() { "LineLocation" }, x =>
                 //        x.Remain == Remain && x.IsSavedLine == IsSavedLine, pageNumber, pageSize, sort, filterColumnName, filterValue);
                 //}
-                //else
-                //{
-                myEntities = _repository.GetAllWithIncludes(new List<string>() { "ApplicationUserRoles.ApplicationRole" }, x => x == x, pageNumber, pageSize, sort, filterColumnName, filterValue);
-                //}
+                else
+                {
+                    myEntities = _repository.GetAllWithIncludes(new List<string>() { "ApplicationUserRoles.ApplicationRole" }, x => x == x, pageNumber, pageSize, sort, filterColumnName, filterValue);
+                }
 
                 //Map ApplicationUser info to out DTO
                 var myApplicationUsersOutList = new List<ApplicationUserOut>();
