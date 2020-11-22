@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ChildRouterOutletComponent } from './child-router-outlet.component';
 
@@ -6,7 +6,7 @@ describe('ChildRouterOutletComponent', () => {
   let component: ChildRouterOutletComponent;
   let fixture: ComponentFixture<ChildRouterOutletComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ ChildRouterOutletComponent ]
     })

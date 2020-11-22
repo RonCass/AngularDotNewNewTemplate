@@ -33,15 +33,15 @@ import { ResetPasswordComponent } from './home/reset-password/reset-password.com
     SharedModule,
     FlexLayoutModule,
     RouterModule.forRoot([
-      { path: '', redirectTo: 'home', pathMatch: 'full' },
-      { path: 'viewLogs', component: ViewLogsComponent },
-      { path: 'authExample', component: ViewLogsComponent, canActivate: [AuthGuard] },
-      { path: 'toastTest', component: ToastTestComponent },
-      { path: 'demos', loadChildren: () => import('./demos/demos.module').then(m => m.DemosModule) },
-      { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
-      { path: 'forgotPassword', component: ForgotPasswordComponent },
-      { path: 'resetPassword', component: ResetPasswordComponent }
-    ]),
+    { path: '', redirectTo: 'home', pathMatch: 'full' },
+    { path: 'viewLogs', component: ViewLogsComponent },
+    { path: 'authExample', component: ViewLogsComponent, canActivate: [AuthGuard] },
+    { path: 'toastTest', component: ToastTestComponent },
+    { path: 'demos', loadChildren: () => import('./demos/demos.module').then(m => m.DemosModule) },
+    { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
+    { path: 'forgotPassword', component: ForgotPasswordComponent },
+    { path: 'resetPassword', component: ResetPasswordComponent }
+], { relativeLinkResolution: 'legacy' }),
 
   ],
   exports: [
